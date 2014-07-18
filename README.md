@@ -1,4 +1,4 @@
-cuelogic-hrms
+Resource and Invoice Tracking
 =============
 
 Rails Project
