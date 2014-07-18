@@ -1,0 +1,29 @@
+<%unless @timesheet.blank?%>
+	<%unless @timesheet.total_hours.blank? %>
+		$("div.<%= @current_timesheet_date %> .fc-event-title").html(<%= (@timesheet.total_hours) + @new_task_hours%> +" Hrs");
+	<%else%>
+		$("div.<%= @current_timesheet_date %> .fc-event-title").html(<%= @new_task_hours %> +" Hrs");
+	<%end%>
+<%else%>
+	$("div.<%= @current_timesheet_date %> .fc-event-title").html(<%= @new_task_hours %> +" Hrs");
+<%end%>
+$("#id_total_hours").html(<%= @total_logged_hours.to_f %> + " hours logged");
+
+// $('.class_timesheet_task_type_id option:eq(0)').attr('selected','selected');
+// $('.class_timesheet_task_hours option:eq(0)').attr('selected','selected');
+// $('.class_timesheet_task_name').val("");
+// $('.class_timesheet_task_desc').val("");
+// $('#id_timesheet_date').val("");
+// $('#project_list').hide();
+
+$('#timesheet_task_hours').val('');
+$('#id_update_timesheet').hide();
+$('#id_archive_timesheet').hide();
+$('#id_create_timesheet').show();
+
+<% unless @timesheet_added.blank? %>
+	$('#id_create_timesheet').show();
+	$('.class_task_form').html('<%= j(render "timesheets/create_timesheet") %>');
+<%else%>
+	$('#id_create_timesheet').hide();
+<% end %>

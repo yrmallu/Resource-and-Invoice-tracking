@@ -1,0 +1,19 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+   <li><span class="prev-link" data-no-turbolink><%= link_to 'Project Listing'.html_safe, projects_path %></span></li>
+    <li><span class="active"> Create Project</span></li>
+</ul>
+
+<!-- <ul class="breadcrumb">
+        <li>
+          <p>YOU ARE HERE</p>
+        </li>
+        <li><span class="semi-bold active">Add Project</span> </li>
+</ul>
+<div class="page-title" data-no-turbolink> 
+	<%#= link_to '<i class="icon-custom-left"></i>'.html_safe, projects_path %>	
+     <h3>Project Listing</h3>
+</div> -->
+<%= render 'form' %>

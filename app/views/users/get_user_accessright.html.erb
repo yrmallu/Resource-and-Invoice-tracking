@@ -1,0 +1,55 @@
+<ul class="breadcrumb">
+        <li>
+          <p>YOU ARE HERE</p>
+        </li>
+        <li><span class="semi-bold active">Edit Access Rights for employee: <%=@user.get_full_name unless @user.blank?%></span></li>
+</ul>
+<div class="page-title" data-no-turbolink> 
+	<%= link_to '<i class="icon-custom-left"></i>'.html_safe, users_path %>	
+    <h3>Employee Listing</h3>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+			<div class="grid-title no-border"></div>  
+				<div class="grid-body no-border">
+					<%=form_tag(:action=>:update_user_accessright) do%>	
+					<div class="row">
+						<div class="right-container">
+			                <h4 class="semi-bold">Employee Name</h4>            
+							<div class="row form-row">
+								<div class="col-md-5">
+								    <%=hidden_field_tag :id, @user.id%> 
+									<%=text_field_tag :name, @user.firstname, :readonly=>true%>
+							    </div>
+							</div>
+							<h4 class="semi-bold">Access Rights</h4>
+							<div class="row form-row">
+							    <div class="col-md-12">
+								    <div id="access_right_load" class="access_right" style="display:block">
+										<%=render 'accessrights/accessright'%>
+									</div>
+							    </div>
+							</div>
+						</div>	
+			    	</div>
+				<%=hidden_field_tag('checked_list[]')%>
+				<%=hidden_field_tag('unchecked_list[]')%>
+					<div class="form-actions" data-no-turbolink>
+					      <div class="pull-right">
+							  <%= submit_tag 'Save', class: "btn btn-success btn-cons", data: { disable_with: 'Saving...' } %>
+							  <%= link_to 'Cancel', users_path, class: "btn btn-white btn-cons" %>
+						  </div>
+					</div>
+				<%end%>  
+			</div>
+	    </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_administration');
+	   });
+</script>
+		  	 

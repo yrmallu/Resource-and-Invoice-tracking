@@ -1,0 +1,17 @@
+$('#id_project_main_content').html('<%= j(render 'project', :object=>@projects) %>')
+
+//Call to data table again to load the dropdown for nos, search box and pagination
+var oTable = $('#id_project_table').dataTable( {
+   "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",
+   "aoColumnDefs": [
+               { "bSortable": false, "aTargets": [ 5 ] }],
+   "aaSorting": [],
+			"oLanguage": {
+		"sLengthMenu": "_MENU_ ",
+		"sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+	},
+	
+});
+$('#example2_wrapper .dataTables_filter input').addClass("input-medium ");
+$('#example2_wrapper .dataTables_length select').addClass("select2-wrapper span12");
+$(".select2-wrapper").select2({minimumResultsForSearch: -1});

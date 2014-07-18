@@ -1,0 +1,105 @@
+
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+   <!-- <li><span class="prev-link" data-no-turbolink><%#= link_to 'Dashboard'.html_safe, dashboard_users_path %></span></li> -->
+    <li><span class="active"> Project Dashboard</span></li>
+</ul>
+	
+	<ul class="nav-justified project-detail">
+		<li>
+    		<div class="bluebg">
+            	<p>Total Time Spent</p>
+            	<h2><%=@total_hours_spent%></h2>
+        	</div>
+    	</li>
+    	<li>
+    		<div class="greenbg">
+            	<p>Resources</p>
+            	<h2><%=@employees.count%></h2>
+        	</div>
+    	</li>
+    	<li>
+    		<div class="pinkbg">
+            	<p>Off Tracked Projects</p>
+            	<h2><%=@off_track_projects%></h2>
+        	</div>
+    	</li>
+    	<li>
+    		<div class="brownbg">
+            	<p>Missed Milestones</p>
+            	<h2><%=@delayed_milestones%></h2>
+        	</div>
+    	</li>
+    	<li>
+    		<div class="purplebg">
+            	<p>Missed Timesheets</p>
+            	<h2><%=@missed_timesheets%></h2>
+        	</div>
+    	</li>
+	</ul>
+	<div class="row">
+		<div class="col-md-12">
+    		<h3 class="semi-bold">Projects</h3>
+				<div class="list-grid">
+					<div class="row">
+						<%unless @projects.blank?%>
+							<%@projects.each do |project|%>
+                            <% if current_user.is_admin == true || project.project_manager == current_user %>
+							
+            					<div class="col-md-4 single-colored-widget project-link" data-no-turbolink>
+									<%if "fixed_cost".eql?(project.project_type) %>
+										<%= link_to  '', project_detail_users_path(:id=>project), :class=>"detail-link" %>
+									<%else%>
+                						<%= link_to  '', tm_project_detail_users_path(:id=>project), :class=>"detail-link" %>
+									<%end%>
+									<div class="heading" >
+                    					<h2>
+											<%=truncate(project.title, length: 16)%>
+										</h2>
+                					</div>
+									<%grid_style = "fixed_cost".eql?(project.project_type) ? 'red' : 'green'%>
+                					<div class="content-wrapper <%=grid_style%>">
+                						<ul class="project-planlist">
+                    						<li><span class="timer"></span> <%= pluralize(@proj_res[project.id],'Resource')%> </li>
+                        					<% if project.project_type.eql?("fixed_cost")%>
+												<% proj_type = project.project_type.titleize%>
+											<%else%>
+												<% proj_type = "T & M"%>
+											<%end%>
+											<li><span class="bid"></span> <%=proj_type %></li>
+                        					<li>
+												<% if project.project_type.eql?("fixed_cost") %>
+													<% if @hashMilestone.keys.include?(project.id.to_s)%>
+														<span class="user"></span> <%= @hashMilestone[project.id.to_s] %> - Milestone					 
+													<%end%>
+												<%else%>
+													<span class="user"></span> month <%=(Time.now.year - project.start_date.year) * 12 + Time.now.month - project.start_date.month - (Time.now.day >= project.start_date.day ? 0 : 1) unless project.start_date.blank?%>
+												<%end%>
+											</li>
+    									</ul>
+               						</div>
+           						</div>
+				 		<%end%>
+                    <% end%>
+       			 </div>
+       	 	</div>
+            <% else %>
+                <div class="col-md-12">
+                    <div class="grid simple">
+                        <div class="grid-title no-border">
+                            <h5>No Projects to display</h5>
+                             <% end %>
+                         </div>
+                    </div>
+    	</div>	</div>
+	</div>
+
+
+   
+	<script type="text/javascript">
+	$(document).ready(function(){
+		showHideMenu('li_projects');
+	});
+	</script>  

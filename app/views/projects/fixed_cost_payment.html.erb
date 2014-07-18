@@ -1,0 +1,38 @@
+
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+   <li><span class="prev-link" data-no-turbolink><%= link_to 'Milestone Status'.html_safe, fc_milestone_projects_path(:id=>@project) %></span></li>
+    <li><span class="active"> Milestone payment status </span></li>
+</ul>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+			<div class="grid-title no-border"></div>  
+			<%= form_tag (fc_payment_create_projects_path(:id=>@project)), :class=>"form_validation form-no-horizontal-spacing class_amount_validation"  do %>
+				<%= fields_for :project, @project do |f| %>
+					<div class="grid-body no-border">
+			    		<% if @project.errors.any? %>
+							<div id="errorbox" class="error_box" style="margin-left: 25px;">	
+								<%= render "shared/error_messages", :object=>@project %>
+							</div>
+						<% end %>
+					<%= render "projects/milestone_details", :proj=>@project, f: f %>
+				<% end %>
+				<div class="form-actions" data-no-turbolink>
+				    <div class="pull-right">
+						  <%= submit_tag 'Save', class: "btn btn-success btn-cons" %>
+						  <%= link_to 'Cancel', fc_milestone_projects_path(:id=>@project), class: "btn btn-white btn-cons" %>
+					</div>
+				</div>
+				<% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,213 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+			<div class="grid-title no-border"></div>  
+			<%= form_for @project, :html=>{:class=>"form_validation form-no-horizontal-spacing class_proj_date_validation"} do |f| %>
+				<%= f.hidden_field :company_id,:value=>@company.id %>
+				<div class="grid-body no-border">
+					<div id="errorbox" class="error_box" style="margin-left: 25px;">	
+						<%= render "shared/error_messages", :object=>@project %>
+					</div>
+			        <div class="row column-seperation form-section">
+			            <div class="col-md-6">
+			                <h4 class="semi-bold">Project Information</h4>            
+							<div class="form-row form-group">
+								<div class="row">
+									<div class="col-md-12">
+										<label class="form-label">Project Name</label>
+										<!-- <span class="help">e.g. "ProjectOne"</span> -->
+							    		<%= f.text_field :title, :autofocus => true, :required=>true, :class => "form-control"%>
+							    	</div>
+								</div>
+							</div>
+							<div class="form-row form-group">
+								<div class="row">
+									<div class="col-md-12">
+										<label class="form-label">Project Incharge</label>
+							    		<%= f.select :user_id, @users.collect {|p| [ p.get_full_detail , p.id ] }, {:prompt => "Select Project Incharge"}, {:class => "form-control", :required=>true} %>
+							    	</div>
+								</div>
+							</div>
+							<div class="form-row form-group">
+								<div class="row">
+							    	<div class="col-md-6">
+									    <label class="form-label">Project start date</label><br>
+									    <!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+									    <div class="controls">						 
+										    <%=f.text_field :start_date, :class=>"form-control" %>		
+										</div>
+									</div>
+		                        	<div class="col-md-6">
+										<label class="form-label">Project end date</label><br>
+									    <!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+									    <div class="controls">						 
+										    <%=f.text_field :end_date, :class=>"form-control" %>			
+										</div>
+										<div class="hide error" id="id_end_date_error">End date should be greater than start date</div> 
+									</div>
+								</div>
+		                    </div>
+			                <div class="form-row form-group">
+								<div class="row">
+			                    	<div class="col-md-6">
+										<label class="form-label">Project Type</label>
+										<%unless "edit".eql?(action_name)%>
+											<%=f.select :project_type, [["Fixed Cost","fixed_cost"],["Time & Material","t_and_m"]], {:prompt => "Select Project Type"}, {:class => "form-control", :required=>true} %>
+										<%else%>
+											<br>
+											<%project_type = "fixed_cost".eql?(f.object.project_type) ? "Fixed Cost" : "Time & Material"%>
+											<%=project_type %>
+										<%end%>	
+									</div>
+			                    	<div class="col-md-6">
+										<label class="form-label">Project Status</label>
+			                    		<%=f.select :status, [["Not Started","not_started"],["Started","started"],["On Hold","on_hold"],["Completed","completed"]], {:prompt => "Select Project Status"}, {:class => "form-control"} %>			
+			                    	</div>
+								</div>
+			                </div>
+							<div class="form-row form-group hide" id="id_committed_hours" >
+								<div class="row">
+									<div class="col-md-8">
+										 <label class="form-label">Commited Hours</label>	
+										 <!-- <span class="help">e.g. "100"</span> -->
+							    		 <%=f.text_field :committed_hours, :class => "form-control" %>
+							    	</div>
+								</div>
+						    </div>
+			            </div>
+	                    <div class="col-md-6">
+							<h4 class="semi-bold">Other Information</h4>
+							<div class="form-row form-group">
+								<div class="row">
+							    	<div class="col-md-12">
+								   	    <label class="form-label">Client</label>	
+							       	 	<%= f.select :client_id, @clients.collect {|p| [ p.name, p.id ] }, {:prompt => "Select Client"}, {:class => "form-control"} %>  
+							    	</div>
+								</div>
+							</div>
+							<div class="form-row form-group">
+								<div class="row">
+									<div class="col-md-12">
+						  				<%unless @contact_points.blank?%>
+						              		<%= render 'client_contact_point' %>
+						  				<%else%>
+											<label class="form-label">Contact Point</label>
+						  					<p id="client_contact" >Please Select Client</p>
+											<p id="id_no_contact_pt" class="hide">No contact points</p>
+						  		    	<%end%>
+										<div id= "client_contact_point"></div>
+							    	</div>
+								 </div>
+							</div>
+							<div class="form-row form-group">
+								<div class="row">
+							    	<div class="col-md-12">
+										<label class="form-label">Project Description</label>	
+										<%=f.text_area :description, :class => "form-control"%>
+							    	</div>
+						    	</div>
+							</div>
+							<div class="form-row form-group">
+								<div class="row">
+							    	<div class="col-md-12">
+										<label class="form-label">Project Related Files</label>	
+										<%=render 'projects/project_file'%>
+									    	<%=f.fields_for :project_files,@project_files do |fb|%>
+									        	<%=render 'project_file_fields', f: fb%>
+									    	<%end%>
+										<%= link_to_add_fields "Add File", f, :project_files %>
+							    	</div>
+								</div>
+							</div>	
+	                    </div>	
+			        </div>
+					<div class="form-actions" data-no-turbolink>
+					      <div class="pull-right">
+							  <%= f.submit 'Save', class: "btn btn-success btn-cons", data: { disable_with: 'Saving...' } %>
+							  <%= link_to 'Cancel', projects_path, class: "btn btn-white btn-cons" %>
+						  </div>
+					</div>
+			</div>
+			<% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+project_cont = "<%=url_for :action=>'get_client_contact_point', :id=>@project.blank? ? 0 : @project.id %>"
+
+$(document).ready(function() {
+
+  $('#project_start_date').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    })  
+
+  $('#project_end_date').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    })
+
+
+	//$('#id_committed_hours').removeClass('show').addClass('hide');
+	$('#id_end_date_error').removeClass('show').addClass('hide');
+	
+	$('#project_project_type').change(function(){
+		if($('#project_project_type').val() == 'fixed_cost')
+		{
+			$('#id_committed_hours').removeClass('hide').addClass('show');
+		}
+		else
+		{
+			$('#id_committed_hours').removeClass('show').addClass('hide');
+		}
+	});
+	
+	$( ".class_proj_date_validation" ).submit(function( event ) {
+		if( Date.parse($('#project_end_date').val()) < Date.parse($('#project_start_date').val()))
+		{
+			$('#id_end_date_error').removeClass('hide').addClass('show');
+			return false;
+		} 
+		else
+		{
+			$('#id_end_date_error').removeClass('show').addClass('hide');
+		}
+	});
+	
+	if('<%=@project.project_type %>' == 'fixed_cost')
+	{
+		$('#id_committed_hours').removeClass('hide').addClass('show');
+	}
+	
+	if('<%=@project.committed_hours%>' != '')
+	{
+		$('#id_committed_hours').removeClass('hide').addClass('show');
+	}
+	
+});
+
+$(function($){
+	showHideMenu('li_projects');
+	$("#project_start_date").inputmask("y/m/d");
+	$("#project_end_date").inputmask("y/m/d");
+});
+
+</script>
+
+
+
+
+
+
+
+
+	
+    

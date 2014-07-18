@@ -1,0 +1,36 @@
+
+$('#id_task_list_slider').html('<%= j(render "timesheets/task_list") %>')
+
+$("div.<%= @current_timesheet_date%> .fc-event-title").html(<%= @timesheet_hours %> +" Hrs");
+
+get_logged_hours('<%= @current_timesheet_date%>', '<%=params[:user_id]%>');
+
+$('.class_task_form').html('<%= j(render "timesheets/create_timesheet") %>');
+
+$('#id_update_timesheet').hide();
+$('#id_create_timesheet').hide();
+$('#id_archive_timesheet').show();
+
+function get_logged_hours(currentDate, selected_user_id)
+{
+	jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_logged_hours')%>",{ current_date : currentDate, user_id : selected_user_id},
+			function(data) {
+				         if(data)
+			             {
+								jQuery("#id_logged_hours").html(data);
+						 }
+			             else
+			             {
+			     		 }
+	 	   		  }
+   		   );
+}
+
+// $('.input-append.date').datepicker({
+// 		startView: 0,
+// 		autoclose: true,
+// 		todayHighlight: true,
+// 		endDate: '+0d'		
+// }).on('changeDate', function (ev) {
+// 
+// });

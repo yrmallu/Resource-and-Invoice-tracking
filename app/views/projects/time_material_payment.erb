@@ -1,0 +1,48 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Milestone Status'.html_safe, tm_milestone_projects_path(:id=>@project) %></span></li>
+    <li><span class="active"> T & M payment milestone for project: <%=@project.title unless @project.blank?%></span></li>
+</ul
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+			<div class="grid-title no-border"></div>  
+			    <%= form_tag (tm_payment_create_projects_path(:id=>@project)), :class=>"form_validation form-no-horizontal-spacing"  do %>
+	 		        <div class="grid-body no-border">
+					<%= fields_for :project, @project do |f| %>
+	 				    <%= f.fields_for :time_materials , @time_materials do |builder| %>
+	 					    <%= render 'time_material_fields', f: builder %>
+	 				        <%=builder.hidden_field(:id)%>
+	 				        <%=link_to "remove", "javascript:void(0)",:class=>"playr-icon-delete" unless builder.object.id.blank?%>
+	 				    <%end%>
+	 			        <%= link_to_add_fields '<i class="fa fa-plus-circle" style = ""></i>'.html_safe,f, :time_materials %>
+	 		        <%end%>
+		   	        <div class="form-actions" data-no-turbolink>
+				       <div class="pull-right">
+					       <%= submit_tag 'Save', class: "btn btn-success btn-cons", data: { disable_with: 'Saving...' } %>
+						   <%= link_to 'Cancel', tm_milestone_projects_path(:id=>@project), class: "btn btn-white btn-cons" %>
+					   </div>
+				    </div>
+			    <% end %>
+			</div>
+        </div>
+    </div>
+</div>
+
+  	 	
+<script type="text/javascript">
+$(function($){
+	showHideMenu('li_projects');
+});
+
+	var milestone = "<%=url_for(:controller=>'projects',:action=>'delete_time_material', :id=>@project)%>"
+</script>
+
+
+
+
+
+					

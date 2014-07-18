@@ -1,0 +1,38 @@
+/* Dashboard */
+ul.project-detail {padding:0; margin:0 0 20px}
+ul.project-detail li {text-align:center; font-family:Open Sans; color:#fff; padding:0 20px 0 0;}
+ul.project-detail li:last-child {padding:0}
+ul.project-detail li h2 {color:#fff}
+ul.project-detail li div {padding:10px}
+ul.project-detail li p {text-transform:capitalize; font-size:14px; min-height: 40px}
+
+.grid-body.list-content {padding:15px !important; overflow:hidden}
+.grid-body.list-content h2 {margin:0; line-height:inherit; font-size:22px; margin-bottom:20px; line-height:22px}
+
+.col-title h3 {margin:0; line-height:normal}
+
+ul.activity-list {margin:0; padding:0; list-style:none}
+ul.activity-list li {border-bottom:1px solid #ddd; padding:0 0 10px; margin-bottom:10px; font-size:14px; font-family:Open Sans}
+ul.activity-list li a {text-decoration:underline}
+ul.activity-list li p {margin:0; overflow:hidden}
+ul.activity-list li:last-child {border:none; margin:0; padding:0}
+
+ul.activity-list li a.action {color:#cd0101; text-decoration:none}
+
+.heading h2 {margin:0; line-height:36px}
+.heading .badge {margin-top:5px}
+
+.list-grid .single-colored-widget {margin-bottom:30px}
+
+ul.project-planlist {margin:0; padding:0; list-style:none}
+ul.project-planlist li {color:#fff; margin-bottom:10px; color:#fff; font-size:15px; font-family:Open Sans; text-transform:capitalize}
+ul.project-planlist li .user,ul.project-planlist li .bid,ul.project-planlist li .timer {background:url(icons.png) no-repeat; display:inline-block; vertical-align:middle; width:16px; height:16px; margin-right:5px}
+ul.project-planlist li .user {background-position:0 0}
+ul.project-planlist li .bid {background-position:0 -32px}
+ul.project-planlist li .timer {background-position:0 -69px}
+
+.bluebg {background:#0090d9}
+.greenbg {background:#0aa699}
+.pinkbg {background:#f35958}
+.purplebg {background:#736086}
+.brownbg {background:#ae3f3f}

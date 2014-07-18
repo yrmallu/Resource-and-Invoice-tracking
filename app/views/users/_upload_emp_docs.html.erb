@@ -1,0 +1,33 @@
+<div class="container">
+	<div class="row row-offcanvas row-offcanvas-right">
+		<div class="col-xs-12 col-sm-9">
+     	   <%#= render 'form' %>
+		   <%= form_tag (save_emp_doc_users_path(:id=>@user)), :remote=>true  do %>
+		   <%#=render 'fc_project'%>
+		   <%= fields_for :user, @user do |f| %>
+		  	 <%= f.fields_for :project_file, @user_file do |f| %>
+       	 		<div class="row">
+       	  	 	   <div class="col-lg-6">
+         	  		   <div class="form-group" >
+           	  	  		 <label>Upload profile</label> <br />
+           	  	 		 <%= f.file_field :files%>
+         	  		 	</div>
+     		  	  </div>
+       	  	  	 <div class="col-lg-6">
+				  <div class="form-group" >
+				  </div>
+       	      	 </div>		  		  		  
+       	  		</div>
+			<%end%>
+		   <%end%>
+			  	<div class="actions">
+			    	<%=submit_tag "Save", class: "btn btn-primary width_100px" %>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			  	</div>
+		   <%end%>
+  	 	</div><!--/span-->
+
+  	  	<%#= link_to 'Back', clients_path %>
+	</div><!--/row-->
+<!-- <hr> -->
+</div><!--/.container-->

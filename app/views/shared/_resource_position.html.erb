@@ -1,0 +1,14 @@
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+  <div class="well sidebar-nav">
+    <ul class="nav">
+  			<li><%= link_to 'Resource Positions', resource_track_users_path  %></li>
+			<li><%= link_to 'Will free in this month', resource_track_users_path(:res_range=>"month")  %></li>
+			<li><%= link_to 'Will free in this Quarter', resource_track_users_path(:res_range=>"quarter")  %></li>
+		<!-- <li><%#=link_to "Contact points", contact_point_clients_path %></li> -->
+      <!-- <li><a href="#">Link</a></li>
+      <li>Sidebar</li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li> -->
+    </ul>
+  </div><!--/.well -->
+</div><!--/span-->

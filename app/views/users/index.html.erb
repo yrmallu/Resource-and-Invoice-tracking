@@ -1,0 +1,57 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Dashboard'.html_safe, dashboard_users_path %></span></li>
+    <li><span class="active"> Employee Listing</span></li>
+</ul>
+
+<!-- Advance Seach start for employee -->
+<div class="search-block admnsearch-block">
+    <div class="adv-search emp-advsearch"> <a href="javascript:void(0);">advance search</a> </div>
+    <div class="clearfix">&nbsp;</div>
+  	<!--Advance search form-->
+  		<%= render 'user_filter'%>
+	<!-- Advance Seach End -->
+</div>
+<div class="row-fluid" id= "id_user_main_content">
+    <div class="loader ajax_loader" style="top:30%">
+ 	    <%=image_tag('loader.gif',  :height => '50', :width => '50')%>
+    </div>
+    <%= render 'user'%>
+</div> 
+ 
+
+<script type="text/javascript">
+$("#id_adv_search").click(function() {
+	$(this).attr('disabled', 'disabled');
+});
+
+$(document).ready(function(){
+	
+	showHideMenu('li_administration');
+	
+	$(".adv-search a").click(function(){
+		$(".advsearch-block").slideDown();
+		$(this).parent().hide();
+		$(this).parent().next().hide();
+		$(".search-block.admnsearch-block").css("margin-bottom", "20px");	
+	});	
+	$(".btn-cancel").click(function(){
+		$(".advsearch-block").slideUp();
+		$(".adv-search").show();
+		$(".search-field").show();
+		$(".adv-search").next().show();
+		$(".search-block.admnsearch-block").css("margin-bottom", "0");
+	});
+    $('#tab-4 a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+	});
+	  
+	
+});
+</script>
+
+
+

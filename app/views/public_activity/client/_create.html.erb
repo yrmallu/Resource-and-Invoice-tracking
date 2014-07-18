@@ -1,0 +1,8 @@
+added a Client
+
+<% if activity.trackable %>
+  <b><%=activity.trackable.name%></b>
+  <%#= link_to activity.trackable.name, activity.trackable %>
+<% else %>
+  which has since been removed
+<% end %>

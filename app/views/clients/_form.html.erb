@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+			<div class="grid-title no-border"></div>  
+			<%= form_for @client, :html=>{:class=>"form_validation form-no-horizontal-spacing"}  do |f| %>
+		  		<div class="grid-body no-border">
+					<div id="errorbox" class="error_box" style="margin-left: 25px;">	
+						<%= render "shared/error_messages", :object=>@client %>
+					</div>
+                <div class="row column-seperation form-section">
+                    <div class="col-md-6">
+                        <h4 class="semi-bold">Client Information</h4>            
+                        <div class="form-row form-group">
+							<div class="row ">
+                            	<div class="col-md-12">
+									<label class="form-label">Client Name</label>
+									<!-- <span class="help">e.g. "3BL Media"</span> -->
+						 	    	<%= f.hidden_field :company_id,:value=>@company.id %>
+					     	    	<%= f.text_field :name, :autofocus => true, :required=>true, :class=>"form-control"%>
+                            	</div>
+					        </div>
+                        </div>
+                        <div class="form-row form-group">
+							<div class="row ">
+                            	<div class="col-md-7">
+									<label class="form-label">Client Website</label>
+									<!-- <span class="help">e.g. "http://www.webarc.com"</span> -->
+						        	<%= f.text_field :website, :class=>"form-control", :style=>"width:480px !important" %>
+                            	</div>
+							</div>
+				        </div>
+                        <div class="form-row">
+							<div class="row ">
+                            	<div class="col-md-12">
+									<label class="form-label">Client Description</label>
+						        	<%= f.text_area :description, :id=>"form3Occupation", :class=>"form-control"%>
+                            	</div>
+                        	</div>
+						</div>
+						 <div class="row form-row">
+ 					        <div class="col-md-6">
+ 						        <table class="">
+ 			  				        <tr>
+ 			  					        <td>
+											<div class="client-img"><%image = "edit".eql?(action_name) ? (f.object.photos.blank?  ? "missin.png" : f.object.photos(:thumb)) : 'missin.png'  %>
+ 			  						        <%= image_tag(image,:alt=>"your image",:class=>"link_to_add_ids",:border=>"1", :class=>"show-page-img") %></div>
+ 			  					        </td>
+ 			  				        </tr>
+ 			  				        <tr>
+ 			  					        <td style="width:180px;">
+ 			  						        <%= f.file_field :photos, :class => 'input-file', :onChange=>"return readURL(this);" %>
+ 			  					        </td>
+ 			  				        </tr>
+ 			  			        </table>
+					        </div>
+						</div>
+                </div>
+                    <div class="col-md-6">
+					    <%=f.fields_for :address,@address do |fb|%>
+			      		    <%=render 'address', f: fb%>
+			    	    <%end%>
+                    </div>
+              </div>
+			  <div class="form-actions" data-no-turbolink>
+			      <div class="pull-right">
+					  <%= f.submit 'Save', class: "btn btn-success btn-cons", data: { disable_with: 'Saving...' } %>
+					  <%= link_to 'Cancel', clients_path, class: "btn btn-white btn-cons" %>
+				  </div>
+			</div>
+			<% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_administration');
+	   });
+</script>
+
+

@@ -1,0 +1,5 @@
+<%if "raise_invoice".eql?(@fixed_cost.status)%>
+	<%=link_to "Payment Received", fc_raise_invoice_projects_path(:id=>@fixed_cost,:status=>'payment_received'), :class=>"milestone_btns btn btn-info btn-cons btn-sm btn-small", data: { confirm: 'Are you sure payment is received?' }, :remote=>true if "raise_invoice".eql?(@fixed_cost.status)%>
+<%else%>
+	<%=link_to "Delivered", "javascript:void(0)" , :class=>"milestone_btns btn btn-primary btn-cons btn-sm btn-small delivered" if "payment_received".eql?(@fixed_cost.status)%>
+<%end%>

@@ -1,0 +1,54 @@
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+  <div class="well sidebar-nav">
+    <ul class="nav">
+		
+		<li>Department Management</li>
+		<% if can? :create, Department %>
+  			<li><%= link_to 'New Department', new_department_path  %></li>
+		<%end%>	
+		<% if can? :read, Department %>
+			<li><%=link_to "List Departments", departments_path %></li>
+		<%end%>	
+	  
+      	<li>Client Management</li>
+		<% if can? :create, Client %>
+      		<li><%=link_to "New Client", new_client_path %></li>
+		<%end%>	
+		<% if can? :read, Client %>
+      		<li><%=link_to "List Clients", clients_path %></li>
+		<%end%>
+		
+      	<li>Role Management</li>
+      	<li><%=link_to "New Role", new_role_path %></li>
+      	<li><%=link_to "List Roles", roles_path %></li>
+      	
+	  
+      	<li>Employee</li>
+		<% if can? :create, User %>
+      		<li><%=link_to "New Employee", new_user_path %></li>
+		<%end%>
+		<% if can? :read, User %>
+      	 	<li><%=link_to "List Employees", users_path %></li>
+		<%end%>
+		<li><%=link_to "Resource Tracking", resource_track_users_path %></li>
+      	<li>Project</li>
+		<% if can? :create, Project %>
+      		<li><%=link_to "New Project", new_project_path %></li>
+		<%end%>
+		<% if can? :read, Project %>
+      	 	<li><%=link_to "List Projects", projects_path %></li>
+		<%end%>		
+		
+		
+		
+      	<li>Access Rights</li>
+      	<li><%=link_to "Assign Access Rights", new_accessright_path %></li>
+      	<li><%=link_to "List Access rights", accessrights_path %></li>
+		<!-- <li><%#=link_to "Contact points", contact_point_clients_path %></li> -->
+      <!-- <li><a href="#">Link</a></li>
+      <li>Sidebar</li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li> -->
+    </ul>
+  </div><!--/.well -->
+</div><!--/span-->

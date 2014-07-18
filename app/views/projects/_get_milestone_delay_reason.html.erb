@@ -1,0 +1,31 @@
+					<div class="grid-body no-border">
+						<div class="row">
+						 	<div class="row form-row">
+						    	<div class="col-md-12">
+						            <%= f.label :reason , "Milestone Delayed Reason"%>
+						            <%= f.text_area :reason, :autofocus => true, :class => "form-control", :required=>true%>
+								</div>
+							</div>
+							<div class="row form-row">
+					        	<div class="col-md-6">
+									<div class="form-group">
+								    	<label class="form-label">Milestone End Date</label><br>
+								    	<span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span>
+								    	<div class="controls">	
+							                <%=f.text_field :milestone_end_date, :class=>"form-control" %>			                          			      			  		  </div>
+									</div> 
+								</div>
+					    	</div>
+							<div class="row form-row">
+								<div class="col-md-12">
+							    	<%=check_box_tag 'change_flag', 'yes', false, :class => "" %> Change related milestone dates
+							    </div>
+							</div>
+						</div>
+						<div class="form-actions" data-no-turbolink>
+						      <div class="pull-right">
+								  <%= f.submit 'Save', class: "btn btn-success btn-cons", data: { disable_with: 'Saving...' } %>
+								  <button type="button" class="btn btn-white btn-cons" data-dismiss="modal">Close</button>
+							  </div>
+						</div>
+					</div>

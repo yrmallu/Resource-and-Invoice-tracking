@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Magnifi</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta charset="utf-8" />
+  <title>Magnifi - Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta content="" name="description" />
+  <meta content="" name="author" />
+
+</head>
+
+<body class="">
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse" data-no-turbolink > 
+  <!-- BEGIN TOP NAVIGATION BAR -->
+  <div class="navbar-inner">
+	<div class="header-seperation"> 
+		<ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">	
+		 <li class="dropdown"> <a id="main-menu-toggle" href="#main-menu"  class="" > <div class="iconset top-menu-toggle-white"></div> </a> </li>		 
+		</ul>
+      <!-- BEGIN LOGO -->	
+      <a href="index.html">
+      	<%= image_tag("cue-logo.png", :width=>"106", :class=>"logo", data: { src: "cue-logo.png", src_retina: "cue-logo.png" } )%>
+      </a>
+      <!-- END LOGO --> 
+      <ul class="nav pull-right notifcation-center">	
+        <li class="dropdown" id="header_task_bar"> <%= link_to '<div class="iconset top-home"></div>'.html_safe, dashboard_users_path %> </li>
+        </ul>
+      </div>
+      <!-- END RESPONSIVE MENU TOGGLER --> 
+      <div class="header-quick-nav" > 
+      <!-- BEGIN TOP NAVIGATION MENU -->
+	  <div class="pull-left"> 
+        <ul class="nav quick-section">
+          <li class="quicklinks"> <a href="#" class="" id="layout-condensed-toggle" >
+            <div class="iconset top-menu-toggle-dark"></div>
+            </a> </li>
+        </ul>
+	</div>
+	 <!-- END TOP NAVIGATION MENU -->
+	 <!-- BEGIN CHAT TOGGLER -->
+     <div class="pull-right"> 
+	<div class="chat-toggler">	
+			<a href="javascript:void(0)"class="" id="my-task-list" data-placement="bottom"  data-content='' data-toggle="" data-original-title="">
+				<div class="user-details"> 
+					<div class="username">
+						<%= current_user.firstname%> <span class="bold"><%= current_user.lastname%> 						</span>									
+					</div>						
+				</div> 
+				<!-- <div class="iconset top-down-arrow"></div> -->
+			</a>	
+			<div class="profile-pic"> 
+				<%= image_tag(current_user.photos.blank? ? 'missin.png' : current_user.photos(:thumb), :width=>"35", :height=>"35" )%>
+			</div>       			
+		</div>
+	 <ul class="nav quick-section ">
+		<li class="quicklinks"> 
+			<a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">						
+				<div class="iconset top-settings-dark "></div> 	
+			</a>
+			<ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
+                 <li><%= link_to "My Account", profile_users_path(:id=>current_user.id) %></li>
+                 <li class="divider"></li>                
+                 <li><%= link_to '<i class="fa fa-power-off"></i>&nbsp;&nbsp;'.html_safe + "Log Out", signout_path, method: :delete %></li>
+              </ul>
+		</li> 
+	</ul>
+     </div>
+	   <!-- END CHAT TOGGLER -->
+      </div> 
+      <!-- END TOP NAVIGATION MENU --> 
+  </div>
+  <!-- END TOP NAVIGATION BAR --> 
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+  <!-- BEGIN SIDEBAR -->
+  <div class="page-sidebar" id="main-menu" data-no-turbolink > 
+  <!-- BEGIN MINI-PROFILE -->
+   <div class="user-info-wrapper">	
+	<div class="profile-wrapper">
+		<%= image_tag(current_user.photos.blank? ? 'missin.png' : current_user.photos(:thumb), :width=>"69", :height=>"69" )%>
+	</div>
+    <div class="user-info">
+      <div class="greeting">Welcome</div>
+      <div class="username"><%= current_user.firstname%> <span class="semi-bold"><%= current_user.lastname %></span></div>
+      <div class="status"><a href="#"></a></div>
+    </div>
+   </div>
+  <!-- END MINI-PROFILE -->
+  <!-- BEGIN SIDEBAR MENU -->	
+	<ul>	
+      <li class="start <% if current_page?(url_for(:controller => 'users', :action => 'dashboard'))   %> active <%end%> " id="li_dashboard"> <%= link_to '<i class="icon-custom-home"></i><span class="title">'.html_safe + 'Dashboard' + '</span>'.html_safe, dashboard_users_path %> </li>
+	  <li id="li_projects"> <%= link_to '<i class="fa fa-tasks"></i> <span class="title">Projects</span>'.html_safe, project_dashboard_users_path, :redirect=>'true'%>  
+		   <span class="arrow arrw-pos" container_li="li_projects"></span>
+		<ul class="sub-menu projectoptions">
+            <li class="hide minibarvisiblelink" > <%= link_to 'Project', project_dashboard_users_path, :redirect=>'true'%>  </li>
+            <li > <%= link_to 'Create Project', new_project_path%></li>
+            <li class="link-separator"> <%= link_to 'Project Listing', projects_path%>  </li>
+			<% unless @projects.blank?%>
+  		        <%@projects.each_with_index do |project, index|%>
+              <% if current_user.is_admin == true || project.project_manager == current_user %>
+		            
+  		  			<li class='<%=  index.blank? ? "" : (index >= 3) ? 'morelinks' : '' %>'>
+						<% if "fixed_cost".eql?(project.project_type)%>
+							<%= link_to truncate(project.title, length: 16, omission: '...') , project_detail_users_path(:id=>project) %>		
+						<%else%>
+							<%= link_to truncate(project.title, length: 16, omission: '...') , tm_project_detail_users_path(:id=>project) %>
+						<%end%>	
+        			</li> 
+		            <% if index >= 3 &&  (@projects.count == index+1)%>
+		            	<li>
+		    	        	<a href='#' id="showmore">show more</a>
+		    			</li>
+		 			<%end%>	
+          <%end%>
+  		  	    <%end%>
+	  	    <%end%>
+		
+		  <li > <%#= link_to 'Invite Team', project_members_projects_path %> </li> 
+		  <li > <%#= link_to 'Archived Projects', new_department_path%>	</li>
+        </ul>
+      </li>
+	  <li class="" id="li_resources">  <%= link_to '<i class="fa fa-users"></i> <span class="title">Resources</span>'.html_safe, resource_track_users_path, :redirect=>'true'%> 
+		  <span class="arrow arrw-pos" container_li="li_resources"></span>
+		<ul class="sub-menu">
+		  <li class="hide minibarvisiblelink"><%= link_to 'Resources', resource_track_users_path, :redirect=>'true' %> </li> 
+		  <li ><%= link_to 'Will free in this month', resource_track_users_path(:res_range=>"month")  %> </li> 
+		  <li ><%= link_to 'Will free in this quarter', resource_track_users_path(:res_range=>"quarter")  %> </li> 
+        </ul>
+      </li> 
+	  <li class="<% if current_page?(url_for(:controller => 'timesheets', :action => 'add_timesheet'))   %> active <%end%> " id="li_timesheet"><%= link_to ' <i class="fa fa-calendar"></i><span class="title">Timesheets</span> '.html_safe, add_timesheet_timesheets_path %> 
+      </li>
+	  <li id="li_administration"> <%= link_to '<i class="icon-custom-extra"></i> <span class="title">Administration</span>'.html_safe, departments_path, :redirect=>'true'%>  
+		  <span class="arrow arrw-pos" container_li="li_administration"></span>
+        <ul class="sub-menu">
+         <li > <%= link_to 'Employees', users_path%>	</li>
+		 <li > <%= link_to 'Roles', roles_path%>	</li>
+		 <li > <%= link_to 'Access Rights', accessrights_path%>	</li>
+		 <li > <%= link_to 'Clients', clients_path%>	</li>
+		 <li > <%= link_to 'Departments', departments_path%>	</li>
+        </ul>
+      </li>
+  </ul>
+  <!-- END SIDEBAR MENU --> 
+  </div>
+  <!-- END SIDEBAR --> 
+  <!-- BEGIN PAGE CONTAINER-->
+  <div class="page-content"> 
+    <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+    <div class="clearfix"></div>
+    <div class="content">  
+		<% flash.each do |key, value| %>
+			<div class="alert alert-<%= key %>"> <%= value %>
+          		<button class="close" data-dismiss="alert"></button>
+          	</div>
+		<% end %>
+		<%=yield %>
+    </div>
+  </div>
+ </div>
+</body>
+</html>

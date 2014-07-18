@@ -1,0 +1,68 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Client Listing'.html_safe, clients_path %></span></li>
+    <li><span class="active"> View Client</span></li>
+</ul>
+
+<div class="row">
+	<div class="col-md-12">
+	    <div class="grid simple vertical green">
+			<div class="grid-title no-border">
+				<!-- <h3 ><%#=@client.name unless @client.blank?%> Information</h3> -->
+			</div>
+			<div class="grid-body no-border">
+				<div class="row-fluid ">
+					<div>
+						<div class="col-md-12" style="margin-top:45px">
+						<div class="col-md-2">
+							<div class="client-img">
+				        	<%image = @client.photos.blank? ? 'missin.png' : @client.photos(:thumb)   %>
+				         	<%= image_tag(image, :class=>"show-page-img") %>
+							</div>
+				    	</div> 
+						<div class="col-md-10 project-addrinfo">
+				    		<address>
+		                		<label class="semi-bold">Name:</label>
+		                		<span class="semi-bold"><%= @client.name %></span>
+							</address>											 
+							<address>
+		                		<label class="semi-bold">Website:</label>
+								<span><%=link_to @client.website, url_with_protocol(@client.website) , :target => '_blank'%></span>
+							</address>
+							<address style="word-wrap: break-word;">
+				        		<label class="semi-bold">Description:</label>
+				        		<span><%= @client.description %></span>
+							</address>
+						</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				<div class="col-md-12 project-addrinfo">
+					<address>
+					 	<%addr = @client.address%>
+						  <h4 class="semi-bold">Address:</h4>
+					 		<%=render 'shared/show_address', :user=>addr%>
+					</address>
+				</div>
+				
+					<div class="form-actions">
+					<address>
+						<div class="pull-right" data-no-turbolink>
+				   	 	<% if can? :update, Client %><%= link_to 'Edit', edit_client_path(@client), class: "btn btn-primary btn-cons" %><%end%>
+					    <% if can? :read, Client %><%= link_to 'Back', clients_path, class: "btn btn-white btn-cons" %><%end%>
+						</div>
+					</address>
+				</div>
+				</div>
+			</div>
+		</div> 
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_administration');
+	   });
+</script>

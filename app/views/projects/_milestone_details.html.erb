@@ -1,0 +1,372 @@
+		<h3 class="semi-bold col-md-9 p-b-10"><%=proj.title%></h3>
+		<div class="clearfix"></div>
+		<div class="p-t-10">
+			<div class="proj-milestoneform">
+				<div class="col-md-3">
+					<label class="form-label">Project start date</label>
+					<!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+					<div class="controls">						 
+				    	<%=f.text_field :start_date, :class=>"form-control", :required=>true%>	
+					</div>
+				</div>	
+				<div class="col-md-3">
+					<label class="form-label">Project end date</label>
+					<!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+					<div class="controls">						 
+				    	 <%=f.text_field :end_date, :class=>"form-control", :required=>true %>				
+					</div>
+				</div>
+				<div class="col-md-6">
+					<label class="form-label">&nbsp;</label>
+					<span class="help">&nbsp;</span>
+					<div class="controls">
+					</div>	
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="row column-seperation">
+            <div class="col-md-6">
+                <h4 class="semi-bold">Payment Information</h4>   
+				<div class="row form-row">
+				    <div class="col-md-12">
+				        <%=f.label :total_amount, "Total Amount"%> 
+					    <%=f.text_field :total_amount, :class=>"total_amount form-control", :required=>true %>
+				    </div>
+				</div>         
+				<div class="row form-row">
+				    <div class="col-md-6">
+						<%=f.label :advanced_amount, "Advance Amount"%> 
+						<%=f.text_field :advanced_amount, :class=>"advanced_amount form-control", :required=>true %>
+						<div class="hide error" id="id_adv_amt_error">Advance amount cannot be more than total amount</div>
+					</div>
+                    <div class="col-md-6">
+	             	  	<%=f.label :sign_off_amount, "Signoff Amount"%> 
+	             	  	<%=f.text_field :sign_off_amount, :class=>"sign_off_amount form-control", :required=>true  %>
+						<div class="hide error" id="id_signoff_amt_error">Signoff amount cannot be more than total amount</div> 
+					</div>
+                </div>
+				<div class="row form-row">
+				    <div class="col-md-12">
+  					    <label>Remaining Amount</label>
+  					    <%=text_field_tag :remain_amount,'', :class=>"remain_amount form-control", :readonly=>true %>
+					</div>
+			    </div>
+			</div> 
+			<div class="col-md-6">
+				<h4 class="semi-bold">Milestone Details</h4>
+				<div class="row form-row">
+			    	<div class="col-md-6">
+						<div class="form-group">
+						    <label class="form-label">Milestone Start Date</label><br>
+						    <!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+						    <div class="controls">						 
+							    <%=f.text_field :starting_date, :class=>"starting_date form-control" %>			                          			      			  </div>
+							<div class="hide error" id="id_milestone_end_date_error">Milestone start date cannot be greater than project end date</div> 	
+							<div class="hide error" id="id_milestone_start_date_error">Milestone start date cannot be less than project start date</div> 	
+						</div>
+  					</div>
+				</div>	
+				<div class="row form-row">
+			    	<div class="col-md-6">
+	           	  		<%=f.label :no_of_milestones, "Number Of Milestones"%> 
+	           	  		<%=f.text_field :no_of_milestones, :class=>"no_of_milestones required",:onlynumeric=>"i" %>
+						
+						<%if "fixed_cost".eql?(proj.project_type)%>
+	  			    		<%=link_to "Go",'javascript:void(0)', :class=>"get_milestone" if proj.fixed_costs.blank?%>
+						<%else%>
+							<%=link_to "Go",'javascript:void(0)', :class=>"get_milestone" if proj.timematerial_milestones.blank?%>
+						<%end%>	
+					</div>
+				</div>	
+				<p class="hide" id="id_milestone_added">New milestone added<p>
+				<%if "fixed_cost".eql?(proj.project_type)%>
+					<%=link_to "Add new milestone",'javascript:void(0)', :class=>"get_new_milestone" unless proj.fixed_costs.blank?%>
+				<%else%>
+					<%=link_to "Add new milestone",'javascript:void(0)', :class=>"get_new_milestone" unless proj.timematerial_milestones.blank?%>
+				<%end%>	
+				
+        	</div>	
+		</div>
+		<%if "fixed_cost".eql?(proj.project_type)%>
+			<div id="project_file"><%=render 'fc_project'%></div>
+		<%else%>
+			<div id="project_file"><%=render 'tm_project'%></div>
+		<%end%>
+		<div class="current_milestone"></div>
+		<div id="project_file1"></div>
+	
+
+<script type="text/javascript">
+		$(function($){
+			$("#project_starting_date").inputmask("y/m/d");
+			$("#project_start_date").inputmask("y/m/d");
+			$("#project_end_date").inputmask("y/m/d");
+			showHideMenu('li_projects');
+		});
+
+		$( ".total_amount" ).blur(function() {
+		  remaining_amount();
+		  change_amount();
+		});
+		$( ".advanced_amount" ).blur(function() {
+		  remaining_amount();
+		  change_amount();
+		});
+		$( ".sign_off_amount" ).blur(function() {
+		  remaining_amount();
+		  change_amount();
+		});
+
+		function remaining_amount(){
+			$(".remain_amount").val(parseInt($( ".total_amount" ).val()) - (parseInt($( ".advanced_amount" ).val())+parseInt($( ".sign_off_amount" ).val())));
+			if(isNaN($(".remain_amount").val())){
+				$(".remain_amount").val(0);
+			}
+		}
+		function change_amount(){
+		   jQuery(".amount").each(function(c,d){
+		   				  jQuery(d).val(parseFloat($(".remain_amount").val()/$(".amount").size()).toFixed(2));
+		       });
+		}
+  
+		$(document).ready(function() {
+
+
+			 $('#project_start_date').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    })			 
+			 $('#project_starting_date').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    })  
+
+  $('#project_end_date').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    })
+
+			$('.get_new_milestone').click(function(){
+				$('.get_new_milestone').css('visibility','hidden');
+				$('#id_milestone_added').removeClass('hide').addClass('show');
+				$('#project_no_of_milestones').val(parseInt($('#project_no_of_milestones').val())+1);
+			})
+			
+		  remaining_amount();
+  
+		  $( "#project_starting_date" ).blur(function() {
+			  if( Date.parse($("#project_starting_date").val()) < Date.parse('<%=proj.start_date%>') )
+			  {
+				  $('#id_milestone_end_date_error').removeClass('show').addClass('hide');
+				  $('#id_milestone_start_date_error').removeClass('hide').addClass('show');
+			  }
+			  else if( Date.parse($("#project_starting_date").val()) > Date.parse('<%=proj.end_date%>') )
+			  {
+				  $('#id_milestone_start_date_error').removeClass('show').addClass('hide');
+			  	  $('#id_milestone_end_date_error').removeClass('hide').addClass('show');
+			  }
+			  else if ( Date.parse($("#project_starting_date").val()) >= Date.parse('<%=proj.start_date%>')  &&  Date.parse($("#project_starting_date").val()) <= Date.parse('<%=proj.end_date%>') )
+			  {
+				  $('#id_milestone_start_date_error').removeClass('show').addClass('hide');
+				  $('#id_milestone_end_date_error').removeClass('show').addClass('hide');
+			  }
+		  });
+  
+		  if(<%= "fixed_cost".eql?(proj.project_type)%>)
+		  {
+		  	if(<%=proj.fixed_costs.blank?%>)
+		  	{
+			  $('#project_no_of_milestones').prop("readonly",false);
+		  	}
+		  	else
+		  	{
+		  	  $('#project_no_of_milestones').prop("readonly",true);
+		  	}			
+		  }
+		  else
+		  {
+  		  	if(<%=proj.timematerial_milestones.blank?%>)
+  		  	{
+  			  $('#project_no_of_milestones').prop("readonly",false);
+  		  	}
+  		  	else
+  		  	{
+  		  	  $('#project_no_of_milestones').prop("readonly",true);
+  		  	}	
+		  }
+		
+		  $('#project_advanced_amount').blur(function() {
+			  check_advanced_amount();
+		  });
+  
+		  $('#project_sign_off_amount').blur(function() {
+			  project_sign_off_amount();
+		  });
+  
+		  $( ".class_amount_validation" ).submit(function( event ) {
+			 var adv_amt = check_advanced_amount();
+			 var sign_amt = project_sign_off_amount();
+			 if(adv_amt == false || sign_amt == false)
+			 {
+			 	event.preventDefault();
+			 }
+     
+		  });
+  
+		  function check_advanced_amount()
+		  {
+			  if( parseFloat($('#project_advanced_amount').val()) > parseFloat($('#project_total_amount').val()) )		
+			  {
+				  $('#id_adv_amt_error').removeClass('hide').addClass('show');
+				  return false;
+			  }
+			  else
+			  {
+			      $('#id_adv_amt_error').removeClass('show').addClass('hide');
+				  return true;
+			  }
+	  
+		  }
+  
+		  function project_sign_off_amount()
+		  {
+			  if( parseFloat($('#project_sign_off_amount').val()) > parseFloat($('#project_total_amount').val()) )
+			  {
+				 $('#id_signoff_amt_error').removeClass('hide').addClass('show');
+			     return false;
+			  }
+			  else
+			  {
+			      $('#id_signoff_amt_error').removeClass('show').addClass('hide');
+				  return true;
+			  }
+		  }
+  
+  
+  
+		});
+
+		 if(<%= "fixed_cost".eql?(proj.project_type)%>)
+		 {
+			$( ".get_milestone" ).click(function() {
+		 	          jQuery.get("<%=url_for(:controller=>'projects',:action=>'get_milestone', :id=>proj.id)%>",{ milestones : jQuery(".no_of_milestones").val(), remain_amount:  jQuery(".remain_amount").val(), starting_date:  jQuery(".starting_date").val()},
+		 	function(data) {
+		 				if(data)
+		 	            {
+		 			        jQuery(".current_milestone").html(data);
+		 	            }
+		 	            else
+		 	            {
+		 	  		       jQuery("#"+email_id).parent().find(".help-inline").html(data);
+		 	             }
+		 	 		});
+		 	});
+			
+		 	$( ".get_new_milestone" ).click(function() {
+		 	          jQuery.get("<%=url_for(:controller=>'projects',:action=>'get_new_fc_milestone', :id=>proj.id)%>",{},
+		 	function(data) {
+		 				if(data)
+		 	            {
+		 			        jQuery(".current_milestone").html(data);
+		 	            }
+		 	            else
+		 	            {
+		 	  		       jQuery("#"+email_id).parent().find(".help-inline").html(data);
+		 	             }
+		 	 		});
+		 	});
+			
+			delete_milestones();
+			
+		 }
+		 else
+		 {
+			$( ".get_milestone" ).click(function() {
+		 	          jQuery.get("<%=url_for(:controller=>'projects',:action=>'get_tm_milestone', :id=>proj.id)%>",{ milestones : jQuery(".no_of_milestones").val(), remain_amount:  jQuery(".remain_amount").val(), starting_date:  jQuery(".starting_date").val()},
+		 	function(data) {
+		 				if(data)
+		 	            {
+		 			        jQuery(".current_milestone").html(data);
+		 	            }
+		 	            else
+		 	            {
+		 	  		       jQuery("#"+email_id).parent().find(".help-inline").html(data);
+		 	             }
+		 	 		});
+		 	});
+			
+		 	$( ".get_new_milestone" ).click(function() {
+		 	          jQuery.get("<%=url_for(:controller=>'projects',:action=>'get_new_tm_milestone', :id=>proj.id)%>",{},
+		 	function(data) {
+		 				if(data)
+		 	            {
+		 			        jQuery(".current_milestone").html(data);
+		 	            }
+		 	            else
+		 	            {
+		 	  		       jQuery("#"+email_id).parent().find(".help-inline").html(data);
+		 	             }
+		 	 		});
+		 	});
+			
+			 delete_milestones();
+		 }
+		
+	 function removeContainer(link,id){
+		    jQuery("."+id).remove();
+		    jQuery(link).prev("input[type=hidden]").remove();
+
+		   }
+		   
+		   
+function delete_milestones()
+{
+	var click_count = 0;
+	 $('.playr-icon-delete').on('click',function(){
+		 click_count ++;
+	      console.log(this);
+	      var that = this;
+	       var id = jQuery(this).prev("input[type=hidden]").val();
+	       if(id ==""  || id==undefined)
+		   {
+	           return;
+	       }
+		   if(<%= "fixed_cost".eql?(proj.project_type)%>)
+		   {
+		   	   $('#project_no_of_milestones').val('<%=proj.fixed_costs.count%>'- click_count);
+	 	 	   jQuery.get("<%=url_for(:controller=>'projects',:action=>'delete_milestone', :id=>proj)%>",{milestone_id:id, milestone_count:$('#project_no_of_milestones').val()},function(data){
+	 		               console.log(data.status);
+	 		               if(data.status){
+	 		                console.log($(that));
+	 		               removeContainer($(that),id);
+	 					   $(that).hide();
+	 					   change_amount();
+	 		               }else{
+	 		               }
+	 		          },'json')
+		   } 
+		   else
+		   {
+			   $('#project_no_of_milestones').val('<%=proj.timematerial_milestones.count%>'- click_count);
+			   jQuery.get("<%=url_for(:controller=>'projects',:action=>'delete_tm_milestone', :id=>proj)%>",{milestone_id:id, milestone_count:$('#project_no_of_milestones').val()},function(data){
+					 		               console.log(data.status);
+					 		               if(data.status){
+					 		                console.log($(that));
+					 		               removeContainer($(that),id);
+					 					   $(that).hide();
+					 					   change_amount();
+					 		               }else{
+					 		               }
+					 		          },'json')
+		   }
+	  });
+}	   
+   
+</script>	

@@ -1,0 +1,10 @@
+<% if @role.errors.any? %>
+	$('#errorbox').html('<%= j(render "shared/error_messages", :object=>@role) %>').removeClass("help_message")
+<% else %>
+	<% 
+	   @role = Role.new
+	%>
+	window.location = '<%= j(roles_path) %>'
+	//$('#errorbox').html("Role was successfully created.").addClass("help_message")
+	//$("#role_name").val("");
+<% end %>

@@ -1,0 +1,118 @@
+    <ul class="nav nav-tabs technology-tab" id="tab-4">
+        <li class="active"><a data-toggle="tab" href="#all-content">All</a></li>
+		<%@technology.keys.each do |x|%>
+       	 	<li><a data-toggle="tab" href="#<%=x%>-content"><%=x%></a></li>
+		<%end%>
+    </ul>
+  	<div class="tech-content">
+    	<div class="tab-content">
+		<div id="all-content" class="tech-content tab-pane fade in active">
+            <div class="user-technolist">
+                <table id="id_resource_table" class="table dataTable" aria-describedby="example2_info">
+                    <thead>
+ 			  	       <tr role="row">
+ 			  		       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 170px;" aria-label="Rendering engine: activate to sort column ascending">Name</th>
+ 			  		       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 200px;" aria-label="Rendering engine: activate to sort column ascending">Position</th>
+ 			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Rendering engine: activate to sort column ascending">Project</th>
+ 			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 100px;" aria-label="Rendering engine: activate to sort column ascending">Experience</th>
+ 			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Rendering engine: activate to sort column ascending">Expertise</th>
+ 			  		    </tr>
+                    </thead>
+                    <tbody>
+					<%@technology.keys.each do |x|%>
+                        <tr>
+                            <td colspan="5">
+                                <div class="user-counter"><%=x%>(<%=@technology[x].count%>)</div>
+                            </td>
+                        </tr>
+						<%unless @technology[x].blank?%>
+						<%@technology[x].each do |res|%>
+                        <tr>
+                            <td>
+								<%logo = res.photos.blank? ? 'missin.png' : res.photos(:thumb) %>
+								<%= link_to image_tag(logo,:class=>"user-photo"), res,:class=>"dashboard-img" %>
+								<%=link_to res.get_full_name, res%>
+
+                            </td>
+                            <td><%=res.role.name unless res.role.blank?%></td>
+                            <td><a href="javascript:void(0);"><%=@user_current_project.include?(res.id) ? @user_current_project[res.id] : "N/A"%></a></td>
+                            <td><%=res.experience.blank? ? 0 : res.experience%> Yrs</td>
+                            <td><%=res.technologies.map(&:name).join(",") unless res.technologies.blank?%></td>
+                        </tr>
+						<%end%>
+						<%end%>
+						<%end%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	<%@technology.keys.each do |x|%>	
+        <div id="<%=x%>-content" class="tech-content tab-pane fade">                       
+            <div class="user-technolist">
+                <table class="table dataTable" aria-describedby="example2_info">
+                    <thead>
+  			  	       <tr role="row">
+  			  		       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 117px;" aria-label="Rendering engine: activate to sort column ascending">Name</th>
+  			  		       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 200px;" aria-label="Rendering engine: activate to sort column ascending">Position</th>
+  			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Rendering engine: activate to sort column ascending">Project</th>
+  			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 100px;" aria-label="Rendering engine: activate to sort column ascending">Experience</th>
+  			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Rendering engine: activate to sort column ascending">Expertise</th>
+  			  		    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5">
+                                <div class="user-counter"><%=x%>(<%=@technology[x].count%>)</div>
+                            </td>
+                        </tr>
+					<%unless @technology[x].blank?%>
+					  <%@technology[x].each do |res|%>	
+                      <tr>
+                          <td>
+							<%logo = res.photos.blank? ? 'missin.png' : res.photos(:thumb) %>
+							<%= link_to image_tag(logo,:class=>"user-photo"), res,:class=>"dashboard-img" %>
+							<%#= link_to image_tag(logo,:class=>"image_index_setting"), user, :class=>"dashboard-img" %>
+							<%=link_to res.get_full_name, res%>
+
+                          </td>
+                          <td><%=res.role.name unless res.role.blank?%></td>
+                          <td><a href="javascript:void(0);"><%=@user_current_project.include?(res.id) ? @user_current_project[res.id] : "N/A"%></a></td>
+                          <td><%=res.experience.blank? ? 0 : res.experience%> Yrs</td>
+                          <td><%=res.technologies.map(&:name).join(",") unless res.technologies.blank?%></td>
+                      </tr>
+					  <%end%>	
+					<%end%>    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	<%end%>	
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function() {		
+	// Call SuperBox - that's it!
+	$('.superbox').SuperBox();		
+});
+
+$(document).ready(function(){
+	$(".search-block").css("margin-bottom","0");
+	$(".adv-search a").click(function(){
+		$(".advsearch-block").slideDown();
+		$(this).parent().hide();
+		$(this).parent().next().hide();	
+	});	
+	$(".btn-cancel").click(function(){
+		$(".advsearch-block").slideUp();
+		$(".adv-search").show();
+		$(".search-field").show();	
+	});
+    $('#tab-4 a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+	});
+});
+
+</script> 
+

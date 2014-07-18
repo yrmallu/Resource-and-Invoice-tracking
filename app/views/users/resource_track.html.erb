@@ -1,0 +1,145 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Dashboard'.html_safe, dashboard_users_path %></span></li>
+    <li><span class="active"> Resources</span></li>
+</ul>
+
+    <!--Resources sec start-->
+    <div class="resource-block">
+    	<div class="tab-block">
+        	<ul class="nav nav-tabs resources-maintab nav-justified">
+               <li class="billable-res select">
+                	<div>
+						<!-- <a href="#resources-billable" data-toggle="tab">&nbsp;</a> -->
+						<%=link_to "",total_billable_resource_users_path, :remote=>true %>
+                    	<p class="tab-title">Billable resources</p>
+                        <h2 class="semi-bold"><%=@billable_res.count%></h2>
+                    </div>
+                </li>
+                
+            	<li class="allocate-res" data-toggle="tab">
+                	<div>
+                    	<!-- <a href="#resources-allocate" data-toggle="tab">&nbsp;</a> -->
+						<%=link_to "", allocated_resource_users_path(:res_range=>@res_availability), :remote=>true%>
+                        <p class="tab-title">Allocated resources</p>
+                        <h2 class="semi-bold"><%=@employees.count%> <span>resources</span></h2>
+                        <h2 class="semi-bold"><%=((@employees.count.to_f/@billable_res.count.to_f)*100).round(1)%>% <span>of total billable</span></h2>
+                    </div>
+                </li>
+                <li class="team-mangmnt" data-toggle="tab">
+                	<div>
+                    	<!-- <a href="#team-manage" data-toggle="tab">&nbsp;</a> -->
+						<%=link_to "", tm_allocated_resource_users_path(:res_range=>@res_availability), :remote=>true%>
+                        <p class="tab-title">T & M</p>
+                        <h2 class="semi-bold"><%=@tm.count%> <span>resources</span></h2>
+                        <h2 class="semi-bold"><%=((@tm.count.to_f/@employees.count.to_f)*100).round(1)%>% <span>of allocated</span></h2>
+                    </div>
+                </li>
+                <li class="fixcost" data-toggle="tab">
+                	<div>
+                    	<!-- <a href="#fix-cost" data-toggle="tab">&nbsp;</a> -->
+						<%=link_to "", fc_allocated_resource_users_path(:res_range=>@res_availability), :remote=>true%>
+                        <p class="tab-title">Fixed Cost</p>
+                        <h2 class="semi-bold"><%=@fc.count%> <span>resources</span></h2>
+                        <h2 class="semi-bold"><%=((@fc.count.to_f/@employees.count.to_f)*100).round(1)%>% <span>of allocated</span></h2>
+                    </div>
+                </li>
+            	
+
+                 <li class="bench" data-toggle="tab">
+                	<div>
+                    	<!-- <a href="#tab-branch" data-toggle="tab">&nbsp;</a> -->
+						<%=link_to "", bench_resource_users_path(:res_range=>@res_availability), :remote=>true%>
+                        <p class="tab-title">Bench resources</p>
+                        <h2 class="semi-bold"><%=@bench_res.count%> <span>resources</span></h2>
+                        <h2 class="semi-bold"><%=((@bench_res.count.to_f/@billable_res.count.to_f)*100).round(1)%>% <span>of total billable</span></h2>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="tab-content">
+			<div id="resource_detail">
+				<!-- <div id="tabContainer" class="resources-billable" > -->
+					<!-- <div id="id_tabcontainer"> -->
+						<%=render :partial=>'total_billable_resources.html'%>
+					<!-- </div> -->
+				<!-- </div> -->
+			</div>
+        </div>
+    </div>
+    <!--Resources sec end-->
+    <div>
+</div>
+
+
+<script type="text/javascript">
+	$(function() {		
+		// Call SuperBox - that's it!
+		$('.superbox').SuperBox();		
+	});
+	$(document).ready(function(){
+		
+		showHideMenu('li_resources');
+		
+		$(".nav-tabs.resources-maintab li").click(function(){
+			if($(this).hasClass("select")  == false)
+			{
+				$(".nav-tabs.resources-maintab li").removeClass("select");
+				$(this).addClass("select");
+				
+				//$("#tabContainer").attr("class","");
+				$("#resource_detail").attr("class","");
+				
+				if($(this).hasClass("billable-res") == true)
+				{
+					$("#tabContainer").addClass("resources-billable");
+				//	$("#resource_detail").addClass("resources-billable");
+				}
+				if($(this).hasClass("allocate-res") == true)
+				{
+					$("#tabContainer").addClass("resources-allocate");
+				//	$("#resource_detail").addClass("resources-allocate");
+				}
+				if($(this).hasClass("team-mangmnt") == true)
+				{
+					$("#tabContainer").addClass("team-manage");
+				//	$("#resource_detail").addClass("team-manage");
+				}
+				if($(this).hasClass("fixcost") == true)
+				{
+					$("#tabContainer").addClass("fix-cost");
+				//	$("#resource_detail").addClass("fix-cost");
+				}
+				if($(this).hasClass("bench") == true)
+				{
+					$("#tabContainer").addClass("tab-branch");
+				//	$("#resource_detail").addClass("tab-branch");
+				}
+			}
+		});
+		
+		// $(".adv-search a").click(function(){
+// 			$(".advsearch-block").slideDown();
+// 			$(this).parent().hide();
+// 			$(this).parent().next().hide();	
+// 		});	
+// 		$(".btn-cancel").click(function(){
+// 			$(".advsearch-block").slideUp();
+// 			$(".adv-search").show();
+// 			$(".search-field").show();	
+// 		});
+		
+		// $(".adv-search a").on('click', function(){
+// 			var selected_tab = $('#tabContainer').attr('class');
+// 			$('#'+selected_tab).find(".advsearch-block").slideDown();
+// 		});	
+// 		$(".btn-cancel").on('click', function(){
+// 			var selected_tab = $('#tabContainer').attr('class');
+// 			alert($('#'+selected_tab).find(".advsearch-block").length);
+// 			$('#'+selected_tab).find(".advsearch-block").slideUp();
+// 		});
+	});
+</script>

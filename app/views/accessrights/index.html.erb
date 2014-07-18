@@ -1,0 +1,72 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Dashboard'.html_safe, dashboard_users_path %></span></li>
+    <li><span class="active"> Access Rights Listing</span></li>
+</ul>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="grid simple">
+		    <div class="grid-body">
+                <div role="grid" class="dataTables_wrapper form-inline" id="example2_wrapper">
+	  		  	    <div class="row" data-no-turbolink>
+			  	  	    <div class="col-md-6">
+							<%= link_to 'Add Access Rights', new_accessright_path, class: "btn btn-primary newempl-btn", :style=>"margin-left: 12px;"%>
+			  		  	</div>
+		  	  	    </div>
+	  	  		    <table id="id_access_right_table" class="table table-striped dataTable listingTable" aria-describedby="example2_info">
+					   <thead>
+					       <%unless @roles.blank?%>
+						       <tr role="row">
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 1px;" aria-label=": activate to sort column ascending"></th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Role</th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Access Rights</th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 219px;" aria-label="Browser: activate to sort column ascending">Action</th>
+						      </tr>
+                	   </thead>
+                	   <tbody role="alert" aria-live="polite" aria-relevant="all">
+						   <% @roles.each do |role| %>
+				  	       <tr class="gradeX odd">
+							    <td class="center"></td>
+							    <td><%=role.name%></td>
+								<td class="<%=role.id%>">
+										<%unless role.accessrights.blank?%>
+											<%role.accessrights.each do |x|%>
+												<li class="<%=role.id%>"><%=x.name%></li>
+											<%end%>
+										<%end%>
+								</td>
+							   <td data-no-turbolink>
+								   <%= link_to '<i title="Edit Accessright" class="fa fa-edit"></i>'.html_safe, edit_accessright_path(role) %>
+							   </td>
+						   </tr>
+	   	      	  		   <% end %>
+						<% end %>
+			  		</tbody>
+		  		  </table>
+			 </div>
+        </div>
+    </div>
+</div> 
+ 
+
+
+  
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_administration');
+	   });
+
+<% @roles.each do |role| %>
+$('.<%=role.id%>:gt(4)').hide().last().after(
+    $('<a />').attr('href','#').text('Show more').click(function(){
+        var a = this;
+        $('.<%=role.id%>:not(:visible):lt(5)').fadeIn(function(){
+         if ($('.<%=role.id%>:not(:visible)').length == 0) $(a).remove();   
+        }); return false;
+    })
+);
+<%end%>
+</script>

@@ -1,0 +1,31 @@
+<%= form_for(:session, url: sessions_path, :html => { :class => "form_validation"}) do |f| %>
+		        <div class="row">
+		                <div class="form-group col-md-10">
+            				<%= f.label :email, :class => "form-label"%>
+  	        				<div class="controls">
+								<div class="input-with-icon">  
+									<%= f.text_field :email, :class => "form-control", :required=>true%>                          
+								</div>
+            				</div>
+          		        </div>
+          		</div>
+		  	  	<div class="row">
+          		    <div class="form-group col-md-10">
+            			<%= f.label :password, :class => "form-label" %>
+  	        			<span class="help"></span>
+            			<div class="controls">
+							<div class="input-with-icon"> 
+								<%= f.password_field :password, :class => "form-control", :required=>true %>
+							</div>
+            			</div>
+          		  </div>
+          	</div>
+		  	<div class="row">
+            	<div class="control-group  col-md-5 fgtpwd-pad">
+			    	<%= link_to 'Forgot password', forgot_password_path%>
+              	</div>
+                <div class="col-md-5">
+                  <%= f.submit "Sign in", :class => "btn btn-primary btn-cons pull-right" %>
+                </div>
+          </div>
+		  <% end %>

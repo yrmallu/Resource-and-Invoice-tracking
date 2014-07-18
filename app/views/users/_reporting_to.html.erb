@@ -1,0 +1,19 @@
+<div class="row form-row">
+    <div class="col-md-9">
+		<label class="form-label">Reporting to</label>
+		<%unless @reporting_to.blank?%>
+			<%= select_tag "boss_id", options_for_select(@users.collect {|p| [ p.get_full_detail , p.id ] }, :selected=>@reporting_to.boss_id), {:prompt => "Reporting to", :class=>"form-control"} %>
+		<%else%>
+			<%= select_tag "boss_id", options_for_select(@users.collect {|p| [ p.get_full_detail , p.id ] }), {:prompt => "Reporting to", :class=>"form-control"} %>
+		<%end%>
+        
+		<span class="help-inline error_box"></span><br>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+$( "#boss_id" ).change(function() {
+	$('#user_boss_id').val($(this).val());
+});
+</script>

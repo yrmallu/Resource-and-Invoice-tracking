@@ -1,0 +1,4 @@
+<% if @projects.blank? %>
+<% else %>
+	$('#raise_project_invoice').html('<%= j(render 'shared/raise_invoice') unless @projects.blank?  %>');
+<% end %>	

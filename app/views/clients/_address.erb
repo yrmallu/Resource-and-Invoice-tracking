@@ -1,0 +1,65 @@
+<h4><span class="semi-bold"> Address: </span><%=f.object.address_type.titleize unless f.object.address_type.blank?%></h4>
+
+<%= f.hidden_field :address_type, :value=> f.object.address_type%>
+<div class="form-row form-group">
+	<div class="row">
+    	<div class="col-md-6">
+			<label class="form-label">City</label>
+			<!-- <span class="help">e.g. "Pune"</span> -->
+      	  	<%= f.text_field :city, :class=>"form-control"%>
+    	</div>
+    	<div class="col-md-6">
+			<label class="form-label">State</label>
+			<!-- <span class="help">e.g. "Maharashtra"</span> -->
+	  	  	<%= f.text_field :state, :class=>"form-control"%>
+    	</div>
+    </div>
+</div>
+<div class="form-row form-group">
+    <div class="row">
+        <div class="col-md-6">
+			<label class="form-label">Country</label>
+			<!-- <span class="help">e.g. "India"</span> -->
+      <%= f.country_select :country,{:prompt => "Select Country"}, {:class=>"form-control"} %> 
+    	</div>
+    	<div class="col-md-6">
+			<label class="form-label">Zip Code</label>
+			<!-- <span class="help">e.g. "411038"</span> -->
+      	  	<%= f.text_field :zip_code, :class=>"form-control" %>
+    	</div>
+	</div>
+</div>
+<div class="form-row form-group">
+    <div class="row">
+		<div class="col-md-12">
+  			<label class="form-label">Street</label>
+  			<!-- <span class="help">e.g. "31 E Street"</span> -->
+   			<%= f.text_field :street, :class=>"form-control" %>
+		</div>
+	</div>
+</div>
+<div class="form-row form-group">
+  	<div class="row">	
+    	<div class="col-md-6">
+  			<label class="form-label">Mobile Number</label><br>
+  			<!-- <span class="help">e.g. "989898989"</span> -->
+      	  	<%= f.text_field :mobile, :class=>"form-control class_emp_mobile"%>
+    	</div>
+		<div class="col-md-6">
+  			<label class="form-label">Telephone Number</label><br>
+  			<!-- <span class="help">e.g. "02021212121"</span> -->
+			<%= f.text_field :telephone_number, :class=>"form-control class_emp_tel"%>
+		</div>
+	</div>
+</div>
+<!-- <div class="form-row form-group">
+	<div class="row">
+		<div class="col-md-6">
+  			<label class="form-label">Fax</label>
+  			<span class="help">e.g. "02021212121"</span>
+      	  	<%#= f.text_field :fax_no, :class=>"form-control"%>
+	  	  	<%#=f.hidden_field(:id)%>
+    	</div>	
+	</div>
+</div> -->
+

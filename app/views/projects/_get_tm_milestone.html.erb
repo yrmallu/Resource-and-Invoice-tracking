@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+			<div class="grid-title no-border"></div>  
+			<%= form_tag (update_tm_milestone_projects_path(:id=>@time_material)), :remote=>true, :class=>"form_validation"  do %>
+				<span id="error_msg"></span>
+				<%= fields_for :timematerial_milestone, @time_material do |f| %>
+					<%= render "projects/get_milestone_delay_reason", :f=>f %>
+				<% end %>
+			<% end %>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_projects');
+		$("#fixed_cost_milestone_end_date").inputmask("y/m/d");
+	   });
+</script>

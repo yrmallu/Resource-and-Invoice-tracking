@@ -1,0 +1,23 @@
+<%unless @timesheet.blank?%>
+	<%unless @timesheet.total_hours.blank? %>
+		$("div.<%= @current_timesheet_date%> .fc-event-title").html(<%= (@timesheet_hours - @old_task_hours) + @new_task_hours %> +" Hrs");
+	<%else%>
+		$("div.<%= @current_timesheet_date%> .fc-event-title").html(<%= @new_task_hours %> +" Hrs");
+	<%end%>
+<%else%>
+	$("div.<%= @current_timesheet_date%> .fc-event-title").html(<%= @new_task_hours %> +" Hrs");
+<%end%>
+
+//$("#id_total_hours").html(<%= pluralize(@total_logged_hours.to_f, 'hour') %> + " logged");
+$("#id_total_hours").html(<%= @total_logged_hours.to_f %> + " hours logged");
+
+<% unless @timesheet_updated.blank? %>
+	$('#id_update_timesheet').show();
+	$('.class_task_form').html('<%= j(render "timesheets/create_timesheet") %>');
+	<%unless @is_edit.blank? %>
+		$('#id_task_list_slider').html('<%= j(render "timesheets/task_list") %>');
+		$('#is_edit').val('');
+	<%end%>
+<%else%>
+	$('#id_update_timesheet').hide();
+<% end %>

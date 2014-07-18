@@ -1,0 +1,11 @@
+development:
+  email: admin@cuelogic.co.in
+  password: 12345678
+
+test:
+  email: admin@cuelogic.co.in
+  password: 12345678
+
+production:
+  email: admin@cuelogic.co.in
+  password: 12345678

@@ -1,0 +1,12 @@
+.dashboard-activities{background: #fff; padding:0 5px}
+.dash-activity .activity-list{padding:0 15px 15px}
+.dash-activity .notification-messages{padding: 15px 18px}
+.dash-activity .notification-messages .message-wrapper{width: 85%}
+.dash-activity .notification-messages.info:hover{background-color:#d8ebf4;cursor:default;}
+.dash-activity .notification-messages.info p{line-height: 25px}
+.dash-activity .notification-messages.info a{background: #fff; padding: 1px 5px; border-radius: 3px}
+.dash-activity .notification-messages .date{opacity: 1}
+
+.dashboard-actions{background: #fff; padding:0 5px}
+.dash-activity .dashboard-actions .notification-messages .message-wrapper{width: 80%}
+.dash-activity .dashboard-actions .take-action a{background: none repeat scroll 0 0 #f35958; color: #fff; padding: 5px 10px}

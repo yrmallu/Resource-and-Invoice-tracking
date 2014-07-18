@@ -1,0 +1,70 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+   <li><span class="prev-link" data-no-turbolink><%= link_to 'Project Progress'.html_safe, project_detail_users_path(:id=>@project) %></span></li>
+    <li><span class="active"> Milestone status </span></li>
+</ul>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="grid simple">
+		    <div class="grid-body">
+                <div role="grid" class="dataTables_wrapper form-inline" id="example2_wrapper">
+	  		  	    <div class="row" data-no-turbolink>
+			  	  	    <h3 class="semi-bold col-md-9 p-b-10"><%=@project.title%></h3>
+						<div class="col-md-3 p-t-10 text-right">
+							<%= link_to 'Milestone Plan', (fixed_cost_payment_projects_path(:id=>@project) if @project.project_type.eql?("fixed_cost")), class: "btn btn-primary btn-sm btn-small"%>
+						</div>
+					</div>
+					
+	  		  	    <table id="id_fc_table" class="table table-striped dataTable" aria-describedby="example2_info">
+					    <thead>
+					        <%unless @project.fixed_costs.blank?%>
+						       <tr role="row">
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 1px;" aria-label=": activate to sort column ascending"></th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Name</th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Amount</th>
+								   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Milestone End Date</th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 219px;" aria-label="Browser: activate to sort column ascending">Action</th>
+						      </tr>
+                	   </thead>
+                	   <tbody role="alert" aria-live="polite" aria-relevant="all" id="id_projects_table" >
+						   <div class="col-md-12">
+						   <span class="semi-bold col-md-3 p-b-10">Advance Amount: <%=@project.advanced_amount%></span>
+						   <span class="semi-bold col-md-3 p-b-10">Sign Off Amount: <%=@project.sign_off_amount%></span>
+						   <span class="semi-bold col-md-3 p-b-10">Total Amount: <%=@project.total_amount%></span>
+					   </div>
+							   
+						   <%=render 'fc_milestone_changes'%> 
+						   <% end %>
+			  		   </tbody>
+		  		    </table>
+			 </div>
+			 </div>
+        </div>
+    </div>
+</div> 
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title semi-bold" id="myModalLabel">Milestone delay</h4>
+            </div>
+            <div class="modal-body">
+		        <div id="fc_milestone"></div>
+            </div>
+            <!-- <div class="modal-footer">
+            </div> -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_projects');
+	   });
+</script>

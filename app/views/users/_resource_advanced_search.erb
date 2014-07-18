@@ -1,0 +1,80 @@
+	<%=form_tag({:action=>:resource_search}, :remote=>true, :method=>:get, :class=>"form_validation") do%>	
+	<div class="search-block">
+	   <div class="adv-search resource-advsearch"> <a href="javascript:void(0);">advance search</a> 
+	</div>
+<!--Advance search form-->
+<%=hidden_field_tag 'res_tb_type', @res_tab_type%>
+ 		<div class="advsearch-block">
+  			<div class="col-xs-6 col-md-3">
+				<label class="capital_label">Technology</label>
+				<div class="adv-search-scroll" data-height="153px" class="scroller">
+				<ul class="tecno-list">
+					
+					<%@technologies.each do |tech|%>
+      					<li>
+        					<%=check_box_tag('tech[]',tech.id, false, :multiple=>true)%>               								  						      <%=tech.name%> 
+					    </li>
+					<%end%>
+    			</ul>
+			</div>
+  			</div>
+  			<div class="col-xs-6 col-md-3">
+    			<label class="capital_label">Experience</label>
+    			<div class="select-exp">
+					<div class="col-md-6"><%=select_tag "exp_cond", options_for_select([ ">", "<", "=" ])%></div>
+      				<div class="col-md-6"><%=text_field_tag 'exp', nil, :placeholder=>"e.g: 3.5"%></div>
+    			</div>
+    			<div class="">
+      				<label class="capital_label">Gender preference</label>
+					<%=select_tag "gender", options_for_select([ "Male", "Female" ]),:prompt => "Select Gender"%>
+    			</div>
+  			</div>
+  			<div class="col-xs-6 col-md-3">
+   			  <label class="capital_label">Status</label>
+    		   <ul class="tecno-list status">
+			       <li>
+					   <%=check_box_tag('res_status[]','bench', false, :multiple=>true)%> On bench
+				   </li>
+      			   <li>
+          		          <%=check_box_tag('res_type[]','non-billable', false, :multiple=>true)%> Deployed but non-billable
+   				   </li>
+      			   <li>
+	        	      <%=check_box_tag('res_type[]','billable', false, :multiple=>true)%> Billable
+	 			   </li>
+    		   </ul>
+  		    </div>
+  			<div class="col-xs-6 col-md-3">
+    			<label class="capital_label">Position</label>
+    		  	<div class="adv-search-scroll" data-height="153px" class="scroller">
+					<ul class="tecno-list status">
+						<%@roles.each do |role|%>	
+      						<li>
+								<%=check_box_tag('role[]',role.id, false, :multiple=>true)%>               							
+								<%=role.name%> 
+							</li>
+						<%end%>	
+    			 	</ul>
+				</div>
+ 		    </div>
+  			<div class="clearfix">&nbsp;</div>
+  			<div class="text-right">
+			    <%= submit_tag "Submit", class: "btn btn-success btn-cons" %>
+    			<input type="button" value="Cancel" class="btn btn-white btn-cons btn-cancel" />
+  		    </div>
+		</div>
+<!--Advance search form--> 
+		<div class="clearfix"></div>
+	</div>
+    <%end%>
+	
+	
+<script type="text/javascript">
+$(document).ready(function(){	
+	$(".btn-cancel").on('click', function(){
+		$("input:checkbox").prop('checked', false);
+		$('#exp').val('');
+		$('#gender option:eq(0)').attr('selected','selected');
+		$('#exp_cond option:eq(0)').attr('selected','selected');
+	});
+});
+</script>

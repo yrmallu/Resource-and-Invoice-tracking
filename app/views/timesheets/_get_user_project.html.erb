@@ -1,0 +1,17 @@
+<%unless @projects.blank?%>
+	<%= label_tag "project_id", "Project Name" %> 
+	<% unless @task.blank?%>
+		<%= select_tag "project_id" ,options_for_select(@projects.collect {|m| [ m.title, m.id ] }, :selected=>@task.project_id), {:prompt => "Select Project", :class => "form-control"} %>
+	<%else%>
+		<%= select_tag "project_id" ,options_for_select(@projects.collect {|m| [ m.title, m.id ] }), {:prompt => "Select Project", :class => "form-control"} %>
+	<%end%>
+<%end%>
+
+<script type="text/javascript">
+$('.class_task_proj_id').val($('#project_id').val());
+$( "#project_id" ).change(function() {
+	$('.class_task_proj_id').val($(this).val());
+});
+</script>
+
+

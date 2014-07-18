@@ -1,0 +1,50 @@
+
+.project-header {margin-bottom:20px}
+.project-header.tm_plan {background:#0aa699}
+.project-header.tm_plan .navbar-brand {color:#fff; font-size:25px; font-weight:normal; font-family:Open Sans; line-height:25px}
+
+.tm_plan .navbar-nav > li > a {padding:18px 20px; color:#fff; font-family:Open Sans; font-size:15px}
+.tm_plan .navbar-nav > li > a:hover,.tm_plan .navbar-nav > li > a.active {background:#07776d}
+
+.milestone-block {background:#fff; padding:15px; position:relative}
+.milestone-block h3 {margin:0 0 20px; line-height:20px; font-size:20px}
+
+.progress-block {margin-bottom:20px}
+
+.invite-form {margin-bottom:20px}
+.invite-form label {font-weight:normal; font-family:Open Sans; text-transform:capitalize}
+.invite-form select {height:auto; padding:5px 5px 5px 10px; color:#6F7B8A; width:90%}
+.invite-form .autocomplete-box {border:1px solid #E5E5E5; padding:10px; width:50%; max-height:150px}
+.invite-form {overflow:hidden;}
+.project-col {width:300px;}
+.optn-select {overflow:hidden; padding-left:5px; margin-top:30px;}
+.optn-select label {margin-right:10px; float:left;}
+
+.user-technolist .table td.brdnone {border:none}
+.user-technolist .table td {font-family:Open Sans; text-transform:capitalize; vertical-align:middle}
+.user-technolist.invite-member .table td a {font-weight:normal; font-size:11px}
+.user-technolist .table td a.user-photo {display:block}
+.user-technolist .table td a.user-photo span {display:inline-block; height:45px; width:45px; position:relative; overflow:hidden; border-radius:45px; text-align:center; vertical-align:middle; margin-right:10px}
+.user-technolist .table td .proj-manager {color:#c1c1c1; font-style:italic}
+.user-technolist .table td p {margin-bottom:5px}
+
+ul.invite-memblist {margin:0; padding:0; list-style:none;}
+ul.invite-memblist li {border-bottom:1px solid #ddd; padding:10px 0; text-transform:capitalize; overflow:hidden;}
+ul.invite-memblist li:last-child {border:none; padding-bottom:0;}
+ul.invite-memblist li .proj-manager {color:#c1c1c1; font-style:italic}
+ul.invite-memblist li .img-col {}
+ul.invite-memblist li .userdetail-col {}
+ul.invite-memblist li .action-col {}
+ul.invite-memblist li div {padding:0 5px;}
+
+.client-photo {position:relative; overflow:hidden; border-radius:180px; height:180px; width:180px; margin:0 0}
+.client-desig {text-align:center; color:#c1c1c1; font-family:Open Sans; font-size:15px}
+.client-detail p {margin:0}
+
+ul.teammember-list {margin:0; padding:0; overflow:hidden; list-style:none}
+ul.teammember-list li {float:left; margin:0 16px 20px 0; text-align:center; min-height:120px}
+ul.teammember-list li .member-photo {width:70px; height:70px; overflow:hidden; position:relative; border-radius:70px; display:inline-block; margin-bottom:5px}
+ul.teammember-list li p {margin:0; line-height:normal}
+ul.teammember-list li .member-name {font-weight:bold; font-family:Open Sans; font-size:15px}
+ul.teammember-list li .member-desig {font-family:Open Sans; font-weight:normal; font-style:italic; color:#c1c1c1}
+

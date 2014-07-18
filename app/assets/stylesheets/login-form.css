@@ -1,0 +1,12 @@
+.signin_text .form-group .form-label {font-size:22px;}
+.signin_text .controls .form-control {padding:10px !important; height:auto; font-size:18px; border:1px solid #ccc; border-radius:8px;}
+.fgtpwd-pad {padding-top:8px;}
+
+ul.org-controllist {margin:0 0 0 10px; padding:10px 0 0; list-style:none;}
+ul.org-controllist li {margin-bottom:15px; font-size:18px; padding:0;}
+
+.container {position:relative;}
+.alert-msg {top:66px; position:absolute;; left:0; right:0;}
+
+.login-container {margin:10% 0 4%;}
+

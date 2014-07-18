@@ -1,0 +1,108 @@
+
+<%= fields_for :project, @project do |f| %>
+	<%= f.fields_for :fixed_costs , @milestones do |f| %>
+	<fieldset>
+	<hr class="<%=f.object.id%>">
+	<div class="row column-seperation">
+    	<div class="col-md-6 <%=f.object.id%>">
+			
+        	<h4 class="semi-bold">Milestone Information</h4>   
+			<div class="row form-row ">
+		    	<div class="col-md-12">
+		        	<%=f.label :milestone_name, "Milestone Name"%> 
+          	    	<%=f.text_field :milestone_name, :class=>"form-control" %>
+		    	</div>
+			</div>         
+			<div class="row form-row">
+		    	<div class="col-md-6">
+					<div class="form-group">
+				    	<label class="form-label">Milestone Start Date</label><br>
+				    	<!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+				    	<div class="controls">						 
+					    	<%#=f.date_select :milestone_start_date,{:order => [:year, :month, :day], :start_year => 1990},{:class => "date_select_list form-control"} %>	                          			      	  
+							<%=f.text_field :milestone_start_date, :class=>"form-control class_milestone_start_date" %>	
+						</div>
+					</div>
+				</div>
+            	<div class="col-md-6">
+					<div class="form-group">
+				    	<label class="form-label">Milestone End Date</label><br>
+				    	<!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+				    	<div class="controls">						 
+					    	<%#=f.date_select :milestone_end_date,{:order => [:year, :month, :day], :start_year => 1990},{:class => "date_select_list"} %>	   
+							<%=f.text_field :milestone_end_date, :class=>"form-control class_milestone_end_date" %>                       			      	  
+						</div>
+					</div>
+				</div>
+        	</div>
+			<div class="row form-row">
+		    	<div class="col-md-8">
+            		<%=f.label :status, "Milestone Status"%>
+            	  	<%=f.select :status, [["Not Started", 'not_started'],["In Progress ", 'in_progress'],["Under Client review ", "under_client_review"],["Client Approved","client_approved"],["Raise Invoice","raise_invoice"],["Invoice Raised","invoice_raised"],["Payment Received",'payment_received']], {:prompt => "Select Milestone Status"}, {:class=>"form-control"} %>
+		    	</div>
+	    	</div>
+		</div> 
+		<div class="col-md-6 <%=f.object.id%>">
+			<h4 class="semi-bold">&nbsp;</h4>
+			<div class="row form-row">
+	    		<div class="col-md-6">
+            		<%=f.label :amount, "Milestone Amount"%> 
+            	  	<%=f.text_field :amount, :class=>"amount form-control" %>		
+				</div>
+			</div>
+			<div class="row form-row">
+		    	<div class="col-md-12">
+            		<%=f.label :description, "Description"%>
+            	  	<%=f.text_area :description, :class=>"form-control" %>
+		    	</div>
+			</div>
+			<div class="row form-row">
+	    		<div class="col-md-12">
+					<%unless f.object.id.blank?%>
+           				<%=f.label :reason, "Delayed Reason"%> 
+           	    		<%=f.text_area :reason, :class=>"form-control" %>
+					<%end%>
+				</div>
+			</div>
+		</div>	
+	</div>	
+	<%=f.hidden_field(:id)%>
+	<%=link_to "remove", "javascript:void(0)", :class=>"playr-icon-delete class_delete_milestone" unless f.object.id.blank?%>	
+	<%=f.hidden_field :_destroy%>
+	</fieldset>
+	<%end%>
+<%end%>
+
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+
+  $('.class_milestone_start_date').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    })  
+
+  $('.class_milestone_end_date').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    })
+  });
+
+// $( ".class_amount_validation" ).submit(function( event ) {
+// 	if( Date.parse($('.class_milestone_end_date').val()) > Date.parse($('#project_end_date').val()))
+// 	{
+// 		alert('Milestone end date cannot be greater than project end date');
+// 		event.preventDefault();
+// 	}
+// 	else if(Date.parse($('.class_milestone_end_date').val()) < Date.parse($('#project_start_date').val()))
+// 	{
+// 		alert('Milestone start date cannot be less than project start date');
+// 		event.preventDefault();
+// 	}
+// });
+</script>

@@ -1,0 +1,35 @@
+
+      <address>
+         <label class="semi-bold">Street:</label>
+         <span><%= user.street unless user.blank?%></span>
+      </address>
+      <address>
+         <label class="semi-bold">City:</label>
+         <span><%= user.city unless user.blank?%></span>
+      </address>
+      <address>
+         <label class="semi-bold">State:</label>
+         <span><%= user.state unless user.blank?%></span>
+      </address>
+      <address>
+         <label class="semi-bold">Country:</label>
+         <span><%@country = Carmen::Country.coded(user.country) %>
+           <%= @country.name %>
+         </span>
+      </address>
+      <address>
+         <label class="semi-bold">Zip Code:</label>
+         <span><%= user.zip_code unless user.blank?%></span>
+      </address>
+      <address>
+         <label class="semi-bold">Tel:</label>
+         <span><%= user.telephone_number unless user.blank?%></span>
+      </address>
+      <address>
+         <label class="semi-bold">Mobile:</label>
+         <span><%= user.mobile unless user.blank?%></span>
+      </address>
+      <address>
+         <!-- <label class="semi-bold">Fax:</label>
+         <span><%#= user.fax_no unless user.blank?%></span>
+      </address> -->

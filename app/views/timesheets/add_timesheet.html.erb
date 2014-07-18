@@ -1,0 +1,73 @@
+<div class="row">
+	<div class="col-md-12">
+<ul class="breadcrumb">
+   <li>
+     <p>YOU ARE HERE</p>
+   </li>
+  <li><span class="prev-link"><%= link_to 'Dashboard'.html_safe, dashboard_users_path %></span></li>
+   <li><span class="active"> Add Timesheet</span></li>
+ </ul>
+</div>	
+</div>
+<div class="row">
+<div class="col-md-8">
+<%unless @team.blank?%>
+<div class="select-user">
+	<label>Timesheet for:</label> 
+	<% @team.each do |team|
+		if current_user.id == team.id
+			@first_name = team.firstname
+			team.firstname = "you" 
+		end 	
+	%>
+	<% end %>
+	<%= select_tag "selected_user_id", options_from_collection_for_select(@team, "id", "firstname", :selected=>current_user.id)%>
+	<% @team.each do |team|
+		team.firstname = @first_name if current_user.id == team.id
+	%>
+	<% end %>
+</div>	
+<%end%>
+</div>
+<div class="col-md-4">
+	<div id="id_logged_hours"></div>
+</div>
+</div>
+
+<div class="row" style="max-height:600px;">
+  <div class="col-md-12">
+  <div class="tiles row tiles-container red no-padding white-bg" id="id_main_calendar_container">	  
+    <div class="col-md-4 tiles red no-padding">
+      <div class="tiles-body">
+        <div class="calender-options-wrapper no-padding">
+          <h3 class="text-white semi-bold" id="calender-current-day"></h3>
+          <h2 class="text-white" id="calender-current-date"></h2>
+          <div id='external-events' class="hide-inphone events-wrapper marginTop">
+            <div class="events-heading">
+				<div id="id_create_timesheet" class="alert_timesheet_success alert_timesheet">Timesheet added</div>	
+				<div id="id_update_timesheet" class="alert_timesheet_success alert_timesheet">Task updated</div>	
+				<div id="id_archive_timesheet" class="alert_timesheet_success alert_timesheet">Task archived</div>
+				<h4 class="detail-title semi-bold">Task Details</h4>
+			</div>
+			<div class="class_task_form">
+				<%= render 'timesheets/create_timesheet'%>
+		   </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 tiles white no-padding">
+		<div id="id_calendar">
+		</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#id_create_timesheet').hide();
+	$('#id_update_timesheet').hide();
+	$('#id_archive_timesheet').hide();
+});
+</script>

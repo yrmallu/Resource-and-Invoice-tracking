@@ -1,0 +1,31 @@
+
+<%= form_tag(assign_project_members_projects_path) do %>
+<div class="row">
+ 	<div class="col-lg-6">
+	   <div class="form-group" >
+		   <strong>Project Name:</strong><br />
+		   <%= @project.title %>
+	   </div>
+	</div>
+ 	<div class="col-lg-6">
+		<strong>Project Incharge:</strong><br />
+		<%= @project.project_manager.get_full_detail unless @project.project_manager.blank? %> 
+ 	</div>
+</div>
+
+<div class="form-group">
+	<%= label_tag :team_members %><br />
+	<% unless @employee_type.blank?%>
+		<%= select_tag 'team_member_id[]', options_for_select(@users.collect {|p| [ p.get_full_detail , p.id ] }, :selected=>(@employee_type<<@project.project_manager).collect{|i| i.id.to_s} ), :prompt => "Select User", :multiple=>"multiple" %>
+	<%else%>
+		<%= select_tag 'team_member_id[]', options_for_select(@users.collect {|p| [ p.get_full_detail , p.id ] }, :selected=>@project.project_manager.id ),  :prompt => "Select User", :multiple=>"multiple" %>
+	<%end%>
+	<%= hidden_field_tag(:id, @project.id)%>
+</div>
+
+<div class="actions" style = "margin-left: 10px;">
+	<%= submit_tag 'Save',class: "btn btn-primary", data: { disable_with: 'Saving...' }, :style => "width:100px;" %>
+	<%= link_to 'Cancel', projects_path, class: "btn btn-primary width_100px"%>
+</div>
+	
+<% end %>

@@ -1,0 +1,25 @@
+<%unless @unverified_employees.blank?%>
+<ul class="invite-memblist col-md-12">
+ <%@unverified_employees.each do |user|%>
+ 
+	<li class="row">
+		<div class="img-col col-md-2">
+			<%logo = user.photos.blank? ? 'missin.png' : user.photos(:thumb) %>
+			<%=image_tag(logo, :class=>"dashboard-img")%>
+		</div>
+    	<div class="userdetail-col col-md-5">
+    		<p class="semi-bold"><%=user.get_full_name%></p>
+       	 <p class="proj-manager"><%=user.role.name unless user.role.blank?%></p>
+    	</div>
+    	<div class="action-col col-md-3">
+			<%=link_to "<i title='Invite Again' class='fa fa-undo'></i>".html_safe + " Invite Again", resend_project_invitation_projects_path(:id=>@project, :user_id=>user), :remote=>true%>
+    	</div>
+    	<div class="action-col col-md-2">
+			<%= link_to "<i title='Remove invited Member' class='fa fa-trash-o'></i>".html_safe + " Remove", cancel_project_invitation_projects_path(:id=>@project, :user_id=>user), :method => :delete, :data => { :confirm => 'Are you sure?' } , :remote=>true%>
+			<%#=link_to "<i class='fa fa-trash-o'></i>".html_safe + " Remove", cancel_project_invitation_projects_path(:id=>@project, :user_id=>user), :remote=>true%>
+    	</div>
+	</li>
+ <%end%>
+</ul>	
+<%end%>	
+

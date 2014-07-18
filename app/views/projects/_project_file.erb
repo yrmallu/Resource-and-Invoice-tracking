@@ -1,0 +1,7 @@
+<fieldset>
+<%unless @project.project_files.blank?%>
+	<%@project.project_files.each do |file|%>
+		<%=file.files_file_name%>      <%=link_to "delete", detele_project_file_projects_path(:id=>@project, :file_id=>file), :remote => true unless file.files_file_name.blank?%><br/>
+	<%end%>
+<%end%>
+</fieldset>

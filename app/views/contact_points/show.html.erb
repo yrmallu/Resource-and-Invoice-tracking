@@ -1,0 +1,64 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Contact Point Listing'.html_safe, contact_detail_clients_path(:id=>@client) %></span></li>
+    <li><span class="active"> View Contact Point: <%=@contact_point.firstname unless @contact_point.blank?%></span></li>
+</ul>
+
+<div class="row">
+	<div class="col-md-12">
+	    <div class="grid simple vertical green">
+			<div class="grid-title no-border">
+				<!-- <h4><%#=@contact_point.firstname unless @contact_point.blank?%> Information</h4> -->
+			</div>
+			<div class="grid-body no-border">
+				<div class="row-fluid detailinfo-secn">
+					<address class="col-md-2">
+	 				   <div class="client-img">
+						   <%= image_tag(@contact_point.photos.blank? ? "missin.png" :@contact_point.photos.url, :alt => "No Image Uploaded", :border=>"1", :class=>"show-page-img") %>		
+				    	</div> 
+					</address>
+					<div class="col-md-10 project-addrinfo">
+					    <address class="margin-bottom-20 margin-top-10">
+			                <label class="semi-bold">Name:</label>
+			                <span class="semi-bold"><%= @contact_point.firstname %></span>
+						</address>											 
+						<address>
+			                <label class="semi-bold">Email:</label>
+							<span><%= @contact_point.email %></span>
+						</address>
+						<address>
+					        <label class="semi-bold">Skype id:</label>
+					        <span><%= @contact_point.skype_id %></span>
+						</address>
+						<address>
+					        <label class="semi-bold">Hangout id:</label>
+					        <span><%= @contact_point.hangout_id %></span>
+						</address>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="form-actions">
+					<address>
+						<div class="pull-right" data-no-turbolink>
+				   	 	<% if can? :update, User %><%= link_to 'Edit',  edit_contact_point_path(@contact_point,:client_id=>@client), class: "btn btn-primary btn-cons" %><%end%>
+					    <% if can? :read, User %><%= link_to 'Back', @client.blank? ? clients_path : contact_detail_clients_path(:id=>@client), class: "btn btn-white btn-cons" %><%end%>
+						</div>
+					</address>
+				</div>
+			</div>
+		</div>
+	</div> 
+</div>
+
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_administration');
+	   });
+</script>
+
+
+
+
+

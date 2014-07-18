@@ -1,0 +1,28 @@
+<h1 class = "create_page_headings listing_heading"><%=@project_module.name unless @project_module.blank?%></h1>
+<div class="container">
+	<div class="row row-offcanvas row-offcanvas-right">
+		<%=render 'shared/admin_sidebar'%>
+		<div class="col-xs-12 col-sm-9">
+     	   <div class="row">
+        	   <div class="col-lg-6">
+          		 <div class="form-group" >
+             		<strong>Name:</strong><br />
+              	  	<%= @project_module.name %>
+          	  	</div>
+        	   </div>
+		   </div>
+		   <div class="row">
+        	   <div class="col-lg-6">
+          		 <div class="form-group">
+              	   <strong>Description:</strong><br />
+              	   <%= @project_module.description %>
+          	 	 </div>          
+        	   </div>
+			</div>   
+			<div class="actions">
+				  <% if can? :update_project_module, ProjectModule %><%= link_to 'Edit',edit_project_module_projects_path(:mod_id=>@project_module.id, :id=> @project.id), class: "btn btn-primary width_100px"%> <%end%>
+		    	   <% if can? :list_project_modules, ProjectModule %><%= link_to 'Back', list_project_modules_projects_path(:id=> @project.id), class: "btn btn-primary width_100px" %> <%end%>
+		       </div>		   		   			   		   		   
+	  	 	</div>
+		</div>
+	</div>

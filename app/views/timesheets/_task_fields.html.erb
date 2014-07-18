@@ -1,0 +1,89 @@
+<%= fields_for :timesheet, @timesheet do |builder| %>
+	
+	<%= builder.hidden_field :user_id, :value=> params[:user_id] %>
+	<%= builder.hidden_field :timesheet_date, :value=>""%>
+	<%= builder.hidden_field :old_task_hours, :value=>""%>
+	<%= builder.hidden_field :task_hours, :value=>""%>
+	
+	<%= builder.fields_for :tasks , @task do |f| %>
+		<div class='detail-form'>
+		    <%= f.label :task_type_id, "Task Type" %>
+			<% unless f.object.blank?%>
+				<%= f.select :task_type_id, options_for_select(@task_types.collect {|m| [ m.name, m.id ] }, :selected=>f.object.task_type_id), {:prompt => "Select Task Type"}, {:class => "form-control class_timesheet_task_type_id", :required=>true}%>
+			<%else%>
+				<%= f.select :task_type_id, options_for_select(@task_types.collect {|m| [ m.name, m.id ] }), {:prompt => "Select Task Type"}, {:class => "form-control class_timesheet_task_type_id", :required=>true}%>
+			<%end%>
+		</div>
+		<div class='detail-form'>
+			<div id= "project_list"></div>
+		</div>
+		<div class='detail-form'>
+			<%= f.label :name, "Task Name" %> 
+			<%= f.text_field :name, :class => "form-control class_timesheet_task_name", :required=>true%>
+		</div>
+		<div class='detail-form'>
+			<%= f.label :description, "Task Description" %>
+			<%= f.text_area :description, :class => "form-control class_timesheet_task_desc", :rows => "6"%>
+		</div>
+		<div class='detail-form'>
+			<%= f.label :hours, "Hours" %> 
+			<%= f.select :hours, [1.0,1.5,2.0], {:prompt => "Select Hours"}, {:class => "form-control class_timesheet_task_hours", :required=>true}	%>	
+		</div>	
+		<%= f.hidden_field(:id)%>
+		<%= f.hidden_field :user_id, :value=> params[:user_id]%>
+		<%= f.hidden_field :project_id, :value=> "", :class=>"class_task_proj_id"%>
+		
+	<%end%> 
+<%end%> 
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	get_projects();
+	$('#selected_user_id').on('change', function(){
+		$('#timesheet_user_id').val($('#selected_user_id').val());
+		get_projects();
+	});	
+	
+	$('.class_timesheet_task_hours').on('change', function(){
+		$('#timesheet_task_hours').val($('.class_timesheet_task_hours').val()); 
+	});	
+	
+	$('#timesheet_old_task_hours').val($('.class_timesheet_task_hours').val()); 
+	
+	function get_projects()
+	{
+		$('#id_task_partial').on('change','.class_timesheet_task_type_id',function() {
+		var selected_task = $(this).val();
+		
+		if (selected_task != '1')
+		{
+			$('#project_list').hide();
+			$('.class_task_proj_id').val("");
+			$('.class_task_task_id').val($(this).val());
+		}
+		else
+		{	
+			jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_user_project')%>",{ task_type_id : $(this).val(), user_id : $('#selected_user_id').val(), task_id :'<%= @task.blank? ? '' : @task.id  %>'},
+			function(data) {
+		             if(data)
+		             {
+					     jQuery("#project_list").html(data);
+						 $('#project_list').show();
+					 }
+		             else
+		             {
+				     }
+		 	   });
+		}
+		});
+	}	
+});
+
+$('#id_new_submit').click(function(){
+	$('#timesheet_timesheet_date').val($('#id_timesheet_date').val()); 
+});
+</script>
+

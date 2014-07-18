@@ -1,0 +1,147 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Employee Listing'.html_safe, users_path %></span></li>
+    <li><span class="active"> View Employee</span></li>
+</ul>
+
+<div class="row">
+	<div class="col-md-12">
+	    <div class="grid simple vertical green">
+			<div class="grid-title no-border">
+				<!-- <h3><%#=@user.firstname unless @user.blank?%> Information</h3> -->
+			</div>
+			<div class="grid-body no-border">
+				<div class="row-fluid detailinfo-secn">
+					<address class="col-md-2">
+	 				   <div class="client-img">
+				        	<%image = @user.photos.blank? ? 'missin.png' : @user.photos(:thumb)   %>
+			         	
+							<%= image_tag(image,:alt=>"your image",:class=>"link_to_add_ids",:border=>"1", :class=>"show-page-img" ) %>									
+				    	</div> 
+					</address>
+					<div class="col-md-10 project-addrinfo">
+					    <address class="margin-bottom-20 margin-top-10">
+			                <label class="semi-bold">Name:</label>
+			                <span class="semi-bold"><%= @user.firstname %> <%=@user.lastname%></span>
+						</address>											 
+						<address>
+			                <label class="semi-bold">Email:</label>
+							<span><%= @user.email %></span>
+						</address>
+						<address>
+					        <label class="semi-bold">Emp Code:</label>
+					        <span><%= @user.emp_code %></span>
+						</address>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="row-fluid ">
+					<div class="col-md-12 addrs-detailsecn">			
+					<div class="col-md-4 project-addrinfo">	
+					<h4>&nbsp;</h4>			    
+					<address>
+						 <label class="semi-bold">Department:</label>
+						 <span><%= @user.department.name unless  @user.department.blank?%></span>
+					</address>
+					<address>
+                 	   <label class="semi-bold">Designation:</label>
+                 	   <span><%= @user.role.name unless  @user.role.blank?%></span>
+					</address>
+					<address>
+	               	   <label class="semi-bold">Gender:</label>
+	               	   <span><%= @user.gender.titleize unless @user.gender.blank? %></span>
+					</address>
+					<address>
+                 	   <label class="semi-bold">Date of birth:</label>
+                 	   <span><%= @user.date_of_birth%></span>
+					</address>
+					<address>
+	               	   <label class="semi-bold">Education:</label>
+	               	   <span><%= @user.education %></span>
+					</address>
+					<address>
+                 	   <label class="semi-bold">Joining date:</label>
+                 	   <span><%= @user.joining_date%></span>
+					</address>
+					<address>
+	               	   <label class="semi-bold">Experience:</label>
+	               	   <span><%= @user.experience %></span>
+					</address>
+					<address>
+	               	   <label class="semi-bold">Reporting To:</label>
+	               	   <span><%= @user.boss.get_full_detail unless @user.boss.blank? %></span>
+					</address>
+					<address>
+	               	   <label class="semi-bold">Employee Type:</label>
+	               	   <span>
+						   <%= res_type = ('non_billable').eql?(@user.resource_type) ? 'Non billable' : 'Billable'%>
+					   </span>
+					</address>
+					<address>
+                 	   <label class="semi-bold">Technology:</label>
+                 	   <span>
+						   <%unless @user.technologies.blank?%>
+						       <% @user.technologies.each do |tech|%>
+							       <%=tech.name%><br/>
+							   <%end%>
+						   <%end%>
+					   </span>
+					</address>
+				</div>
+	 	        <% unless @user.addresses.blank? %>
+	 		   		<%@user.addresses.each do |addr|%>
+	    		  	  	  	  <div class="col-md-4 project-addrinfo"><h4><span class="semi-bold">Address:</span> <%=addr.address_type%></h4>
+	 	  	 				<%=render 'shared/show_address', :user=>addr%></div>
+	 				<%end%>	
+	 	        <%end%>	
+				<div class="clearfix"></div>
+			</div>
+		</div>
+				<div class="clearfix"></div>
+					<div class="form-actions">
+					<address>
+						<div class="pull-right" data-no-turbolink>
+							<%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary btn-cons" %>    
+	   		
+							<% if can? :read, User %>
+					         	<%= link_to 'Back', users_path, class: "btn btn-white btn-cons" %>
+				
+							<% elsif can? :read, Client %>		
+								<%= link_to 'Back', clients_path, class: "btn btn-white btn-cons" %>
+				
+							<% elsif can? :read, Department %>		
+								<%= link_to 'Back', departmentss_path, class: "btn btn-white btn-cons" %>	 
+				  		
+							<% elsif can? :read, Role %>		
+								<%= link_to 'Back', roles_path, class: "btn btn-white btn-cons" %>
+				
+							<% elsif can? :create, User %>		
+								<%= link_to 'Back', new_user_path, class: "btn btn-white btn-cons" %>	
+					
+							<% elsif can? :create, Client %>		
+								<%= link_to 'Back', new_client_path, class: "btn btn-white btn-cons" %>	
+				
+							<% elsif can? :create, Department %>		
+								<%= link_to 'Back', new_department_path, class: "btn btn-white btn-cons" %>	
+				
+							<% elsif can? :create, Role %>		
+								<%= link_to 'Back', new_role_path, class: "btn btn-white btn-cons" %>	
+				
+							<%end%>	
+						</div>
+					</address>
+				</div>
+				</div>
+			</div>
+		</div> 
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_administration');
+	   });
+</script>

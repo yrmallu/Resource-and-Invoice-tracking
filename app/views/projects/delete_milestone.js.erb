@@ -1,0 +1,15 @@
+
+if(<%= "fixed_cost".eql?(@project.project_type)%>)
+{
+	<% if @project.blank? %>
+	<% else %>
+		$('#project_file').html('<%= j(render 'projects/fc_project') unless @fc_project.blank?  %>');
+	<% end %>	
+}
+else
+{
+	<% if @project.blank? %>
+	<% else %>
+		$('#project_file').html('<%= j(render 'projects/tm_project') unless @tm_project.blank?  %>');
+	<% end %>	
+}

@@ -1,0 +1,21 @@
+<%unless @project.blank?%>  
+    <%=select_tag 'contact_persons[]', options_from_collection_for_select(@contact_points, 'id', 'firstname', :selected=>@project.client_contacts.collect!{|i| i.id.to_s}), {:prompt=>"Select Contacts",:multiple=>"multiple"}%>
+<%else%>
+	<%=select_tag 'contact_persons[]', options_from_collection_for_select(@contact_points, 'id', 'firstname'), {:prompt=>"Select Contacts",:multiple=>"multiple"}%>
+<%end%>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#id_no_contact_pt').removeClass('show').addClass('hide');
+	if ('<%=@contact_points unless @contact_points.blank?%>')
+	{
+		$('#client_contact_point').show();
+	}
+	else
+	{
+		$('#client_contact_point').hide();
+		$('#id_no_contact_pt').removeClass('hide').addClass('show');
+	}
+});
+</script>

@@ -1,0 +1,48 @@
+<%@project.fixed_costs.each do |fc|%>	
+
+<tr class="gradeX odd">
+   <td class="center"></td>
+   <td><%=fc.milestone_name%></td>
+   <td class=" "><%=fc.amount%></td>
+   <td class=" "><%=fc.milestone_end_date%></td>
+   <td class="" style="display: -webkit-box">
+	   
+	   	<span class="<%=fc.id%>">
+		   <%=link_to "Raise Invoice", fc_raise_invoice_projects_path(:id=>fc,:status=>'raise_invoice'), :remote=>true, :class=>"btn-sm btn-small btn btn-success btn-cons milestone_btns", :id=>"id_raise_invoice", data: { confirm: 'Are you sure you want to raise invoice?' } unless ["invoice_raised", "payment_received", "raise_invoice"].include?(fc.status)%>
+	   </span>
+	   <span id="<%=fc.id%>">
+		   <%=render :partial=>"projects/milestone_invoice", :locals=>{:@fixed_cost=>fc}%>
+	   </span>
+	   <%unless ["payment_received","raise_invoice"].include?(fc.status)%>
+	      <div class='<%=fc.id%>'> 
+		    	<button type="button" data-input='<%=fc.id%>' data-toggle="modal" data-target="#myModal" class=" milestone_btns fc_delayed btn btn-danger btn-cons btn-sm btn-small">Delayed</button>
+			</div>
+	   	<%end%>
+   </td>
+</tr>
+<%end%>
+
+
+<script type="text/javascript">
+//$('#myModal').modal(options)
+$( ".fc_delayed" ).click(function() {
+          jQuery.get("<%=url_for(:controller=>'projects',:action=>'get_fc_detail')%>",{ id : $(this).attr('data-input')},
+function(data) {
+				if(data)
+              	{
+		   		 	jQuery("#fc_milestone").html(data);
+             	}
+               	else
+				{
+			  	  jQuery("#"+email_id).parent().find(".help-inline").html(data);
+				}
+ 		   });
+});
+
+
+
+// $('#id_raise_invoice').click(function() {
+//  	$('.fc_delayed').hide();
+// });
+ 
+</script>

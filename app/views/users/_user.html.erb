@@ -1,0 +1,66 @@
+<div class="span12">
+    <div class="grid simple ">
+	    <div class="grid-body ">
+            <div role="grid" class="dataTables_wrapper form-inline" id="example2_wrapper">
+  		  	    <div class="row" data-no-turbolink>
+					<div class="col-md-6">
+		  		  	    <%= link_to 'New Employee', new_user_path, class: "btn btn-primary newempl-btn", :style => "margin-left: 12px;" %>
+					</div>
+	  	  	    </div>
+			    <table id="id_user_table" class="table table-striped dataTable" aria-describedby="example2_info">
+			     <thead>
+			         <% unless @users.blank? %>
+			  	       <tr role="row">
+			  		       <!-- <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 1px;" aria-label=": activate to sort column ascending"></th> -->
+			  		       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 117px;" aria-label="Rendering engine: activate to sort column ascending">Name</th>
+			  		       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 200px;" aria-label="Rendering engine: activate to sort column ascending">Email</th>
+			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Rendering engine: activate to sort column ascending">Designation</th>
+			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 100px;" aria-label="Rendering engine: activate to sort column ascending">Experience</th>
+			  			   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Rendering engine: activate to sort column ascending">Technology</th>
+			  		       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 180px;" aria-label="Browser: activate to sort column ascending">Action</th>
+			  	      </tr>
+			     </thead>
+			     <tbody role="alert" aria-live="polite" aria-relevant="all" id="id_user_tbody">
+			  	     <% @users.each do |user| %>
+					 <tr class="gradeX odd">
+						  <!-- <td class="center"></td> -->
+						  <%logo = user.photos.blank? ? 'missin.png' : user.photos(:thumb) %>
+						 <td data-no-turbolink> 
+						 	<% if can? :read, User %><%= link_to image_tag(logo,:class=>"image_index_setting"), user, :class=>"dashboard-img" %>
+						 	<br>
+						 	<div class="employee-name">
+						 	<%= link_to user.firstname, user%><%end%>
+						 </div>
+						 </td>
+						 <td class=" "><%= user.email%></td>
+						 <td class=" "><%= user.role.name unless user.role.blank?%></td>
+						 <td class=" "><%= user.experience%></td>
+						 <td class=" ">
+							 <%unless user.technologies.blank?%>
+							     <%user.technologies.each do |tech|%>
+								 	<%=tech.name%><br/>
+								<%end%>
+							<%end%>
+						</td>
+						<td data-no-turbolink>
+						  		<% arrayUserIds = @users.map(&:id) %>
+						 	 	<% if can? :update, User %><%= link_to '<i title="Edit Employee" class="fa fa-edit"></i>'.html_safe, edit_user_path(user) %><%end%>
+						 	 	<% if can? :destroy, User %> | <%= link_to '<i title="Archive Employee" class="fa fa-trash-o"></i>'.html_safe, user, method: :delete, data: { confirm: 'Are you sure?' } %><%end%>
+						 	<% if can? :get_user_accessright, User %> | <%= link_to 'Access Right', get_user_accessright_users_path(:id=>user) %><%end%> 
+
+						 	<% if can? :list_user_project_detail, User %> 
+						 		<%unless user.team_members.blank? %> | 
+						 			<%= link_to "Team", list_user_project_detail_users_path(:id=>user) %>
+						 		<%end%>
+						 	<%end%>
+						 </td>
+					 </tr>
+			  		 <% end %>
+			  	<% end %>
+			  </tbody>
+			  </table>
+  	  		   
+		    </div>
+	    </div>
+    </div>
+</div>

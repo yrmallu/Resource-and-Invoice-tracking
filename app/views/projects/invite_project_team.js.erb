@@ -1,0 +1,27 @@
+var flashError = "<%=flash.now[:user]%>";
+if (flashError){
+  $("#flash-error").addClass("alert").html(flashError);
+}
+$('#unverified').html('<%= j(render 'projects/unverified_resource') %>');
+$('.token-input-list').remove();
+$('#no_team_member').addClass('hide').removeClass('show');
+
+  $("#invite_users").tokenInput([
+	<%@users.each do |user|%>
+	{
+      "first_name": "<%=user.firstname%>",
+      "last_name": "<%=user.lastname%>",
+      "email": "<%=user.email%>",
+      "url": "https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
+      "id":"<%=user.id%>",
+	"duplicate":true
+  },
+<%end%>
+], {
+    propertyToSearch: "first_name",
+    //preventDuplicates: true,
+    resultsFormatter: function(item){ return "<li>" + "<img src='" + item.url + "' title='" + item.first_name + " " + item.last_name + "' height='25px' width='25px' />" + "<div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.first_name + " " + item.last_name + "</div><div class='email'>" + item.email + "</div></div></li>" },
+    tokenFormatter: function(item) { return "<li><p>" + "<img src='" + item.url + "' title='" + item.first_name + " " + item.last_name + "' height='25px' width='25px' />" + item.first_name + " " + item.last_name + "</p></li>" },
+    onAdd: function (item) { $('#no_team_member').addClass('hide').removeClass('show');},
+    onDelete: function (item) {}
+  });

@@ -1,0 +1,19 @@
+<h1 class = "create_page_headings listing_heading">Edit Module - <%=@project_module.name%></h1>
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-right">
+         	<%=render 'shared/admin_sidebar'%>
+		 	<div class="col-xs-12 col-sm-9">
+            	<%= form_tag (update_project_module_projects_path(:id=>@project)), :class=>"form_validation"  do%>
+	 		       <%= fields_for :project, @project do |f| %>
+				   		<%= f.fields_for :project_modules , @project_module do |builder| %>
+							<%=render 'project_module_fields', f: builder%>
+						<%end%>	
+				   <%end%>		
+		 		   <div class="actions">
+		 			    <%=submit_tag "Save", class: "btn btn-primary width_100px", data: { disable_with: 'Saving...' } %>
+		 				<%= link_to 'Cancel', projects_path, class: "btn btn-primary width_100px"%>
+		 		   </div>
+           		<% end %>
+        	</div>
+		</div>
+	</div>

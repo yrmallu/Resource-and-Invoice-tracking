@@ -1,0 +1,10 @@
+
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+   <li><span class="prev-link" data-no-turbolink><%= link_to 'Project Listing'.html_safe, projects_path %></span></li>
+    <li><span class="active"> Edit Project: <%=@project.title unless @project.blank?%></span></li>
+</ul>
+
+<%= render 'form' %>

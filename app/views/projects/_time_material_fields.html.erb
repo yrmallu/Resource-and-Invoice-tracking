@@ -1,0 +1,69 @@
+<fieldset>
+	<div class="row column-seperation">
+		<div class="col-md-12 <%=f.object.id%>">
+			<!-- <h4>Milestone Information</h4>   --> 
+			<div class="row form-row">
+	    		<div class="col-md-4">
+          	    	<%=f.label :user_id, "Employee Name"%>
+          	    	<%= f.select :user_id, @users.collect {|p| [ p.get_full_detail , p.id ]}, {:prompt => "Select Employee"}, {:class=>"class_employee_name form-control", :required=>true}  %>
+				</div>
+        		<div class="col-md-2">
+	            	<%= f.label :rate_per_hour, "Rate per Hour" %>
+	            	<%= f.text_field :rate_per_hour, :class=>"form-control" %>
+				</div>
+	   		 	<div class="col-md-2">
+					<%= f.label :rate_start_date, "Rate From Date" %>
+					<%= f.text_field :rate_start_date, :class=>"form-control class_rate_start_date" %>
+				</div>
+	   		 	<div class="col-md-2">
+					<%= f.label :rate_end_date, "Rate To Date" %>
+					<%= f.text_field :rate_end_date, :class=>"form-control class_rate_end_date" %>
+				</div>
+	   		 	<div class="col-md-2">
+					<%= f.label :is_active, "Resource Status" %>
+					<%= f.select :is_active,[["Active","true"],["Not Active","false"]], {:prompt => "Resource Status"}, {:class => "form-control", :required=>true} %>
+					
+				</div>
+    		</div>
+		</div>	
+	</div>	
+<%=f.hidden_field :_destroy%>
+<%=link_to "remove", '#', :class => 'remove_fields' unless ["edit", "update", "create", "show"].include?(action_name)%>
+</fieldset>
+
+<script type="text/javascript">
+	$(".class_rate_start_date").inputmask("y/m/d");
+	$(".class_rate_end_date").inputmask("y/m/d");
+</script>
+
+					<!-- <table id="id_resource_table" class="table table-striped dataTable" aria-describedby="example2_info">
+					   <thead>
+					       <%#= unless @users.blank? %>
+						       <tr role="row">
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Resource Name</th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Resource Rate</th>
+								   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Rate From Date</th>
+								   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Rate To Date</th>
+								   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Is Active</th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 219px;" aria-label="Browser: activate to sort column ascending">Action</th>
+						      </tr>
+	            	   </thead>
+	            	   <tbody role="alert" aria-live="polite" aria-relevant="all">
+					   		<%#= @all_users.each do |team_member|%>  
+						 		<%#= unless team_member.is_verified.eql?('true') || !team_member.user_type.eql?('employee') %>
+				  	       			<tr class="gradeX odd">
+							   		 	<td><%#= team_member.client_contact.get_full_detail %></td>
+							   		 	<td><%#= f.text_field :rate_per_hour, :class=>"form-control" %></td>
+							   		 	<td><%#= f.text_field :rate_start_date, :class=>"form-control class_rate_start_date" %></td>
+							   		 	<td><%#= f.text_field :rate_end_date, :class=>"form-control class_rate_end_date" %></td>
+							   		 	<td><%#= f.text_field :is_active, :class=>"form-control" %></td>
+						   			</tr>
+						 		<%#=end%>
+							<%#=end%>
+						<%#=end%>
+					</tbody>
+				</table> -->
+				
+				
+				
+				

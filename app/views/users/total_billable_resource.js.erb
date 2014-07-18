@@ -1,0 +1,8 @@
+<%#=  if @billable_res.blank? %>
+<%#=  else %>
+	$('#resource_detail').html('<%= j(render 'users/total_billable_resources')  %>');
+<%#=  end %>	
+// if($('#id_resources-billable_inner_container').hasClass('resources-billable') == false)
+// {
+// 	$('#id_resources-billable_inner_container').removeClass('team-manage').removeClass('tab-branch').removeClass('fix-cost').removeClass('resources-allocate').addClass('resources-billable');
+// }

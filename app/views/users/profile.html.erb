@@ -1,0 +1,106 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Dashboard'.html_safe, dashboard_users_path %></span></li>
+    <li><span class="active"> Profile</span></li>
+</ul>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="row">
+		<div class="col-md-6">
+			<div class="row-fluid profileinfo-secn">
+				<!-- <a class="edit-link" href="javascript:void(0);">Edit Profile</a> -->
+				<%= link_to 'Edit Profile', edit_user_path(@user), class: "edit-link" %>     
+				<address class="text-center">
+ 				   <span class="client-img" style="display:inline-block">
+			        	<%image = @user.photos.blank? ? 'missin.png' : @user.photos(:thumb)   %>
+		         	
+						<%= image_tag(image,:alt=>"your image",:class=>"link_to_add_ids",:border=>"1", :class=>"show-page-img" ) %>									
+			    	</span> 
+				</address>
+				<div class="project-addrinfo text-center">				    
+		                <p class="semi-bold"><%= @user.firstname %> <%=@user.lastname%></p>
+						<p class="desgn"><%= @user.role.name unless  @user.role.blank?%></p>
+						<p><%= @user.email %></p>
+				        <p><%= @user.emp_code %></p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="grid simple vertical green">
+				<div class="grid-body">
+				<div class="project-addrinfo">
+				<address>
+					 <label class="semi-bold">Department:</label>
+					 <span><%= @user.department.name unless  @user.department.blank?%></span>
+				</address>
+				<address>
+               	   <label class="semi-bold">Gender:</label>
+               	   <span><%= @user.gender.titleize unless @user.gender.blank? %></span>
+				</address>
+				<address>
+             	   <label class="semi-bold">Date of birth:</label>
+             	   <span><%= @user.date_of_birth%></span>
+				</address>
+				<address>
+               	   <label class="semi-bold">Education:</label>
+               	   <span><%= @user.education %></span>
+				</address>
+				<address>
+             	   <label class="semi-bold">Joining date:</label>
+             	   <span><%= @user.joining_date%></span>
+				</address>
+				<address>
+               	   <label class="semi-bold">Experience:</label>
+               	   <span><%= @user.experience %></span>
+				</address>
+				<address>
+               	   <label class="semi-bold">Reporting To:</label>
+               	   <span><%= @user.boss.get_full_detail unless @user.boss.blank? %></span>
+				</address>
+				<address>
+             	   <label class="semi-bold">Technology:</label>
+             	   <span>
+					   <%unless @user.technologies.blank?%>
+					       <% @user.technologies.each do |tech|%>
+						       <%=tech.name%><br/>
+						   <%end%>
+					   <%end%>
+				   </span>
+				</address>
+			</div>
+		</div>
+			</div>
+		</div>
+		</div>
+				<div class="row">
+					<div class="col-md-12 addrs-detailsecn">			
+					<div class="row">
+	 	        <% unless @user.addresses.blank? %>
+	 		   		<%@user.addresses.each do |addr|%>
+	    		  	  	  	  <div class="col-md-6 project-addrinfo">
+								  <div class="grid simple vertical green">
+									  <div class="grid-body no-border">
+									  <h4><span class="semi-bold">Address:</span> <%=addr.address_type%></h4>
+	 	  	 				<%=render 'shared/show_address', :user=>addr%>
+									</div>
+								</div>
+							</div>
+	 				<%end%>	
+	 	        <%end%>	
+				<div class="clearfix"></div>
+					</div>
+					</div>
+				</div>
+		</div> 
+	</div>
+</div>
+
+
+
+
+
+

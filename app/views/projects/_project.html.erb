@@ -1,0 +1,62 @@
+
+<div class="span12">
+    <div class="grid simple">
+	    <div class="grid-body">
+            <div role="grid" class="dataTables_wrapper form-inline" id="example2_wrapper">
+  		  	    <div class="row" data-no-turbolink>
+		  	  	    <div class="col-md-6">
+		  		  	    <% if can? :create, Project %>
+							<%= link_to 'New Project', new_project_path, class: "btn btn-primary newempl-btn", :style=>"margin-left: 12px;"%>
+						<%end%>
+						<%#= link_to "Advanced Search", project_filter_projects_path, class: "btn btn-primary", :id=>"id_adv_search", :remote => true, :style => "margin: 3px 90px 1px 12px;" %>
+		  	  	    </div>
+	  	  	    </div>
+  	  		    <table id="id_project_table" class="table table-striped dataTable listingTable" aria-describedby="example2_info">
+				   <thead>
+				       <% unless @projects.blank? %>
+					       <tr role="row">
+						       <!-- <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 1px;" aria-label=": activate to sort column ascending"></th> -->
+						       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Name</th>
+						       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Client</th>
+							   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Project Manager</th>
+							   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Start Date</th>
+							   <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">End Date</th>
+						       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 219px;" aria-label="Browser: activate to sort column ascending">Action</th>
+					      </tr>
+            	   </thead>
+            	   <tbody role="alert" aria-live="polite" aria-relevant="all">
+					 <% @projects.each do |project| %>
+			  	       <tr class="gradeX odd">
+						    <!-- <td class="center"></td> -->
+						   <td><% if can? :read, Project %><%= link_to project.title, project %><%end%></td>
+						   <td class=" "><%=project.client.name unless project.client.blank? %></td>
+						   <td class=" ">
+							   <%=project.project_manager.firstname unless project.project_manager.blank?%> 
+							   <%=project.project_manager.lastname unless project.project_manager.blank?%>
+						   </td>
+						   <td class=" "><%=project.start_date%></td>
+						   <td class=" "><%=project.end_date%></td>
+                 	 	   <td data-no-turbolink>
+					           <% if can? :update, Project %><%= link_to '<i title="Edit Project" class="fa fa-edit"></i>'.html_safe, edit_project_path(project) %><%end%>
+					     	   <% if can? :destroy, Project %> | <%= link_to '<i title="Archive Project" class="fa fa-trash-o"></i>'.html_safe, project, method: :delete, data: { confirm: 'Are you sure?' } %><%end%>
+							  <%#= link_to '<i title="Payment" class="fa fa-dollar"></i>'.html_safe, fixed_cost_payment_projects_path(:id=>project) if project.project_type.eql?("fixed_cost")%>
+					   		   <%#= link_to '<i title="Payment" class="fa fa-dollar"></i>'.html_safe, time_material_payment_projects_path(:id=>project) if project.project_type.eql?("t_and_m")%>  
+					   		   <%#= link_to 'Invite Team', project_members_projects_path(:id=>project) %> 
+							   <%if project.project_type.eql?("fixed_cost")%>
+							     <%#= link_to 'Milestone', fc_milestone_projects_path(:id=>project) %> 
+							   <%end%>
+							   <%#= if can? :project_module, ProjectModule %> <%#= link_to 'Add modules', project_module_projects_path(:id=>project) %> <%#=end%> 
+					   		   <%#= if can? :list_project_modules, ProjectModule %> <%#= link_to 'View modules',list_project_modules_projects_path(:id=>project) %> <%#=end%>  
+					   		    <%#= unless current_user.is_admin? %>
+					   		    <%#= if can? :add_timesheet, Timesheet %> <%#= link_to '<i title="Timesheet" class="fa fa-calendar"></i>'.html_safe, add_timesheet_timesheets_path(:id=>project) %> <%#=end%> 
+					   		<%#=end%>
+							</td>
+              		   </tr>
+   	      	  		   <% end %>
+					<% end %>
+		  		</tbody>
+	  		  </table>
+		 	</div>
+        </div>
+    </div>
+</div>

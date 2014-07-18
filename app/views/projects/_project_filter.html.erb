@@ -1,0 +1,99 @@
+<div class="advsearch-block emp-search">
+	<%= form_tag('/projects/project', remote: true) do %>
+		<div>
+			<ul class="tecno-list proj-advsearch emp-advsearch">
+  				<li class="col-xs-6 col-md-3">
+    				<%= label_tag 'project_label', "Project Name" %>
+			        <div><%= text_field_tag 'project_title', nil, placeholder: 'Project Title' %></div>
+				</li>
+  				<li class="col-xs-6 col-md-3">
+           			<%= label_tag 'proj_manager_label', "Project Incharge"%>
+           			<div><%= select_tag 'proj_manager_id', options_for_select(@users.collect {|user| next unless @arrayProjectManagers.include? (user); [user.get_full_detail, user.id] }), :prompt => "Select User" %>	</div>
+				</li>
+  				<li class="col-xs-6 col-md-3">
+           			<%= label_tag 'proj_type_label', "Project Type"%>
+           			<div><%= select_tag 'proj_type', "<option>Fixed Cost</option> <option>Time & Material</option>".html_safe, :prompt => "Select Project Type" %></div>
+				</li>
+  				<li class="col-xs-6 col-md-3">
+           			<%= label_tag 'client_label', "Client"%>
+           			<div><%= select_tag 'client_id',options_for_select(@clients.collect {|c| [ c.name, c.id ] }), :prompt => "Select Client" %></div>	
+				</li>
+  			</ul>
+		</div>
+		<div>
+			<ul class="tecno-list emp-advsearch">
+				<li class="col-xs-6 col-md-3">
+					<label>Project Start date</label>
+	                <div class="input-append success date start_date proj-adv-search-date">
+						<%= text_field_tag "proj_start_date_value", nil, :class => "", :id=>"id_proj_start_date"%>
+		    			<span class="add-on">
+							<span class="arrow"></span>
+							<i class="fa fa-th" ></i>
+						</span>
+					</div>
+				</li>
+				<li class="col-xs-6 col-md-3">
+					<label>Project End date</label>
+	                <div class="input-append success date end_date proj-adv-search-date">
+						<%= text_field_tag "proj_end_date_value", nil, :class => "", :id=>"id_proj_end_date"%>
+		    			<span class="add-on">
+							<span class="arrow"></span>
+							<i class="fa fa-th" ></i>
+						</span>
+					</div>
+					<div id="id_end_msg" style="display:none" class="error">End date should be greater than start date</div>
+				</li>
+			</ul>
+	    </div>
+		
+	<div class="clearfix">&nbsp;</div>
+	<div class="text-right" data-no-turbolink>
+			<%= submit_tag 'Search',class: "btn btn-success btn-cons" %>
+			<input type="button" value="Cancel" class="btn btn-white btn-cons btn-cancel" />
+	</div>
+	<% end %>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {		
+		
+    $('.input-append.date.end_date').datepicker({
+   		startView: 0,
+   		autoclose: true,
+   		todayHighlight: true,
+   }).on('changeDate', function(ev){
+	   if ($('#id_proj_end_date').val() < $('#id_proj_start_date').val()){
+		   $('#id_end_msg').show();
+       }
+	   else
+	   {
+	   	   $('#id_end_msg').hide();
+	   }
+     });
+   
+    $('.input-append.date.start_date').datepicker({
+   		startView: 0,
+   		autoclose: true,
+   		todayHighlight: true,
+   });
+	   
+	   $('#proj_manager_id').each(function(){
+	         if($(this).val() == "")
+	     		 $('select option:empty').remove();
+	   });
+		
+      $(".btn-cancel").click(function(){
+  		$("#project_title").val("");
+  		$('#proj_manager_id option:eq(0)').attr('selected','selected');
+  		$('#proj_type option:eq(0)').attr('selected','selected');
+  		$('#technology_id option:eq(0)').attr('selected','selected');
+		$('#id_proj_start_date').val("");
+		$('#id_proj_end_date').val("");
+  	  });
+   	 
+});
+</script>
+
+			
+ 

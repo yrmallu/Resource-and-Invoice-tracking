@@ -1,0 +1,8 @@
+<%#= if @employees.blank? %>
+<%#=  else %>
+	$('#resource_detail').html('<%= j(render 'users/allocated_resources')  %>');
+<%#=  end %>	
+ if($('#resource_detail').hasClass('resources-allocate') == false)
+ {
+ //	$('#resource_detail').removeClass('resources-billable').removeClass('tab-branch').removeClass('fix-cost').removeClass('team-manage').addClass('resources-allocate');
+ }

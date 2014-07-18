@@ -1,0 +1,11 @@
+<% if @fixed_cost.blank? %>
+<% else %>
+	<%if "raise_invoice".eql?(@fixed_cost.status)%>
+	    $('div.'+<%=@fixed_cost.id%>).hide();
+		$('.'+<%=@fixed_cost.id%>).html('<%= j(render 'projects/milestone_invoice') unless @fixed_cost.blank?  %>');
+    <%else%>
+	    $('.'+<%=@fixed_cost.id%>).hide();
+		$('div.'+<%=@fixed_cost.id%>).hide();
+		$('#'+<%=@fixed_cost.id%>).html('<%= j(render 'projects/milestone_invoice') unless @fixed_cost.blank?  %>');
+	<%end%>
+<% end %>	

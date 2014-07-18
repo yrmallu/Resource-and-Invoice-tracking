@@ -1,0 +1,31 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Role Listing'.html_safe, roles_path %></span></li>
+    <li><span class="active"> Edit Role: <%= @role.name unless @role.blank?%></span></li>
+</ul>
+
+		<div class="col-md-6">
+		    <div class="grid simple">
+		        <div class="grid-title no-border">
+		            <div id="errorbox" class="error_box" style="margin-left: 25px;">	
+						<%= render "shared/error_messages", :object=>@role %>
+					</div>
+				</div>
+		        <div class="grid-body no-border">
+				    <%= form_for @role, :html=>{:class => "form_validation"}, :remote=>true do |f| %>
+                  	    <div class="form-group">
+		               		<%= render 'role_fields' , f: f %>
+		                </div>
+				    	<div class="form-actions">  
+						    <div class="pull-right" data-no-turbolink>
+								 <%= render "form_buttons", f: f%>
+							</div>
+					    </div>
+				    <% end %>
+		        </div>
+			</div>	
+		</div>
+
+

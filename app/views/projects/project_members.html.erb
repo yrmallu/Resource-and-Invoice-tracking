@@ -1,0 +1,170 @@
+<div id="flash-error">
+</div>
+   <ul class="breadcrumb">
+       <li>
+           <p>YOU ARE HERE</p>
+       </li>
+	   <%if "fixed_cost".eql?(@project.project_type)%>
+	   	<li><span class="prev-link" data-no-turbolink><%= link_to 'Project Progress'.html_safe, project_detail_users_path(:id=>@project) %></span></li>
+	   <%else%>
+	   	<li><span class="prev-link" data-no-turbolink><%= link_to 'Project Progress'.html_safe, tm_project_detail_users_path(:id=>@project) %></span></li>
+	   <%end%>
+       <li><span class="active"> Invite team for project: <%=@project.title unless @project.blank?%></span></li>
+   </ul>
+    <!--Project Progress sec start-->
+    <!--Project Header--> 
+    <div class="project-header" data-no-turbolink>
+    	<div class="navbar-header">
+        	<button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+          	</button>
+        	<a class="navbar-brand" href="../"><%=@project.title unless @project.blank?%></a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+        	<ul class="nav navbar-nav navbar-right">
+                <li><%= link_to 'Timesheets' , add_timesheet_timesheets_path %></li>
+                <li><%= link_to 'Milestones', fc_milestone_projects_path(:id=>@project) if @project.project_type.eql?("fixed_cost")%></li>
+                <!-- <li><%#= link_to 'Team', project_members_projects_path(:id=>@project)%> </li> -->
+            </ul>
+        </nav>
+    </div>
+    <!--Project Header-->
+    <!--Project Progress Block-->
+    <div class="milestone-block progress-block">
+    	<h3 class="semi-bold">Invite Team</h3>
+		<%=form_tag({:action=>:invite_project_team}, :remote=>true, :method=>:get, :class=>"form_validation", :id=>"invite_form") do%>	
+        <div class="invite-form">
+			<div class="pull-left project-col">
+        	<label>Project</label>
+            <div>
+				<%=select_tag "id", options_from_collection_for_select(@projects, "id", "title", :selected=>@project.blank? ? "" : @project.id)%>
+            </div>
+			<%=hidden_field_tag 'id', @project.id%>
+        	</div>
+			<div class="pull-left optn-select">
+				<label><%=radio_button_tag 'billable', 'billable', true%> Billable</label>
+				<label><%=radio_button_tag 'billable', 'non_billable', false%> Non-billable<label>
+			</div>
+		</div>
+		
+        <div class="invite-form">
+        	<label>Enter name</label>        
+            <div><input type="text" id="invite_users" name="team_member_name", required=true />
+			<div id="no_team_member" class="error hide">Please select team member</div>        	
+		</div>		
+        </div>
+		<div><%= submit_tag "Invite", class: "btn btn-success btn-cons", data: { disable_with: 'Inviting...' }, :style=>"margin-left: 431px;" %></div>
+        <div class="clearfix"></div>
+		<%end%>
+    </div>
+    <!--Project Progress Block-->
+    <!--Invite member start-->
+    <div class="milestone-block progress-block" id="id_invited_members">
+    	<h3 class="semi-bold">Invited Members</h3>
+        <div class="col-md-6">
+        	<div class="user-technolist invite-member" id="unverified">			
+				<div><%=render 'projects/unverified_resource'%></div>
+            </div>
+        </div>
+    <div class="clearfix"></div>
+    </div>
+    <div class="text-center loadmore_arrw"><a href="javascript:void(0);" class="toggle_invited_members" container-div="id_invited_members"><i class="fa fa-angle-down"></i></a></div>
+    
+	<!--Invite member end-->
+    <!--Team block start-->
+        <% unless @project.project_manager.delete_flag == true %>
+
+    <div class="milestone-block" id="id_member_list">
+    	<h3 class="semi-bold" >The Team</h3>
+        <div class="col-md-3">
+        	<div class="client-detail">
+                <div class="">
+					<%logo = @project.project_manager.photos.blank? ? 'missin.png' : @project.project_manager.photos(:thumb) %>
+					<%=image_tag(logo, :class=>"client-photo")%>
+				</div>
+                <h4 class="text-center semi-bold"><%=@project.project_manager.get_full_name unless @project.project_manager.blank?%></h4>
+                <p class="client-desig"><%=@project.project_manager.role.name unless @project.project_manager.role.blank?  unless @project.project_manager.blank?%></p>
+            </div>
+        </div>
+		<div class="col-md-9" id="id_invited_team">
+			<span id="project_team"><%=render 'project_team'%></span>
+		</div>
+	<div class="clearfix"></div>
+    </div>
+    <% end %>
+    <div class="text-center loadmore_arrw"><a href="javascript:void(0);" class="toggle_invited_members" container-div="id_member_list"><i class="fa fa-angle-down"></i></a></div>
+    <!--Team block end-->
+    <!--Project Progress sec end-->
+  </div>
+</div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+$(function() {		
+	// Call SuperBox - that's it!
+	$('.superbox').SuperBox();		
+});
+$(document).ready(function(){
+
+	showHideMenu('li_projects');
+	
+	$('.toggle_invited_members').click(function(e){
+		e.preventDefault();
+		var container_div = $(this).attr('container-div');
+		$('#'+container_div).slideToggle('slow');
+		//$(this).parent().effect("highlight", {background:"000000"}, 500);
+		
+	});
+	
+	$("#invite_form").submit(function( event ) {
+	  if (jQuery.trim($('#invite_users').val()) == '')
+	  {
+		  $('#no_team_member').removeClass('hide').addClass('show');
+	  	  return false;
+	  }
+	  else
+	  {
+	  	  $('#no_team_member').addClass('hide').removeClass('show');
+	  }
+	  
+	});
+	
+	if('<%=@project.project_type%>' == 'fixed_cost')
+	{
+		$('.project-header').addClass("fixed_plan");
+		$('.project-header').removeClass("tm_plan");
+	}
+	else
+	{
+		$('.project-header').addClass("tm_plan");
+		$('.project-header').removeClass("fixed_plan");
+	}
+	
+    $("#invite_users").tokenInput([
+		<%@users.each do |user|%>
+		{
+        "first_name": "<%=user.firstname%>",
+        "last_name": "<%=user.lastname%>",
+        "email": "<%=user.email%>",
+        "url": "https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
+        "id":"<%=user.id%>",
+		"duplicate":true
+    },
+	<%end%>
+  ], {
+      propertyToSearch: "first_name",
+      //preventDuplicates: true,
+      resultsFormatter: function(item){ return "<li>" + "<img src='" + item.url + "' title='" + item.first_name + " " + item.last_name + "' height='25px' width='25px' />" + "<div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.first_name + " " + item.last_name + "</div><div class='email'>" + item.email + "</div></div></li>" },
+      tokenFormatter: function(item) { return "<li><p>" + "<img src='" + item.url + "' title='" + item.first_name + " " + item.last_name + "' height='25px' width='25px' />" + item.first_name + " " + item.last_name + "</p></li>" },
+      onAdd: function (item) { $('#no_team_member').removeClass('hide').removeClass('show').addClass('hide');},
+	  onDelete: function (item) {}
+
+  });
+       
+});
+</script>

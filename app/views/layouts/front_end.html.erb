@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta charset="utf-8" />
+<title>Magnifi.it</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+
+<%= stylesheet_link_tag "bootstrap.min.css" %>
+<%= stylesheet_link_tag "bootstrap-theme.min.css" %>
+<%= stylesheet_link_tag "/stylesheets/home_style.css" %>
+<%= stylesheet_link_tag "responsive.css" %>
+<%= stylesheet_link_tag "component.css" %>
+<%= stylesheet_link_tag "owl.carousel.css" %>
+<%= stylesheet_link_tag "owl.theme.css" %>
+<%= stylesheet_link_tag "settings.css" %>
+<%= stylesheet_link_tag "pace-theme-flash.css" %>
+<%= stylesheet_link_tag "font-awesome.css" %>
+<%= stylesheet_link_tag "index_footer.css" %>
+
+</head>
+<!-- END HEAD -->
+<body>
+<div class="main-wrapper">
+  <header id="ha-header" class="ha-header ha-header-hide "  >
+    <div class="ha-header-perspective">
+      <div class="ha-header-front navbar navbar-default">
+        <div class="compressed">
+          <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+			
+			<%= link_to image_tag("logo_black.png", :width=>"140", data: { src_retina: "logo_black.png"}), root_url, :class=>"navbar-brand compressed"%>				
+		  </div>
+          <div class="navbar-collapse collapse">
+		      <ul class="nav navbar-nav navbar-right" >
+                  <li ><%= link_to 'Home', root_url%></li>
+                  <li ><a href="javascript:void(0);">Tour</a></li>
+                  <li><%= link_to 'Login', signin_path%></li>
+		  	  </ul>
+	      </div>
+          <!--/.nav-collapse --> 
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="section ha-waypoint"  data-animate-down="ha-header-hide" data-animate-up="ha-header-hide">
+    <div role="navigation" class="navbar navbar-transparent navbar-top">
+      <div class="container">
+        <div class="compressed">
+          <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <%= link_to image_tag("cue-logo.png", :width=>"140", data: { src_retina: "cue-logo.png"}), root_url, :class=>"navbar-brand compressed"%>
+		  </div>
+          <div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right" >
+              <li ><%= link_to 'Home', root_url%></li>
+              <li ><a href="javascript:void(0);">Tour</a></li>
+              <li><a href="#" id="checking" class="dropdown-toggle" data-original-title="Log In" data-toggle="dropdown" data-content="" data-placement="bottom" >Login</a></li>
+              <li class="login-inside"><%= render 'layouts/signin'%></li>
+          	</ul>
+          </div>
+          <!--/.nav-collapse --> 
+        </div>
+      </div>
+    </div>
+    <!--BEGIN SLIDER -->
+   <div id="notification-list" style="display:none">
+					<div style="width:300px">
+						  <div class="notification-messages info">
+
+									<%= render 'layouts/signin'%>
+									
+								</div>	
+													
+						</div>				
+				</div> 
+ 
+   		<%=yield %>
+  	
+		
+  <div class="section black footer">
+    <div class="container">
+      <div class="p-t-30 p-b-20">
+        <div class="row">
+          <!--Footer Top Sec Start-->
+          <div class="footer-topsec">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+              <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                  <ul class="footer-link">
+                    <li><%= link_to 'Home', root_url%></li>
+                    <li><a href="javascript:void(0);">Tour</a></li>
+                    <li><a href="http://www.cuelogic.com/blog/">Blog</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                  <ul class="footer-link">
+                    <li><a href="javascript:void(0);">project management tool</a></li>
+                    <li><a href="javascript:void(0);">invoicing tool</a></li>
+                    <li><a href="javascript:void(0);">HRMS tool</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                  <ul class="footer-link">
+                    <li><a href="javascript:void(0);">content management tool</a></li>
+                    <li><a href="javascript:void(0);">OpEx tracking tool</a></li>
+                    <li><a href="javascript:void(0);">FAQ</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6">
+              <div class="social-icon text-right"> <a class="cuelogo" href="http://cuelogic.com">&nbsp;</a> <!-- <a target="_blank" class="git" href="https://github.com/vikrantlabde">&nbsp;</a>  --><a target="_blank" class="fb" href="http://www.facebook.com/pages/Cuelogic-Technologies/298280838251?ref=search&sid=1037363674.3484703204..1">&nbsp;</a> <a target="_blank" class="twit" href="http://www.twitter.com/cuelogic">&nbsp;</a> <a target="_blank" class="in" href="http://www.linkedin.com/companies/cuelogic-technologies?trk=co_search_results&goback=%2Ecps_1265875999963_1">&nbsp;</a> </div>
+            </div>
+          </div>
+          <!--Footer Top Sec End-->
+          <div class="footer-text">
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <a href="javascript:void(0);">Privacy</a> / <a href="javascript:void(0);">Terms</a> / <a href="javascript:void(0);">Contact</a> 
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6">
+                <p class="text-right">Copyright &copy;2008-<%= Time.now.year %><a href="http://cuelogic.com" target="_blank"> Cuelogic Technologies.</a> All rights reserved.</p>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag "1_jquery-1.10.2.js" %>
+<%= javascript_include_tag "jquery.themepunch.plugins.min.js" %>
+<%= javascript_include_tag "jquery.themepunch.revolution.min.js" %>
+<%= javascript_include_tag "bootstrap.min.js" %>
+<%= javascript_include_tag "pace.min.js" %>
+<%= javascript_include_tag "jquery.unveil.min.js" %>
+<%= javascript_include_tag "owl.carousel.min.js" %>
+<%= javascript_include_tag "waypoints.min.js" %>
+<%= javascript_include_tag "jquery.parallax-1.1.3.js" %>
+<%= javascript_include_tag "jquery.nicescroll.min.js" %>
+<%= javascript_include_tag "jquery.appear.js" %>
+<%= javascript_include_tag "jquery.animateNumbers.js" %>
+<%= javascript_include_tag "core.js" %>
+
+</body>
+
+
+<script type="text/javascript">
+$(document).ready(function(){	
+ /*** Retina Image Loader ***/
+ if ($.fn.unveil){
+  $("img").unveil(); 
+ }
+ 
+  /**** Scroller ****/
+  if ($.fn.niceScroll){
+	var mainScroller = $("html").niceScroll({
+					zindex:999999,
+					boxzoom:true,
+					cursoropacitymin :0.5,
+					cursoropacitymax :0.8,
+					cursorwidth :"10px",
+					cursorborder :"0px solid",
+					autohidemode:false
+	});
+  }
+  
+  /**** Mobile Side Menu ****/
+  if ($.fn.waypoint){  
+	var $head = $('#ha-header');
+	$( '.ha-waypoint' ).each( function(i) {
+					var $el = $( this ),
+						animClassDown = $el.data( 'animateDown' ),
+						animClassUp = $el.data( 'animateUp' );
+
+					$el.waypoint( function( direction ) {
+						if( direction === 'down' && animClassDown ) {
+							$head.attr('class', 'ha-header ' + animClassDown);
+						}
+						else if( direction === 'up' && animClassUp ){
+							$head.attr('class', 'ha-header ' + animClassUp);
+						}
+					}, { offset: '50%' } );
+	});
+	}
+	
+	/**** Parrallax ****/
+	if ($.fn.parallax){
+	$('#working-section').parallax("50%", 0.1,false);
+		
+	$('.parrallax-element, .parrallax-background').each(function () {
+		$(this).css('background-image', 'url(' + $(this).attr("data-background-image") + ')');
+		$(this).css('height',  $(this).attr("data-background-height"));
+		$(this).css('width',  $(this).attr("data-background-width"));
+		$(this).parallax("50%", 0.1);
+	});
+	}	
+	
+	/**** Appear JS ****/
+	if ($.fn.appear){
+	$('[data-ride="animated"]').appear();
+    if( !$('html').hasClass('ie no-ie10') ) {		
+        $('[data-ride="animated"]').addClass('appear');
+    	$('[data-ride="animated"]').on('appear', function() {
+	        var $el = $(this), $ani = ($el.data('animation') || 'fadeIn'), $delay;
+	        if ( !$el.hasClass('animated') ) {	
+	        	$delay = $el.data('delay') || 0;
+                setTimeout(function(){
+                    $el.removeClass('appear').addClass( $ani + " animated" );
+                }, $delay);
+	        }
+	    });
+    };
+	$('.number-animator').appear();
+	$('.number-animator').on('appear', function() {
+			 $(this).animateNumbers($(this).attr("data-value"), true, parseInt($(this).attr("data-animation-duration")));	
+	});
+	
+	$('.animated-progress-bar').appear();
+	$('.animated-progress-bar').on('appear', function() {
+			$(this).css('width', $(this).attr("data-percentage"));
+	});
+	}
+	
+	/**** Animate Numbers ****/
+	if ($.fn.animateNumbers){
+	$('.animate-number').each(function(){
+		 $(this).animateNumbers($(this).attr("data-value"), true, parseInt($(this).attr("data-animation-duration")));	
+	})
+	}
+	
+	$('.animate-progress-bar').each(function(){
+		 $(this).css('width', $(this).attr("data-percentage"));
+		
+	})
+	
+	if ($("#thumbs").length > 0){
+		var $container = $('#thumbs');
+		$container.isotope({
+			filter: '*',
+			animationOptions: {
+				duration: 750,
+				easing: 'linear',
+				queue: false
+			}
+		});
+		 
+		$(window).resize(function() {
+			var $container = $('#thumbs');
+				$container.isotope({
+					itemSelector : '.item',
+					animationOptions: {
+						duration: 250,
+						easing: 'linear',
+						queue: false
+					}
+			});
+		});
+	
+		// filter items when filter link is clicked
+		$('#portfolio-nav a, #gallery-nav a').click(function(){
+											 //alert("CLICK")
+			  var selector = $(this).attr('data-filter');
+			  $container.isotope({ filter: selector });
+			  
+			  $("#portfolio-nav li, #gallery-nav li").removeClass("current");
+			  $(this).closest("li").addClass("current");
+			  
+			  return false;
+		});
+	}
+	
+	$(".portfolio-grid ul li").hover(function(){								
+			var imgHeight=$(this).find("img").height();			
+			$(this).find(".portfolio-image-wrapper").height(imgHeight);			
+
+	});	
+
+});	
+</script>
+
+	

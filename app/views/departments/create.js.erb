@@ -1,0 +1,10 @@
+<% if @department.errors.any? %>
+	$('#errorbox').html('<%= j(render "shared/error_messages", :object=>@department) %>')
+<% else %>
+	<% 
+	   @department = Department.new
+	%>
+	//$('#errorbox').html("Department was successfully created.").addClass("help_message")
+	//$("#department_name").val("");
+	window.location = '<%= j(departments_path) %>'
+<% end %>

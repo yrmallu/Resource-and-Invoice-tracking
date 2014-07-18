@@ -1,0 +1,25 @@
+
+$('.class_task_form').html('<%= j(render "timesheets/edit_task") %>')
+
+$('#id_create_timesheet').hide();
+$('#id_archive_timesheet').hide();
+$('#id_archive_timesheet').hide();
+
+if ($( ".class_timesheet_task_type_id" ).val() == "1")
+{
+	$( ".class_timesheet_task_type_id" ).trigger('change');
+}
+//  $('.input-append.date').datepicker({
+// 		startView: 0,
+// 		autoclose: true,
+// 		todayHighlight: true,
+// 		endDate: '+0d'		
+// }).on('changeDate', function (ev) {
+// 
+// });
+
+$('.input-append.date').click(function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+});
+

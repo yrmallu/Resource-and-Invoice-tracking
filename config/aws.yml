@@ -1,0 +1,14 @@
+development:
+  bucket: magnifi.it
+  access_key_id: AKIAIV6YY4GSZ6KOCMQA
+  secret_access_key: s8VXiYNgn1n7b9UW5BcmIiczhPw1m5SWyxQJZUpB
+
+test:
+  bucket: YOUR_TEST_BUCKET_NAME
+  access_key_id: YOUR_ACCESS_KEY
+  secret_access_key: YOUR_SECRET_ACCESS_KEY
+
+production:
+  bucket: magnifi.it
+  access_key_id: AKIAIV6YY4GSZ6KOCMQA
+  secret_access_key: s8VXiYNgn1n7b9UW5BcmIiczhPw1m5SWyxQJZUpB

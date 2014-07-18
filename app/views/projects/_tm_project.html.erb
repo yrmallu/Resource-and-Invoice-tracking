@@ -1,0 +1,73 @@
+
+<%= fields_for :project, @project do |tm| %>
+	<%= tm.fields_for :timematerial_milestones , @milestones do |f| %>
+	<fieldset>
+	<hr class="<%=f.object.id%>">
+	<div class="row column-seperation">
+    	<div class="col-md-6 <%=f.object.id%>">
+			
+        	<h4 class="semi-bold">Milestone Information</h4>   
+			<div class="row form-row ">
+		    	<div class="col-md-12">
+		        	<%=f.label :milestone_name, "Milestone Name"%> 
+          	    	<%=f.text_field :milestone_name, :class=>"form-control" %>
+		    	</div>
+			</div>         
+			<div class="row form-row">
+		    	<div class="col-md-6">
+					<div class="form-group">
+				    	<label class="form-label">Milestone Start Date</label><br>
+				    	<span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span>
+				    	<div class="controls">						 
+					    	<%=f.text_field :milestone_start_date, :class=>"form-control" %>	
+						</div>
+					</div>
+				</div>
+            	<div class="col-md-6">
+					<div class="form-group">
+				    	<label class="form-label">Milestone End Date</label><br>
+				    	<span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span>
+				    	<div class="controls">						 
+					    	<%=f.text_field :milestone_end_date, :class=>"form-control class_milestone_end_date" %>                       			      	  
+						</div>
+					</div>
+				</div>
+        	</div>
+			<div class="row form-row">
+		    	<div class="col-md-8">
+            		<%=f.label :status, "Milestone Status"%>
+            	  	<%=f.select :status, [["Not Started", 'not_started'],["In Progress ", 'in_progress'],["Raise Invoice","raise_invoice"],["Invoice Raised","invoice_raised"],["Payment Received",'payment_received']], {:prompt => "Select Milestone Status"}, {:class=>"form-control"} %>
+		    	</div>
+	    	</div>
+		</div> 
+		<div class="col-md-6 <%=f.object.id%>">
+			<h4 class="semi-bold">&nbsp;</h4>
+			<div class="row form-row">
+	    		<div class="col-md-6">
+            		<%=f.label :amount, "Milestone Amount"%> 
+            	  	<%=f.text_field :amount, :class=>"amount form-control" %>		
+				</div>
+			</div>
+			<div class="row form-row">
+		    	<div class="col-md-12">
+            		<%=f.label :description, "Description"%>
+            	  	<%=f.text_area :description, :class=>"form-control" %>
+		    	</div>
+			</div>
+			<div class="row form-row">
+	    		<div class="col-md-12">
+					<%unless f.object.id.blank?%>
+           				<%=f.label :reason, "Delayed Reason"%> 
+           	    		<%=f.text_area :reason, :class=>"form-control" %>
+					<%end%>
+				</div>
+			</div>
+		</div>	
+	</div>	
+	<%=f.hidden_field(:id)%>
+	<%=link_to "remove", "javascript:void(0)", :class=>"playr-icon-delete class_delete_milestone" unless f.object.id.blank?%>	
+	<%=f.hidden_field :_destroy%>
+	</fieldset>
+	<%end%>
+<%end%>
+

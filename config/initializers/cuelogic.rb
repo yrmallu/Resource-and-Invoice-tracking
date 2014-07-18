@@ -1,0 +1,1 @@
+CUELOGIC_CONFIG = YAML.load_file("#{::Rails.root}/config/cuelogic.yml")[::Rails.env]

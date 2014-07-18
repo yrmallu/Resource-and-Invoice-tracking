@@ -1,0 +1,281 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+			<div class="grid-title no-border"></div>  
+			<%= form_for @user, :html=>{:class=>"form_validation form-no-horizontal-spacing class_date_validation"} do |f| %>
+				<%= f.hidden_field :company_id,:value=>@company.id %>
+				<div class="grid-body no-border">
+					<div id="errorbox" class="error_box" style="margin-left: 25px;">	
+						<%= render "shared/error_messages", :object=>@user %>
+					</div>
+			        <div class="row column-seperation form-section">
+			            <div class="col-md-6">
+			                <h4 class="semi-bold">Basic Information</h4>            
+			                <div class="form-row form-group">
+								<div class="row ">
+			                    	<div class="col-md-6">
+										<label class="form-label">First Name</label>
+										<!-- <span class="help">e.g. "Jane"</span> -->
+			                        	<%= f.text_field :firstname, :autofocus => true, :required=>true, :class=>"form-control"%>
+			                    	</div>
+			                    	<div class="col-md-6">
+										<label class="form-label">Last Name</label>
+										<!-- <span class="help">e.g. "Smith"</span> -->
+			                        	<%= f.text_field :lastname, :class=>"form-control" %>
+			                    	</div>
+								</div>
+			                </div>
+			                <div class="form-row form-group">
+								<div class="row ">
+			                    	<div class="col-md-6">
+			                      		<label class="form-label">Gender</label>   
+										<%=f.select :gender, [["Male","male"],["Female","female"]], {:prompt => "Select Gender"}, {:class=>"form-control"} %>     	  </div>
+			                    	<div class="col-md-6">
+										<label class="form-label">Employee Code</label>
+										<!-- <span class="help">e.g. "Cue120"</span> -->
+			                        	<%= f.text_field :emp_code, :class=>"form-control emp_code_validation"%>	
+										<span class="help-inline error_box"></span>
+			                    	</div>
+								</div>
+			                </div>
+			                <div class="form-row form-group">
+								<div class="row ">
+			                    	<div class="col-md-12">
+										<label class="form-label">Email</label>
+										<!-- <span class="help">e.g. "jane@gmail.com"</span> -->
+			                        	<%= f.text_field :email, :autocomplete => "off", :class=>"email_validation form-control", :required=>true %>
+								   	 <!-- <div class="" id="loading">
+								   	 	<%#=image_tag('loader.jpeg', :height => '30', :width => '30')%>
+								   	 </div> -->
+										<span class="help-inline error_box"></span>
+			                    	</div>
+								</div>
+			                </div>
+			                <div class="form-row form-group">
+								<div class="row ">
+			                    	<div class="col-md-6">
+									   	<label class="form-label">Date of birth</label><br>
+									   	<!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+									   	<div class="controls">						 
+									    	<%=f.text_field :date_of_birth, :class=>"form-control", :required=>true%>					
+										</div>
+                                        <div class="hide error" id="id_birth_date_error">Date of birth should be less than date of joining</div> 
+                                        <div class="hide error" id="id_birth_date_age">Date of birth should be greater than 18 years</div> 
+			                     	</div>
+			                    	<div class="col-md-6">
+			                		    <label class="form-label">Date of joining</label><br>
+									    <!-- <span class="help">e.g. "2013/12/25 yyyy/mm/dd"</span> -->
+									    <div class="controls">						 
+										   	<%=f.text_field :joining_date, :class=>"form-control"%>	
+                                        </div>
+										<div class="hide error" id="id_joining_date_error">Joining date should be greater than date of birth</div> 
+									</div>
+								</div>
+			                </div>
+			                <div class="row form-row">
+			                    <div class="col-md-6">
+									<label class="form-label">Department</label>
+			                        <%= f.select :department_id, @departments.collect {|p| [ p.name, p.id ] }, {:prompt => "Select Department"}, {:class=>"form-control"} %>
+								</div>
+			                    <div class="col-md-6">
+									<label class="form-label">Designation</label>
+			                    	<%= f.select :role_id, @roles.collect {|p| [ p.name, p.id ] }, {:prompt => "Select Designation"}, {:required=>true, :class => "form-control"} %>			
+			                    </div>
+			                </div>
+			                <div class="form-row form-group">
+								<div class="row ">
+			                    	<div class="col-md-6">
+										<label class="form-label">Experience</label>
+										<!-- <span class="help">e.g. "5"</span> -->
+			                        	<%= f.text_field :experience, :class=>"form-control"%>
+									</div>
+			                    	<div class="col-md-6">
+										<label class="form-label">Education</label>
+										<!-- <span class="help">e.g. "MCA"</span> -->
+			                        	<%= f.text_field :education, :class=>"form-control"%>
+									</div>
+								</div>
+						    </div>
+			                <div class="row form-row">
+							 <div class="col-md-6">
+								<label class="form-label">Resource Type</label>
+		                    	<%=f.select :resource_type, [["Billable","billable"],["Non Billable","non_billable"]], {:prompt => "Select Employee Type"}, {:class=>"form-control", :required=>true} %>
+		                    </div>
+			                    <div class="col-md-6">
+									<label class="form-label">Technology</label>	
+			                    	<%=select_tag "technology[]", options_from_collection_for_select(@technologies, "id", "name", :selected=> ("new".eql?(action_name)) ? [] : (@user_tech.map(&:id) unless @user_tech.blank?)),{:multiple=>"multiple"}%>
+			                    </div>
+						     </div>
+							 <%=f.hidden_field :boss_id%>
+ 			                 <div id="id_reporting_to"> </div>
+			                 <div class="row form-row">
+ 			                    <div class="col-md-6">
+ 								   <table class="image_view_setting">
+ 						   			    <tr>
+ 						   				    <td>
+ 						   					    <div class="client-img"><%image = ( ["edit", "update"].include?(action_name)) ? (@user.photos.blank? ? "missin.png" : @user.photos.url) : 'missin.png'  %>
+ 						   					    <%= image_tag(image,:alt=>"your image",:id=>"image_preview",:class=>"link_to_add_ids show-page-img",:border=>"1") %></div>
+ 						   				    </td>
+ 						   			    </tr>
+ 						   			    <tr>
+ 						   				    <td>
+ 						   					    <%= f.file_field :photos, :class => 'input-file', :onChange=>"return readURL(this);"%>
+ 						   				    </td>
+ 						   			    </tr>
+ 						   		    </table>
+ 			                    </div> 
+			                </div>
+			             </div>
+	                    <div class="col-md-6">
+							<%=f.fields_for :addresses,@addresses do |fb|%>
+					      		<%=render 'clients/address', f: fb%>
+					    	<%end%>
+	                    </div>	
+			        </div>
+					<%=f.hidden_field :password, :value=>"123456789"%>
+					<%=f.hidden_field :password_confirmation, :value=>"123456789"%>
+					<%=f.hidden_field :user_type, :value=>"employee"%>
+					<div class="form-actions" data-no-turbolink>
+					      <div class="pull-right">
+							  <%= f.submit 'Save', class: "btn btn-success btn-cons", data: { disable_with: 'Saving...' } %>
+							  <%= link_to 'Cancel', users_path, class: "btn btn-white btn-cons" %>
+						  </div>
+					</div>
+				</div>
+			<% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+  function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#image_preview')
+          .attr('src', e.target.result)
+          .width(250)
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+
+email_valid = "<%= url_for :controller=> 'contact_points', :action => 'email_validation', :id=> action_name.eql?("edit") ? @user.id : 0%>"
+
+emp_code_valid = "<%= url_for :controller=> 'users', :action => 'emp_code_validation', :id=> action_name.eql?("edit") ? @user.id : 0%>"
+
+$(document).ready(function(){
+	showHideMenu('li_administration');
+	
+        var d = new Date();
+
+    var dob= $('#user_date_of_birth').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    }).on('changeDate', function(ev){
+
+	var date_of_birth= $('#user_date_of_birth').datepicker({format: "yyyy-mm-dd"}).val();
+	var birth_date = new Date(date_of_birth);
+
+    var nowYear = d.getFullYear();
+    var birthYear = id_birth_date_errordate.getFullYear();
+    var age = nowYear - birthYear;
+    
+            if (ev.date.valueOf() > doj.date.valueOf() && doj.date.valueOf() != undefined ){
+                
+                $("#id_birth_date_error").removeClass('hide').addClass('show');
+                
+            }
+            else
+            {
+                $("#id_birth_date_error").removeClass('show').addClass('hide');
+            }            
+            if (age < 18 ){
+                
+                $("#id_birth_date_age").removeClass('hide').addClass('show');
+                
+            }
+            else
+            {
+                $("#id_birth_date_age").removeClass('show').addClass('hide');
+            }
+        }).data('datepicker');
+    
+    var doj= $('#user_joining_date').datepicker({
+  			format: "yyyy-mm-dd",
+  			startView: 2,
+  			autoclose: true,
+  			todayHighlight: true
+    }).on('changeDate', function(ev){
+            if (ev.date.valueOf() < dob.date.valueOf() &&  ( dob.date.valueOf() != undefined  )){
+            $("#id_joining_date_error").removeClass('hide').addClass('show');
+           
+        }
+        else
+        {
+            $("#id_joining_date_error").removeClass('show').addClass('hide');
+        }
+    }).data('datepicker');
+    
+	
+    
+
+$( ".class_date_validation" ).submit(function( event ) {	
+
+   	if( Date.parse($('#user_date_of_birth').val()) >= Date.parse($('#user_joining_date').val()) )
+	{
+		$('#id_joining_date_error').removeClass('hide').addClass('show');
+		return false;
+	} 
+	else
+	{
+		$('#id_joining_date_error').removeClass('show').addClass('hide');
+	}	
+});	
+	
+if ($('#user_resource_type').val() == 'non_billable')
+{
+	jQuery.get("<%=url_for(:controller=>'users',:action=>'reporting_to')%>",{resource_type : $('#user_resource_type').val(), user_id: '<%=@user.id%>'},
+			function(data) {
+				         if(data)
+			             {
+							 $("#id_reporting_to").show();
+							jQuery("#id_reporting_to").html(data);
+						 }
+			             else
+			             {}
+	 	   		  }
+   		   );
+}
+
+$('#user_resource_type').change(function(){
+	if ($('#user_resource_type').val() == 'non_billable')
+	{
+  		jQuery.get("<%=url_for(:controller=>'users',:action=>'reporting_to')%>",{resource_type : $('#user_resource_type').val(), user_id:""},
+			function(data) {
+					         if(data)
+				             {
+								 $("#id_reporting_to").show();
+								 jQuery("#id_reporting_to").html(data);
+							 }
+						     else
+						     {}
+				 	   	 }
+			   		  );
+			}
+			else
+			{
+				$("#id_reporting_to").hide();
+			}
+		});
+				
+});
+</script>

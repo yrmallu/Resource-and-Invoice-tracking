@@ -1,0 +1,139 @@
+<div class="advsearch-block emp-search">
+	<%= form_tag('/users/user', remote: true) do %>
+		<div>
+			  	<ul class="tecno-list emp-advsearch">
+  				<li class="col-xs-6 col-md-3">
+    				<%= label_tag 'user_fn_label', "First Name" %>
+			        <div><%= text_field_tag 'user_fname', nil, placeholder: 'Employee First Name' %></div>
+				</li>
+  				<li class="col-xs-6 col-md-3">
+    				<%= label_tag 'user_ln_label', "Last Name" %>
+			        <div><%= text_field_tag 'user_lname', nil, placeholder: 'Employee Last Name' %></div>
+				</li>
+  				<li class="col-xs-6 col-md-3">
+           			<%= label_tag 'state_label', "State" %>
+           			<div><%= text_field_tag 'state_name', nil, placeholder: 'Employee State' %></div>
+				</li>
+  				<li class="col-xs-6 col-md-3">
+           			<%= label_tag 'city_label', "City" %>
+           			<div><%= text_field_tag 'city_name', nil, placeholder: 'Employee City' %></div>	
+				</li>
+  			</ul>
+		</div>
+		<div>
+			<ul class="tecno-list emp-advsearch">
+		    	<li class="col-xs-6 col-md-3">
+       				<%= label_tag 'user_type_label', "Employee Type"%>
+   	   				<div><%= select_tag 'user_type', "<option>Billable</option> <option>Non Billable</option>".html_safe, :prompt => "Select Employee Type" %></div>	
+	 	   		</li>	
+		    	<li class="col-xs-6 col-md-3">
+	       			<%= label_tag 'department_label', "Department"%>
+	   	   			<div><%= select_tag 'department_id',options_for_select(@departments.collect {|p| [ p.name, p.id ] }), :prompt => "Select Department" %></div>
+				</li>
+				<li class="col-xs-6 col-md-3">
+       		    	<%= label_tag 'role_label', "Role" %>
+       		    	<div><%= select_tag 'role_id', options_for_select(@roles.collect {|p| [ p.name, p.id ] }), :prompt => "Select Role" %></div>
+	        	</li>
+				<li class="col-xs-6 col-md-3">
+ 					<%= label_tag 'gender_label', "Gender"%>
+ 					<div><%= select_tag 'gender_type', "<option>Male</option> <option>Female</option>".html_safe, :prompt => "Select Gender" %></div>		
+	        	</li>
+		    	
+			</ul>
+	    </div>
+		<div>
+			<ul class="tecno-list emp-advsearch">
+		    	<li class="col-xs-6 col-md-3">
+	 				<%= label_tag 'technology_label', "Technology" %>
+		        	<div><%=select_tag "technology[]", options_from_collection_for_select(@technologies, "id", "name"), {:multiple=>"multiple"}%>
+					
+					</div>
+		 	   	</li>
+  				<li class="col-xs-6 col-md-3">
+           			<%= label_tag 'education_label', "Education" %>
+           			<div><%= text_field_tag 'education_name', nil, placeholder: 'Employee Education' %></div>
+				</li>
+		    	<li class="col-xs-6 col-md-3">
+					<label>Joining Start date</label>
+                	<div class="input-append success date start_date">
+						<%= text_field_tag "from_joining_date_value", nil, :id=>"id_from_joining_date"%>
+	    				<span class="add-on">
+							<span class="arrow"></span>
+							<i class="fa fa-th" ></i>
+						</span>
+					</div>
+				</li>
+				<li class="col-xs-6 col-md-3">
+					<label>Joining End date</label>
+                	<div class="input-append success date end_date">
+						<%= text_field_tag "to_joining_date_value", nil, :class => "", :id=>"id_end_joining_date"%>
+	    				<span class="add-on">
+							<span class="arrow"></span>
+							<i class="fa fa-th" ></i>
+						</span>
+					</div>
+					<div id="id_end_msg" style="display:none" class="error">End date should be greater than start date</div>
+				</li>
+		    	<li class="col-xs-6 col-md-3">
+					<label>Age range</label>
+        			<div class="slider primary">
+          	  		  	<input type="text"  data-slider-value="[18,60]" data-slider-step="1" data-slider-max="60" data-slider-min="18" value="" class="slider-element form-control" data-slider-selection="after" id="id_slider">
+        			</div>
+				</li>
+			</ul>
+		</div>
+		
+		<%= hidden_field_tag "slider_value", "18,60"%>
+	<div class="clearfix">&nbsp;</div>
+	<div class="text-right col-md-12" data-no-turbolink>
+			<%= submit_tag 'Search',class: "btn btn-success btn-cons" %>
+			<input type="button" value="Cancel" class="btn btn-white btn-cons btn-cancel" />
+	</div>
+	<% end %>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+		
+		
+		$('.slider-element').slider();
+		
+	    $('.input-append.date.end_date').datepicker({
+	   		startView: 0,
+	   		autoclose: true,
+	   		todayHighlight: true,
+	   }).on('changeDate', function(ev){
+		   if ( Date.parse($('#id_end_joining_date').val()) < Date.parse($('#id_from_joining_date').val()) ){
+			   $('#id_end_msg').show();
+			   return false;
+	       }
+		   else
+		   {
+		   	   $('#id_end_msg').hide();
+		   }
+	     });
+	   
+ 	    $('.input-append.date.start_date').datepicker({
+ 	   		startView: 0,
+ 	   		autoclose: true,
+ 	   		todayHighlight: true,
+ 	   });
+	   
+	  
+	  $(".btn-cancel").click(function(e){
+	      $("#user_name").val("");
+		  $("#education_name").val("");
+		  $("#state_name").val("");
+		  $("#city_name").val("");
+		  $('#department_id option:eq(0)').attr('selected','selected');
+		  $('#role_id option:eq(0)').attr('selected','selected');
+		  $('#technology_id option:eq(0)').attr('selected','selected');
+		  $('#user_type option:eq(0)').attr('selected','selected');
+		  $('#gender_type option:eq(0)').attr('selected','selected');
+		  $('#id_from_joining_date').val("");
+		  $('#id_end_joining_date').val("");
+       	  e.preventDefault();
+          $('#id_slider').slider('setValue',[18,60]);
+	  });
+});
+</script>

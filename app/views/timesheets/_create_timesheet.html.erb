@@ -1,0 +1,126 @@
+
+<%= form_tag create_timesheet_timesheets_path, :class=>"form_validation ", :remote=>true  do%>
+	<div class='detail-form'>
+		<%= label_tag "timesheet_date", "Task Date" %>
+		<div class="input-append success date">
+			<%= text_field_tag "timesheet_date", nil, :class => "form-control", :id=>"id_timesheet_date", :required=>true%>
+ 			<span class="add-on">
+				<span class="arrow"></span>
+				<i class="fa fa-th" ></i>
+			</span>
+		</div>
+	</div>
+	<span id="id_future_date" style="display:none">Please select a valid date</span>
+	<div id="id_task_partial">
+		<%= render 'task_fields'%>
+	</div>
+ 	<div class="text-right paddingTop10">	
+    	<%= submit_tag "Save", :id=>"id_new_submit", class: "btn btn-success btn-cons" %>
+    	<%#= submit_tag "Save", :id=>"id_new_submit", class: "btn btn-success btn-cons", data: { disable_with: 'Saving...' } %>
+	</div>
+	<%= hidden_field_tag "current_date"%>
+	<%= hidden_field_tag "timesheet_selected_user_id"%>
+<%end%>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	var d = new Date();
+	var yyyy = d.getFullYear().toString();                                    
+	var mm = (d.getMonth()+1).toString();   
+	var dd  = d.getDate().toString();             
+	var today_date = yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+	
+	if(today_date != '')
+	{
+		get_monthly_timesheets(today_date, $('#timesheet_selected_user_id').val());
+		get_logged_hours(today_date, $('#timesheet_selected_user_id').val());
+	}
+	
+	$('#timesheet_selected_user_id').val($('#selected_user_id').val());
+	$("#current_date").val(today_date);
+	$('#id_main_calendar_container').removeClass('tiles');
+	
+	$('#selected_user_id').on('change', function(){
+		$('#timesheet_selected_user_id').val($('#selected_user_id').val());
+		get_monthly_timesheets(today_date, $('#selected_user_id').val());
+		get_logged_hours(today_date, $('#selected_user_id').val());
+		$('#id_update_timesheet').hide();
+		$('#id_create_timesheet').hide();
+		$('#id_archive_timesheet').hide();
+	});	
+
+ $('.input-append.date').datepicker({
+		startView: 0,
+		autoclose: true,
+		todayHighlight: true,
+		endDate: '+0d'		
+}).on('changeDate', function (ev) {
+	if($('#id_timesheet_date').val() > today_date )
+	{
+		$("#id_future_date").show();
+		$("#id_task_partial").hide();
+	}
+	else
+	{
+		$("#id_future_date").hide();
+		$("#id_task_partial").show();
+		if($('#id_timesheet_date').val() != '')
+		{
+	   		jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'check_timesheet_exist')%>",{ timesheet_date : $('#id_timesheet_date').val(), user_id : $('#timesheet_selected_user_id').val()},
+					function(data) {
+						         if(data)
+					             {
+									jQuery("#id_task_partial").html(data);
+									$('#timesheet_selected_user_id').val($('#selected_user_id').val());
+								 }
+					             else
+					             {
+					     		 }
+			 	   		  }
+		   		   );
+	   		}
+		}	
+});
+
+$('.class_timesheet_task_hours').on('change', function(){
+	$('#timesheet_task_hours').val($('.class_timesheet_task_hours').val()); 
+});	
+
+$('#id_new_submit').click(function(){
+	$('#timesheet_timesheet_date').val($('#id_timesheet_date').val()); 
+});
+	function get_logged_hours(currentDate, selected_user_id)
+	{
+		jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_logged_hours')%>",{ current_date : currentDate, user_id : $('#selected_user_id').val(), task_hours : $('#timesheet_task_hours').val()},
+				function(data) {
+					         if(data)
+				             {
+									jQuery("#id_logged_hours").html(data);
+							 }
+				             else
+				             {
+				     		 }
+		 	   		  }
+	   		   );
+	}
+	
+	function get_monthly_timesheets(currentDate, selected_user_id)
+	{
+		jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_monthly_timesheets')%>",{ current_date : currentDate, user_id : $('#selected_user_id').val()},
+			function(data) {
+				         if(data)
+			             {
+							jQuery("#id_calendar").html(data);
+						 }
+			             else
+			             {
+			     		 }
+	 	   		  }
+   		   );
+	}
+});
+
+</script>

@@ -1,0 +1,62 @@
+<ul id="master" class="team-structlist">	
+	<li class="current1">
+		<span class="status-icon green"></span><span class="cursor_pointer project_type"> Current Projects (<span class="started_proj">0</span>) </span>
+		<% @user.projects.each do |project| %>
+			<% unless project.user_id != @user.id %>
+			<ul>
+				<% if project.status.eql?("started")%>
+					<li class="started_project_li project_name"><%= project.title%></li>
+				<% end %>
+			</ul>	
+			<% end %>
+		<%end %>
+	</li>
+	<li class="current1">
+		<span class="status-icon grey"></span><span class="cursor_pointer project_type"> Completed Projects (<span class="completed_proj">0</span>) </span>
+		<% @user.projects.each do |project| %>
+			<% unless project.user_id != @user.id %>
+			<ul>	
+				<% if project.status.eql?("completed")%>
+					<li class="completed_project_li project_name" ><%= project.title%></li>
+				<% end %>
+			</ul>
+			<% end %>
+		<% end %>
+	</li>
+	<li class="current1">
+		<span class="status-icon red"></span><span class="cursor_pointer project_type"> Oh hold Projects (<span class="on_hold_proj">0</span>) </span>
+		<% @user.projects.each do |project| %>
+			<% unless project.user_id != @user.id %>	
+			<ul>
+				<% if project.status.eql?("on_hold")%>
+					<li class="on_hold_project_li project_name" ><%= project.title%></li>
+				<% end %>
+			</ul>
+			<% end %>
+		<% end %>
+	</li>
+	<li class="current1">
+		<span class="status-icon yellow"></span><span class="cursor_pointer project_type"> Not started Projects (<span class="not_started_proj">0</span>) </span>
+		<% @user.projects.each do |project| %>
+			<% unless project.user_id != @user.id %>	
+			<ul>
+				<% if project.status.eql?("not_started")%>
+					<li class="not_started_project_li project_name" ><%= project.title%></li>
+				<% end %>
+			</ul>		
+			<% end %>
+		<% end %>
+	</li>
+</ul>
+<script type="text/javascript">
+
+$('.started_proj').html($(".started_project_li").size()/2);
+$('.completed_proj').html($(".completed_project_li").size()/2);
+$('.on_hold_proj').html($(".on_hold_project_li").size()/2);
+$('.not_started_proj').html($(".not_started_project_li").size()/2);
+
+$(".current1").click(function(e){
+     $(this).find('ul').toggle();
+})
+
+</script>

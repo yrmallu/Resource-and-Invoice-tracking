@@ -1,0 +1,29 @@
+<body>
+	<div class="container">
+		<div class= "row row-offcanvas row-offcanvas-right">	
+			<div class= "col-xs-12 col-sm-9">
+				<div class="row">
+	    			<div class="col-lg-6">
+						<fieldset>
+							<%#= form_tag (departments_path),:class => "class_deptForm", :remote => true  do |f| %>	
+								
+								<%#= fields_for :company, @company do |f| %>
+								 
+								 	<%#= f.fields_for :departments, @department do |builder| %>
+					   					<%#= render 'department_fields', f: builder, locals: {company: company.id} %>
+	  								<%#= end %>
+									
+	  								<%#= link_to_add_fields '<i class="icon-plus" style = "margin: -67px 0px 0px 330px;"></i>'.html_safe,f, :departments %>
+									<%#= render 'form_buttons' ,f: f %>
+	  			      	  	   <%#= end %>
+								
+							<%#= end %>
+						</fieldset>
+					</div><!--/span--> 
+					<div class="col-lg-3"></div>
+	      		</div><!--/row-->
+	  		</div>
+  		</div>
+	</div><!--/.container-->
+</body>
+	

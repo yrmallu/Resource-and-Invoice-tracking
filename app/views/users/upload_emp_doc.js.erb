@@ -1,0 +1,4 @@
+<%if @user.blank? %>
+<%else %>
+	$('#emp_doc').html('<%= j(render 'users/upload_emp_docs') unless @user.blank? %>');
+<%end %>	

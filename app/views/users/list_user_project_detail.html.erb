@@ -1,0 +1,59 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Employee Listing'.html_safe, users_path %></span></li>
+    <li><span class="active"> Team Structure: <%= @user.get_full_name %></span></li>
+</ul>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+			<div class="grid-title no-border"></div> 
+			<div class="grid-body no-border">
+			<div class="col-md-6 col-lg-6 col-sm-6" id="id_proj_listing">
+				<% unless @user.projects.blank? %>
+					<h4 class="semi-bold">Projects </h4>
+					<%= render 'project_list'%>	
+				<% end %>	
+			</div>
+			<div class="col-md-6 col-lg-6 col-sm-6" id="id_reporting_listing">	
+			<h4 class="semi-bold">Reporting employees </h4>
+				<% unless @user.projects.blank? %>
+					<%= render 'reporting_people'%>		
+				<% else %>
+					<% @user.team_members.each do |user| %>
+					<li class="role_name"><%= user.get_full_name %> <br>
+						<span class="role_font">
+							<%= user.get_user_role%>
+						</span>
+					</li>
+					<%end%>
+				<% end %>
+			</div>
+			<div class="clearfix"></div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+$(function($){
+	showHideMenu('li_administration');
+});
+
+$(document).ready(function(){
+	
+	if(<%=@user.projects.blank?%>)
+	{
+		$('#id_proj_listing').addClass('hide').removeClass('show');
+	}
+	else
+	{
+		$('#id_proj_listing').addClass('show').removeClass('hide');
+	}
+});	   
+	   
+	   
+</script>

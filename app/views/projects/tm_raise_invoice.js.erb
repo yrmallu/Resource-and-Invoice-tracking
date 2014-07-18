@@ -1,0 +1,11 @@
+<% if @time_material.blank? %>
+<% else %>
+	<%if "raise_invoice".eql?(@time_material.status)%>
+	    $('div.'+<%=@time_material.id%>).hide();
+		$('.'+<%=@time_material.id%>).html('<%= j(render 'projects/tm_milestone_invoice') unless @time_material.blank?  %>');
+    <%else%>
+	    $('.'+<%=@time_material.id%>).hide();
+		$('div.'+<%=@time_material.id%>).hide();
+		$('#'+<%=@time_material.id%>).html('<%= j(render 'projects/tm_milestone_invoice') unless @time_material.blank?  %>');
+	<%end%>
+<% end %>	

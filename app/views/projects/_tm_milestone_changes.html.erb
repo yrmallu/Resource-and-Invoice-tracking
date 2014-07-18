@@ -1,0 +1,41 @@
+<%@project.timematerial_milestones.each do |tm|%>	
+
+<tr class="gradeX odd">
+   <td class="center"></td>
+   <td><%=tm.milestone_name%></td>
+   <td class=" "><%=tm.amount%></td>
+   <td class=" "><%=tm.milestone_end_date%></td>
+   <td class="" style="display: -webkit-box">
+	   
+	   	<span class="<%=tm.id%>">
+		   <%=link_to "Raise Invoice", tm_raise_invoice_projects_path(:id=>tm,:status=>'raise_invoice'), :remote=>true, :class=>"btn-sm btn-small btn btn-success btn-cons milestone_btns", :id=>"id_raise_invoice", data: { confirm: 'Are you sure you want to raise invoice?' } unless ["invoice_raised", "payment_received", "raise_invoice"].include?(tm.status)%>
+	   </span>
+	   <span id="<%=tm.id%>">
+		   <%=render :partial=>"projects/tm_milestone_invoice", :locals=>{:@time_material=>tm}%>
+	   </span>
+	   <%unless ["payment_received","raise_invoice"].include?(tm.status)%>
+	      <div class='<%=tm.id%>'> 
+		    	<button type="button" data-input='<%=tm.id%>' data-toggle="modal" data-target="#myModal" class=" milestone_btns tm_delayed btn btn-danger btn-cons btn-sm btn-small">Delayed</button>
+			</div>
+	   	<%end%>
+   </td>
+</tr>
+<%end%>
+
+
+<script type="text/javascript">
+//$('#myModal').modal(options)
+$( ".tm_delayed" ).click(function() {
+          jQuery.get("<%=url_for(:controller=>'projects',:action=>'get_tm_detail')%>",{ id : $(this).attr('data-input')},
+function(data) {
+				if(data)
+              	{
+		   		 	jQuery("#tm_milestone").html(data);
+             	}
+               	else
+				{
+			  	  jQuery("#"+email_id).parent().find(".help-inline").html(data);
+				}
+ 		   });
+}); 
+</script>

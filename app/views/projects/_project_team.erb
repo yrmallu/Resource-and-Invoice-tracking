@@ -1,0 +1,29 @@
+<div data-no-turbolink>
+	<ul class="teammember-list">
+		<%unless @verified_employees.blank?%>
+			<%@verified_employees.each do |emp|%>
+			<% unless emp.delete_flag == true  %> 
+			 <%next if emp == @project.project_manager %>
+    			<li>
+        			<span class="">
+						<%logo = emp.photos.blank? ? 'missin.png' : emp.photos(:thumb) %>
+						<%=image_tag(logo, :class=>"dashboard-img")%>
+					</span>
+            		<p class="semi-bold"><%=emp.get_full_name%>
+					<sapn class="del_icon_team">
+						<%= link_to "<i title='Remove invited Member' class='fa fa-trash-o'></i>".html_safe, cancel_invited_project_invitation_projects_path(:id=>@project, :user_id=>emp), :method => :delete, :data => { :confirm => 'Are you sure?' } , :remote=>true%>
+					</span>	
+					</p>
+            		<p class="member-desig"><%=emp.role.name unless emp.role.blank?%></p>
+ 				</li>
+ 				<%end%>	
+			<%end%>
+		<%end%>
+		<li>
+			<span class="">
+				<%= link_to image_tag('invite.png', :class=>"dashboard-img"), project_members_projects_path(:id=>@project)%>
+			</span>
+			<p class="semi-bold"><%= link_to "Invite", project_members_projects_path(:id=>@project)%></p>
+		</li>
+    </ul>
+</div>

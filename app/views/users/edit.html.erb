@@ -1,0 +1,9 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+   <li><span class="prev-link" data-no-turbolink><%= link_to 'Employee Listing'.html_safe, users_path %></span></li>
+    <li><span class="active"> Edit Employee: <%=@user.firstname unless @user.blank?%></span></li>
+</ul>
+
+<%= render 'form' %>

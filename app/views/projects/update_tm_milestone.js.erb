@@ -1,0 +1,4 @@
+<% if @project.blank? %>
+<% else %>
+	$('#id_projects_table').html('<%= j(render 'projects/tm_milestone_changes') unless @project.blank?  %>');
+<% end %>	

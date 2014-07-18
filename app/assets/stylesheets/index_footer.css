@@ -1,0 +1,84 @@
+.navbar-default,.navbar {border-radius:0;}
+
+img {max-width:100%}
+ul.home-banner {list-style:none; margin:0; padding:0}
+ul.home-banner li {width:100%; height:500px; background:#0072bb; text-align:center}
+ul.home-banner li img{text-align:center}
+ul.home-banner li img.banner_header{width:50%; margin-top:145px}
+ul.home-banner li img.banner_concept{width:85%; margin-top:70px}
+
+
+.social-icon a {background:url(social_icon.png) no-repeat; width:36px; height:36px; display:inline-block; margin-left: 3px; }
+.social-icon a:hover,.social-icon a:focus {text-decoration:none}
+.social-icon a.git {background-position:0 0}
+.social-icon a.fb {background-position:-51px 0}
+.social-icon a.twit {background-position:-102px 0}
+.social-icon a.in {background-position:-154px 0}
+.social-icon a.git:hover {background-position:0 -50px}
+.social-icon a.fb:hover {background-position:-51px -50px}
+.social-icon a.twit:hover {background-position:-102px -50px}
+.social-icon a.in:hover {background-position:-154px -50px}
+.social-icon a.cuelogo {background:url(footer-logo.png) 0 0 no-repeat; width:43px; height:32px}
+
+.footer-topsec {overflow:hidden; margin-bottom:20px}
+ul.footer-link {list-style:none; margin:0; padding:0}
+ul.footer-link li {margin-bottom:10px}
+ul.footer-link li a {color:#fff; font-size:12px; text-transform:capitalize; font-family:Open Sans}
+
+.footer-text,.footer-text a {color:#fff; font-size:12px; font-family:Open Sans}
+.footer-text a {margin:0 3px}
+
+.btn-black {background:#1b1e24}
+
+.img_align{vertical-align: top !important;}
+
+.popover{left:-120px !important;}
+.popover .popover-content{overflow: hidden;}
+.popover.bottom .arrow{left: 60%}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus{background: none; border: none}
+.navbar-nav > li > a:focus{border: none}
+
+/* LOGIN FORM FOR SMALL DEVICES IS HIDDEN */
+.nav > li.login-inside{display: none}
+
+
+/* Media classes added for login popup responsiveness */
+
+@media screen and (max-width: 1366px){
+	.popover{left:-125px !important;}
+	.popover.bottom .arrow{left: 60%}
+}
+@media screen and (max-width: 1280px){
+	.popover{left:-130px !important;}
+	.popover.bottom .arrow{left: 63%}
+}
+@media screen and (max-width: 1024px){
+	.popover{left:-160px !important;}
+	.popover.bottom .arrow{left: 75%}
+}
+@media screen and (max-width: 980px){
+	.container{width: 880px}
+	.popover-content > div{width: 245px !important}
+	.popover-content .form-group{margin-bottom: 10px}
+	.popover-content .form-group .controls{margin-top: 0}
+	.popover-content .btn-cons{width: 100%; margin-top: 10px}
+	.popover{left:-140px !important;}
+	.popover.bottom .arrow{left: 67%}
+}
+@media screen and (max-width: 800px){
+	.container{width: 95%}
+	.popover{left:-160px !important;}
+	.popover.bottom .arrow{left: 75%}
+}
+
+@media screen and (max-width: 767px){
+	.nav .popover{display: none !important}
+
+	.nav.navbar-nav{background: #015992}
+	.nav > li.login-inside{display: block;}
+	.compressed .navbar-nav > li > a{padding:5px 15px; margin:10px;}
+	.navbar-nav > li > a:hover, .navbar-nav > li > a:focus{border-bottom: none; background: #0072bb }
+	.login-inside{padding: 5px 15px; margin: 10px}
+	.login-inside .form-group .form-label{color: #fff}
+	.login-inside a{color: #fff; font-style: italic;}
+}

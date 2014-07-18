@@ -1,0 +1,33 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Department Listing'.html_safe, departments_path %></span></li>
+    <li><span class="active"> Edit Department: <%= @department.name unless @department.blank?%></span></li>
+</ul>
+
+	<div class="col-md-6" data-no-turbolink>
+		    <div class="grid simple">
+		        <div class="grid-title no-border">
+		            <!-- <h4>Create <span class="semi-bold">new department</span></h4> -->
+					<div id="errorbox" class="error_box" style="margin-left: 25px;">	
+						<%= render "shared/error_messages", :object=>@department %>
+					</div>
+				</div>
+		        <div class="grid-body no-border">
+					<%= form_for @department, :html=>{:class => "class_deptForm form_validation"}, :remote=>true do |f| %>
+                        <div class="form-group">
+		                	<%= render "department_fields", f: f%>
+		                </div>
+						<div class="form-actions">  
+						    <div class="pull-right">
+							    <%= render "form_buttons", f: f%>
+						    </div>
+					    </div>
+					<% end %>
+		        </div>
+		    </div>	
+		</div>
+
+
+	

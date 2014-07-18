@@ -1,0 +1,99 @@
+
+<div class="grid-body no-border">
+	<fieldset>
+	<div class="row column-seperation form-section">
+        <div class="col-md-6">
+            <h4 class="semi-bold">Basic Information</h4> 
+			<br>           
+                <div class="row form-row form-group">
+					<div class="row ">
+                    	<div class="col-md-6">
+							<label class="form-label">First Name</label>
+							<span class="help">e.g. "Smith"</span>
+                     		<%=f.text_field :firstname, :class=>"form-control class_contact_firstname"%>
+                    	</div>
+                    	<div class="col-md-6">
+							<label class="form-label">Last Name</label>
+							<span class="help">e.g. "Jones"</span>
+                        	<%=f.text_field :lastname, :class=>"form-control" %>
+                    	</div>
+					</div>
+                </div>
+				<br>
+                <div class="row form-row">
+                    <div class="col-md-12">
+			   		 <table class="contact_point_image">
+			   			 <tr>
+			   				 <td>
+			   					 <div class="client-img"><%image = ( ["edit", "update"].include?(action_name)) ? (@contact_point.photos.blank? ? "missin.png" : @contact_point.photos.url) : 'missin.png'  %>
+			   					 <%= image_tag(image,:alt=>"your image",:class=>"link_to_add_ids show-page-img",:border=>"1") %></div>
+			   				 </td>
+			   			 </tr>
+			   			 <tr>
+			   				 <td style="width:180px;">
+			   					 <%= f.file_field :photos, :class => 'input-file', :onChange=>"return readURL(this);"%>
+			   				 </td>
+			   			 </tr>
+			   		 </table>
+				    </div>
+                </div>
+           </div>
+           <div class="col-md-6">
+		       <h4 class="semi-bold">Other Information</h4>
+                    <div class="form-row form-group">
+						<div class="row ">
+                       	 	<div class="col-md-12">
+								<span class="help-inline error_box"></span><br>
+								<label class="form-label">Email</label>
+								<span class="help">e.g. "smith@gmail.com"</span>
+						 	   <%=f.text_field :email, :autocomplete => "off", :class=>"form-control email_validation class_contact_email",  :required=>true%> 
+						 	</div>
+					   	</div>
+                    </div>
+                    <div class="form-row form-group">
+						<div class="row ">
+                        	<div class="col-md-12">
+								<label class="form-label">Skype id</label>
+                          	 	<%=f.text_field :skype_id, :class=>"form-control"%>
+                        	</div>
+						</div>
+                    </div>
+                    <div class="form-row form-group">
+						<div class="row ">
+                        	<div class="col-md-12">
+								<label class="form-label">Hangout id</label>
+                          		<%=f.text_field :hangout_id, :class=>"form-control"%> 
+                        	</div>
+						</div>
+                    </div>
+                    <div class="form-row form-group">
+						<div class="row ">
+                        	<div class="col-md-8">
+								<label class="form-label">Mobile Number</label>
+								<span class="help">e.g. "9898089675"</span>
+						    	<%=f.fields_for :addresses, @address do |fb|%>
+						        	<%=fb.text_field :mobile, :class=>"form-control mobile_number"%>
+						        	<%=fb.hidden_field(:id)%>
+						    	<%end%>
+                        	</div>
+						</div>
+				  	<%=f.hidden_field :password, :value=>"123456789"%>
+				  	<%=f.hidden_field :password_confirmation, :value=>"123456789"%>
+				  	<%=f.hidden_field :user_type, :value=>"contact_point"%>				  
+                    
+				    <%=f.hidden_field :_destroy%>
+				    <%=link_to "Remove", '#', :class => 'remove_fields' unless ["edit", "update", "create", "show"].include?(action_name)%>
+			       </div>
+	       </div>
+    </div>
+	</fieldset>
+</div>
+
+<script type="text/javascript">
+
+	$(function($){
+		showHideMenu('li_administration');
+	   });
+
+var email_valid = "<%= url_for :controller=> 'contact_points', :action => 'email_validation', :id=> action_name.eql?("edit") ? @contact_point.id : 0%>"
+</script>

@@ -1,0 +1,40 @@
+<title>Project Modules</title>
+<div class="page_title" id="container-heading" >
+	<h1 class = "listing_heading">Project Modules</h1>
+	<% if can? :project_module, ProjectModule %><%= link_to 'New Module', project_module_projects_path(:id=>@project), class: "btn btn-primary", :style=>"margin-left: 420px;"%> <% end %>	
+   	<%=render 'shared/page_search'%>   	
+</div>
+
+<div class="container">
+	<div class="row row-offcanvas row-offcanvas-right">
+		<%= render 'shared/admin_sidebar' %>
+		<div class="col-xs-12 col-sm-9">
+			<table class="table table-hover listingTable">
+        		<thead>
+					<% unless @modules.blank? %>
+          				<tr>
+			  				<th>Module Name</th>
+							<th>Description</th>
+            				<th>Actions</th>
+						</tr>
+				</thead>
+				<tbody>
+						<% @modules.each do |mod| %>
+            			<tr>
+							<td><% if can? :show_project_module, ProjectModule %> <%= link_to mod.name , show_project_module_projects_path(:mod_id=>mod, :id=> @project.id)%> <%end%></td>
+							<td><%=mod.description%></td>
+              	 			<td>
+              				<% if can? :update_project_module, ProjectModule %><%= link_to 'Edit', edit_project_module_projects_path(:mod_id=>mod, :id=> @project.id) %><%end%> |
+              				<% if can? :archive_project_module, ProjectModule %><%= link_to 'Archive', archive_project_module_projects_path(:mod_id=>mod.id, :id=> @project.id), :method => :delete, :data => { :confirm => 'Are you sure?' } %><%end%>
+						</td>
+            			</tr>
+	      	  		    <% end %>
+					<%else%>
+						<tr><td colspan="3" class = "no_records_found">No Project Modules</td></tr>
+		  			<% end %>
+				</tbody>
+      	  </table>
+		  <%= paginate @modules %>
+	  	</div>
+	</div>
+</div>

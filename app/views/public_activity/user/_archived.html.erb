@@ -1,0 +1,16 @@
+Archived the
+
+<% if activity.trackable %>
+	<%=activity.trackable.user_type.eql?("employee") ? "Employee" : "Contact Point"%>
+  	<%#= link_to activity.trackable.firstname, activity.trackable %>
+	<%if activity.trackable.user_type.eql?("contact_point") %> 
+		<b><%=activity.trackable.firstname%></b>
+		<%#= link_to activity.trackable.firstname, contact_point_path(activity.trackable,:client_id=>activity.trackable.client.id) %>
+	Of a Client <b><%=activity.trackable.client.name%></b><%#=link_to activity.trackable.client.name, activity.trackable.client%>
+	<%else%>
+		<b><%=activity.trackable.firstname%></b>
+		<%#= link_to activity.trackable.firstname, activity.trackable %>
+	<%end%>
+<% else %>
+  which has since been removed
+<% end %>

@@ -1,0 +1,22 @@
+<title>Project Module</title>
+<h1 class = "create_page_headings listing_heading"><%= @project.title%> : Module</h1>
+<div class="container">
+	<div class="row row-offcanvas row-offcanvas-right">
+   		<%=render 'shared/admin_sidebar'%>
+		<div class="col-xs-12 col-sm-9">
+     	   <%= form_tag (project_module_create_projects_path(:id=>@project)), :class=>"form_validation"  do %>
+		   <%= fields_for :project, @project do |f| %>
+				<%= f.fields_for :project_modules , @project_modules do |builder| %>
+					 <%= render 'project_module_fields', f: builder %>
+				<%end%>
+				<%= link_to_add_fields '<i class="icon-plus" style = ""></i>'.html_safe,f, :project_modules %>
+		   <%end%>
+		   <div class="actions">
+			    <%=submit_tag "Save", class: "btn btn-primary width_100px", data: { disable_with: 'Saving...' } %>
+				<%= link_to 'Cancel', projects_path, class: "btn btn-primary width_100px"%>
+		   </div>
+		   <%end%>
+  	 	</div>
+	</div>
+</div>
+	

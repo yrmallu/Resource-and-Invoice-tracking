@@ -1,0 +1,227 @@
+
+<%= render 'timesheets/calendar'%>
+	
+<script type="text/javascript">
+$(document).ready(function() {
+	
+$('#timesheet_task_hours').val('');
+var d = new Date();
+var yyyy = d.getFullYear().toString();                                    
+var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based         
+var dd  = d.getDate().toString();             
+var today_date = yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+
+	/* initialize the external events
+		-----------------------------------------------------------------*/
+
+		$('#external-events div.external-event').each(function() {
+	
+			// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+			// it doesn't need to have a start or end
+			var eventObject = {
+				title: $.trim($(this).text()) // use the element's text as the event title
+			};
+		
+			// store the Event Object in the DOM element so we can get to it later
+			$(this).data('eventObject', eventObject);
+		
+			// make the event draggable using jQuery UI
+			$(this).draggable({
+				zIndex: 999,
+				revert: true,      // will cause the event to go back to its
+				revertDuration: 0  //  original position after the drag
+			});
+		
+		});
+
+
+		var total_hours;
+		taskEvents = [];
+		var task = [];
+	
+	<% @timsheet_existing_dates = @all_timesheets.map(&:timesheet_date)%>
+
+	<% unless @all_timesheets.blank? %>
+		<% @all_month_dates.each_with_index do |month_date,index| %>
+			<% if @timsheet_existing_dates.include? month_date%>
+				<% @all_timesheets.each do |timesheet| %>
+					<% if timesheet.timesheet_date ==  month_date %>
+						total_hours = <%=timesheet.total_hours%>
+					<%end%>
+				<%end%>
+			<%else%>
+				total_hours = 0;
+			<%end%>	
+			 task = [];
+				task.title = (total_hours+" Hrs");
+				task.start = '<%= month_date.to_date %>';
+				task.className = '<%= month_date.to_date %>';
+				if('<%= month_date.to_date %>' <= today_date)
+				{
+					taskEvents.push(task);
+				}
+		<%end%>
+	<%else%>
+		<% @all_month_dates.each_with_index do |month_date,index| %>
+			task = [];
+			if('<%= month_date.to_date %>' <= today_date)
+			{
+				task.title = ("0 Hrs");
+				task.start = '<%= month_date.to_date %>';
+				task.className = '<%= month_date.to_date %>';
+				taskEvents.push(task);
+			}
+		<%end%>
+	<%end%>	
+	
+	
+		/* initialize the calendar
+		-----------------------------------------------------------------*/
+		$('#calendar').fullCalendar({
+			year:'<%=@clicked_year%>',
+			month:'<%=@clicked_month%>',
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+			//	right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+			disableDragging: true,
+		    dayClick: function(date, allDay, jsEvent, view) 
+			{
+		 	    clicked_date = $.fullCalendar.formatDate(date, 'yyyy-MM-dd');
+				if(clicked_date > today_date )
+				{
+					return false;
+				}
+				getDayClick(clicked_date);
+			},
+			events: taskEvents
+		});
+		
+		// if($('#timesheet_selected_user_id').val() != undefined)
+// 		{
+// 			var selected_user_id = $('#timesheet_selected_user_id').val();
+// 		}
+// 		else
+// 		{
+// 			var selected_user_id = $('#timesheet_user_id').val();
+// 		}
+		$('#selected_user_id').on('change', function(){
+			$('#timesheet_task_hours').val('');
+		})
+		
+		function getDayClick(clickedDate)
+		{
+		    $('#id_archive_timesheet').hide();
+	 	    $('#id_update_timesheet').hide();
+	 	    $('#id_create_timesheet').hide();
+		   
+		    jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_task_list')%>",{ user_id : $('#selected_user_id').val() , timesheet_date : clickedDate},
+				function(data) {
+				           if(data)
+						   {
+							   $('#id_hide_calendar').hide();
+							   $('#id_main_calendar_container').removeClass('tiles');
+							   jQuery("#id_task_list_slider").html(data);
+				            }
+				            else
+				            {
+							  //jQuery("#"+email_id).parent().find(".help-inline").html(data);
+						    }
+				 	   });
+		}
+		
+		$(".fc-event-inner span.fc-event-title").on("click",function(){
+		    var allClasses = $(this).parent().parent().attr('class');
+			splitClass = allClasses.split(" ");
+			dateClass = splitClass[4];
+			getDayClick(dateClass);
+		});
+	
+		/* Hide Default header : coz our bottons look awesome */ 
+		$('.fc-header').hide();
+	
+		//Get the current date and display on the tile
+		var currentDate = $('#calendar').fullCalendar('getDate');
+	
+		$('#calender-current-day').html($.fullCalendar.formatDate(currentDate, "dddd"));
+		$('#calender-current-date').html($.fullCalendar.formatDate(currentDate, "MMM yyyy"));
+	
+
+		$('#calender-prev').click(function(){
+ 		   $('#id_archive_timesheet').hide();
+ 	 	   $('#id_update_timesheet').hide();
+ 	 	   $('#id_create_timesheet').hide();
+		   
+			$('#calendar').fullCalendar( 'prev' );
+			currentDate = $('#calendar').fullCalendar('getDate');		
+			$('#calender-current-day').html($.fullCalendar.formatDate(currentDate, "dddd"));
+			$('#calender-current-date').html($.fullCalendar.formatDate(currentDate, "MMM yyyy"));
+			$('#timesheet_task_hours').val('');
+			call_prev_next_month(currentDate, selected_user_id);
+		});
+		$('#calender-next').click(function(){
+ 		   $('#id_archive_timesheet').hide();
+ 	 	   $('#id_update_timesheet').hide();
+ 	 	   $('#id_create_timesheet').hide();
+		   
+			$('#calendar').fullCalendar( 'next' );
+			currentDate = $('#calendar').fullCalendar('getDate');		
+			$('#calender-current-day').html($.fullCalendar.formatDate(currentDate, "dddd"));
+			$('#calender-current-date').html($.fullCalendar.formatDate(currentDate, "MMM yyyy"));
+			$('#timesheet_task_hours').val('');
+			call_prev_next_month(currentDate, selected_user_id);
+		});
+		
+		$('#change-view-month').click(function(){
+			$('#calendar').fullCalendar('changeView', 'month');
+		});
+		
+		function call_prev_next_month(currentDate, selected_user_id)
+		{
+			function convert(str) {
+			    var mnths = { 
+			        Jan:"01", Feb:"02", Mar:"03", Apr:"04", May:"05", Jun:"06",
+			        Jul:"07", Aug:"08", Sep:"09", Oct:"10", Nov:"11", Dec:"12"
+			    },
+			    date = str.split(" ");
+				return [ date[3], mnths[date[1]], date[2] ].join("-");
+			}
+			
+			get_monthly_timesheets(convert(currentDate.toString()), selected_user_id);
+			get_logged_hours(convert(currentDate.toString()), selected_user_id);
+		}
+	
+		function get_logged_hours(currentDate, selected_user_id)
+		{
+			jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_logged_hours')%>",{ current_date : currentDate, user_id : $('#selected_user_id').val(), task_hours : $('#timesheet_task_hours').val()},
+					function(data) {
+						         if(data)
+					             {
+									jQuery("#id_logged_hours").html(data);
+								 }
+					             else
+					             {
+					     		 }
+			 	   		  }
+		   		   );
+				   $('#timesheet_task_hours').val('');
+		}
+	
+		function get_monthly_timesheets(currentDate, selected_user_id)
+		{
+			jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_monthly_timesheets')%>",{ current_date : currentDate, user_id : $('#selected_user_id').val()},
+				function(data) {
+					         if(data)
+				             {
+								jQuery("#id_calendar").html(data);
+							 }
+				             else
+				             {
+				     		 }
+		 	   		  }
+	   		   );
+		}
+});	
+	</script>

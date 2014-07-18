@@ -1,0 +1,13 @@
+<%unless @resources.blank?%>
+	<% if @allocation_type.blank? %>
+		$('.navbar-fixed-<%=@tech%>').html('<%= j(render 'users/resource_info')  %>');
+	<%else%>
+	 	$('.navbar-fixed-<%=@allocation_type%>-<%=@tech%>').html('<%= j(render 'users/resource_info')  %>');
+	<%end%>
+<%else%>
+    <% if @allocation_type.blank? %>
+		$('.navbar-fixed-<%=@tech%>').html('')
+	<%else%>
+		$('.navbar-fixed-<%=@allocation_type%>-<%=@tech%>').html('')
+	<%end%>
+<%end%>	

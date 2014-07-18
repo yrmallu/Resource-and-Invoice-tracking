@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta charset="utf-8" />
+<title>Magnifi.it</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+
+
+<%= stylesheet_link_tag "bootstrap.min.css" %>
+<%= stylesheet_link_tag "bootstrap-theme.min.css" %>
+<%= stylesheet_link_tag "style.css" %>
+<%= stylesheet_link_tag "responsive.css" %>
+<%= stylesheet_link_tag "login-form.css" %>
+<%= stylesheet_link_tag "index_footer.css" %>
+<%= stylesheet_link_tag "/stylesheets/home_style.css" %>
+
+</head>
+
+<body class="error-body no-top">
+	<div class="header navbar navbar-inverse" style="background:#0090d9">
+		<div class="container">
+			<h1 id="logo">
+				<%= link_to image_tag("cue-logo.png", :class=>"img_align", :width=>"140", data: { src_retina: "cue-logo.png"} ), root_url%>
+			</h1>
+		</div>
+	</div>
+	
+	<%=yield%>
+	
+	<div class="section black footer">
+	  <div class="container">
+	    <div class="p-t-30 p-b-10">
+	      <div class="row">
+	        <!--Footer Top Sec Start-->
+	        <div class="footer-topsec">
+	          <div class="col-md-6 col-lg-6 col-sm-6">
+	            <div class="row">
+	              <div class="col-md-4 col-lg-4 col-sm-4">
+	                <ul class="footer-link">
+	                  <li><%= link_to 'Home', root_url%></li>
+	                  <li><a href="javascript:void(0);">Tour</a></li>
+	                  <li><a href="http://www.cuelogic.com/blog/">Blog</a></li>
+	                </ul>
+	              </div>
+	              <div class="col-md-4 col-lg-4 col-sm-4">
+	                <ul class="footer-link">
+	                  <li><a href="javascript:void(0);">project management tool</a></li>
+	                  <li><a href="javascript:void(0);">invoicing tool</a></li>
+	                  <li><a href="javascript:void(0);">HRMS tool</a></li>
+	                </ul>
+	              </div>
+	              <div class="col-md-4 col-lg-4 col-sm-4">
+	                <ul class="footer-link">
+	                  <li><a href="javascript:void(0);">content management tool</a></li>
+	                  <li><a href="javascript:void(0);">OpEx tracking tool</a></li>
+	                  <li><a href="javascript:void(0);">FAQ</a></li>
+	                </ul>
+	              </div>
+	            </div>
+	          </div>
+	          <div class="col-md-6 col-lg-6 col-sm-6">
+	            <div class="social-icon text-right"> <a class="cuelogo" href="http://cuelogic.com">&nbsp;</a> <!-- <a target="_blank" class="git" href="https://github.com/vikrantlabde">&nbsp;</a>  --><a target="_blank" class="fb" href="http://www.facebook.com/pages/Cuelogic-Technologies/298280838251?ref=search&sid=1037363674.3484703204..1">&nbsp;</a> <a target="_blank" class="twit" href="http://www.twitter.com/cuelogic">&nbsp;</a> <a target="_blank" class="in" href="http://www.linkedin.com/companies/cuelogic-technologies?trk=co_search_results&goback=%2Ecps_1265875999963_1">&nbsp;</a> </div>
+	          </div>
+	        </div>
+	        <!--Footer Top Sec End-->
+	        <div class="footer-text">
+	            <div class="col-md-6 col-lg-6 col-sm-6">
+	              <a href="javascript:void(0);">Privacy</a> / <a href="javascript:void(0);">Terms</a> / <a href="javascript:void(0);">Contact</a> 
+	            </div>
+	            <div class="col-md-6 col-lg-6 col-sm-6">
+	              <p class="text-right">Copyright &copy;2008-<%= Time.now.year %><a href="http://cuelogic.com" target="_blank"> Cuelogic Technologies.</a> All rights reserved.</p>
+	            </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+<%= javascript_include_tag "1_jquery-1.10.2.js" %>
+<%= javascript_include_tag "6_jquery-ui-1.10.3.custom.min" %>
+<%= javascript_include_tag "jquery.validate.min.js" %>
+<%= javascript_include_tag "required_field_validation.js" %>
+<%= javascript_include_tag "bootstrap.min.js" %>
+
+</body>
+</html>

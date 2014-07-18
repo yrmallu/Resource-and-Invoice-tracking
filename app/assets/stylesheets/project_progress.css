@@ -1,0 +1,55 @@
+
+.project-header {margin-bottom:20px}
+.project-header.fixed_plan {background:#f35958}
+.project-header.fixed_plan .navbar-brand {color:#fff; font-size:25px; font-weight:normal; font-family:Open Sans; line-height:25px}
+.project-header .navbar-brand {word-wrap:break-word; display:inline-block;}
+
+.fixed_plan .navbar-nav > li > a {padding:18px 20px; color:#fff; font-family:Open Sans; font-size:15px}
+.fixed_plan .navbar-nav > li > a:hover,.fixed_plan .navbar-nav > li > a.active {background:#ae3f3f; color:#fff;}
+
+.milestone-block {background:#fff; padding:15px; position:relative}
+.milestone-block h3 {margin:0 0 20px; line-height:20px; font-size:20px}
+
+
+ul.overview-detail {padding:0; margin:0 0 20px;list-style:none;}
+ul.overview-detail li {text-align:center; font-family:Open Sans; color:#fff; margin-bottom:20px; padding:0}
+ul.overview-detail li h2 {color:#fff}
+ul.overview-detail li div {padding:10px}
+ul.overview-detail li p {text-transform:capitalize; font-size:15px}
+
+ul.payment-list {margin:0; padding:0; list-style:none; overflow:hidden}
+ul.payment-list li {float:left; width:120px; height:120px; overflow:hidden; border-radius:120px; margin:0 10px 15px; text-align:center; color:#fff; font-family:Open Sans; padding:20px 0 0}
+ul.payment-list li.endM {color:#919191}
+ul.payment-list li.new-milestone {width:auto; height:auto; padding:0; border-radius:0;}
+
+.progress-block {margin-bottom:20px}
+.progress-box {border:2px solid #f7bf95; height:110px; position:relative; margin-bottom:20px}
+.progress-box .progress-bar {position:absolute; left:0; top:0; bottom:0; background:#f35957; border-radius:0}
+
+/* Green */
+.tnm-progress .progress-box {border:2px solid #39b1b5; height:110px; position:relative; margin-bottom:20px}
+.tnm-progress .progress-box .progress-bar {position:absolute; left:0; top:0; bottom:0; background:#08a699; border-radius:0}
+
+.startdate-box,.enddate-box {position:absolute; bottom:-38px; background:#000; border-radius:5px; color:#fff; display:block; padding:5px 10px; font-family:Open Sans}
+.startdate-box {left:-20px}
+.enddate-box {right:-22px}
+.startdate-box span,.enddate-box span {color:#8B91A0}
+
+.startdate-box:after,.enddate-box:after {position:absolute; display:block; width:0; height:0; border-color:transparent; border-style:solid; border-width:6px; content: ""; margin-left:-11px; border-top-width:0; border-bottom-color:#000; border-top-color:rgba(0, 0, 0, 0.25); top:-6px;}
+.startdate-box:after {left:21%}
+.enddate-box:after {right:10%}
+.process-titletxt {margin:0 0 10px; color:#d02b28}
+.tnm-title .process-titletxt{margin:0 0 10px; color:#0d353e}
+.track-timetxt {font-size:20px; color:#d02b28; margin:0 0 10px; line-height:20px}
+.tnm-title .track-timetxt {font-size:20px; color:#0d353e; margin:0 0 10px; line-height:20px}
+.spenttime-txt {font-size:20px; line-height:20px}
+
+.bluebg {background:#0090d9}
+.greenbg {background:#0aa699}
+.pinkbg {background:#f35958}
+.purplebg {background:#736086}
+.brownbg {background:#ae3f3f}
+.completed {background:#008f28}
+.endM {background:#cbcbcb}
+
+

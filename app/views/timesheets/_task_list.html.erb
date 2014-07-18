@@ -1,0 +1,148 @@
+
+	<div class="task-details">
+        <a href="javascript:void(0);" class="task-detailclose">Back</a>
+	    <div class="pull-right">
+	        <div class="btn-group ">
+	            <button class="btn btn-success" id="id_task_slider_calender-prev"><i class="fa fa-angle-left"></i></button>
+	            <button class="btn btn-success" id="id_task_slider_calender-next"><i class="fa fa-angle-right"></i></button>
+		    </div>
+	    </div>
+		<% unless @timesheet.blank? %>
+		
+			<%= hidden_field_tag "current_timesheet_date", @timesheet.timesheet_date %>
+			<%= hidden_field_tag "prev_timesheet_date", @timesheet.timesheet_date - 1 %>
+			<%= hidden_field_tag "next_timesheet_date", @timesheet.timesheet_date + 1%>
+		
+			<% unless @timesheet.tasks.blank? %>
+				<h2 class="cal-title semi-bold"><%= @timesheet.timesheet_date.strftime("%b %d, %Y") unless @timesheet.timesheet_date.blank?%></h2>
+				<div class="clearfix"></div>
+				<table cellpadding="0" cellspacing="0" border="0" class="table dataTable" aria-describedby="example3_info" id="id_task_table">
+          	    	<thead>
+            			<tr role="row">
+              		    <!-- <th class="sorting" role="columnheader" aria-label="name" style="width:50px;">#</th> -->
+              		  		<th class="sorting non_cursor" role="columnheader" tabindex="0" aria-controls="example3" style="width:250px;" aria-label="Position">Task Title</th>
+              		  		<th class="sorting non_cursor" role="columnheader" tabindex="0" aria-controls="example3"  style="width: 60px;" aria-label="Experience">Hours</th>
+              		  		<th class="sorting non_cursor" role="columnheader" tabindex="0" aria-controls="example3" style="width: 120px;" aria-label="Expertise">Actions</th>
+            			</tr>
+          	    	</thead>
+          	    	<tbody>
+						<% @timesheet.tasks.each do |task| %>
+            				<tr>
+              	    			<!-- <td>1</td> -->
+              					<td><%= task.name %></td>
+              		  			<td><%= task.hours %></td>
+              		  			<td>
+				  		  			<%= link_to '<i title="Edit Task" class="fa fa-edit"></i>'.html_safe, edit_task_timesheets_path(:task_id=>task.id, :timesheet_id=> @timesheet, :timesheet_date=>@timesheet.timesheet_date, :user_id=>params[:user_id], :is_edit=>"edit"), :remote=>true %> | 
+			  	  		  			<%= link_to '<i title="Delete Task" class="fa fa-trash-o"></i>'.html_safe, archive_task_timesheets_path(:task_id=>task.id, :timesheet_id=> @timesheet, :timesheet_date=>@timesheet.timesheet_date, :user_id=>params[:user_id]), :method => :get, :data => { :confirm => 'Are you sure?' }, :remote=>true, :id=>"id_delete_task" %>
+			  		  			</td>
+            				</tr>
+						<%end%>
+		  	  	  	</tbody>
+				</table>
+			<%else%>
+				<h2 class="cal-title semi-bold"><%= @current_timesheet_date.strftime("%b %d, %Y")%></h2>
+				<div class="clearfix"></div>
+				<div class="task-msg semi-bold">No Task's</div>
+			<%end%>
+		
+		<%else%>
+			<h2 class="cal-title semi-bold"><%= @current_timesheet_date.strftime("%b %d, %Y")%></h2>
+			<div class="clearfix"></div>
+			<div class="task-msg semi-bold">No Timesheet</div>
+			<%= hidden_field_tag "current_timesheet_date", @current_timesheet_date %>
+			<%= hidden_field_tag "prev_timesheet_date", @current_timesheet_date - 1 %>
+			<%= hidden_field_tag "next_timesheet_date", @current_timesheet_date + 1%>
+		<%end%>
+	</div> 
+	
+	
+<script type="text/javascript">
+
+var d = new Date();
+var yyyy = d.getFullYear().toString();                                    
+var mm = (d.getMonth()+1).toString(); // getMonth() is zero-based         
+var dd  = d.getDate().toString();             
+var today_date = yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+
+
+	$('#id_task_list_slider').removeClass('hide').addClass('show');
+	
+	$('.task-detailclose').click(function(){
+	   $('#id_task_list_slider').removeClass('show');
+	   $('#id_main_calendar_container').removeClass('tiles');
+	   $('#id_hide_calendar').show();
+	   hide_messages();
+	   reset_form();
+	});
+	
+	$('#id_task_slider_calender-prev').click(function(){
+		var clicked_date = $('#prev_timesheet_date').val();
+		if(today_date >= clicked_date)
+		{
+			get_task_list(clicked_date, '<%=params[:user_id]%>');
+			get_logged_hours(clicked_date, '<%=params[:user_id]%>');
+		}
+		reset_form();
+	});
+	
+	$('#id_task_slider_calender-next').click(function(){
+		var clicked_date = $('#next_timesheet_date').val();
+		if(today_date >= clicked_date)
+		{
+			get_task_list(clicked_date, '<%=params[:user_id]%>');
+			get_logged_hours(clicked_date, '<%=params[:user_id]%>');
+		}
+		reset_form();
+	});
+	
+	
+	function get_task_list(clicked_date, selected_user_id)
+	{
+		jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_task_list')%>",{ user_id : selected_user_id, timesheet_date : clicked_date},
+		function(data) {
+		           if(data)
+				   {
+					   $('#id_hide_calendar').hide();
+					   $('#id_main_calendar_container').removeClass('tiles');
+					   jQuery("#id_task_list_slider").html(data);
+		            }
+		            else
+		            {
+				    }
+				
+		 	   });
+	}
+	
+	function get_logged_hours(currentDate, selected_user_id)
+	{
+		jQuery.get("<%=url_for(:controller=>'timesheets',:action=>'get_logged_hours')%>",{ current_date : currentDate, user_id : selected_user_id},
+				function(data) {
+					         if(data)
+				             {
+									jQuery("#id_logged_hours").html(data);
+							 }
+				             else
+				             {
+				     		 }
+		 	   		  }
+	   		   );
+	}
+	
+	function reset_form()
+	{
+		// $('.class_timesheet_task_type_id option:eq(0)').attr('selected','selected');
+// 		$('.class_timesheet_task_hours option:eq(0)').attr('selected','selected');
+// 		$('.class_timesheet_task_name').val("");
+// 		$('.class_timesheet_task_desc').val("");
+// 		$('#id_timesheet_date').val("");
+// 		$('#project_list').hide();
+	}
+	
+	function hide_messages()
+	{
+		$('#id_create_timesheet').hide();
+		$('#id_update_timesheet').hide();
+		$('#id_archive_timesheet').hide();
+	}
+	
+</script>

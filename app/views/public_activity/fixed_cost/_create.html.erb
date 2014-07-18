@@ -1,0 +1,10 @@
+added a Milestone
+
+<% if activity.trackable %>
+ <b><%=activity.trackable.milestone_name%></b> to the Project
+ <b><%=activity.trackable.project.title%></b>
+ <%#= link_to activity.trackable.project.title, fixed_cost_payment_projects_path(:id=>activity.trackable.project.id) %>
+ <%#= link_to activity.trackable.status, fixed_cost_payment_projects_path(:id=>activity.trackable.project.id) %>
+<% else %>
+  which has since been removed
+<% end %>

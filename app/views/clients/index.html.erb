@@ -1,0 +1,58 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Dashboard'.html_safe, dashboard_users_path %></span></li>
+    <li><span class="active"> Client Listing</span></li>
+</ul>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="grid simple ">
+		    <div class="grid-body ">
+                <div role="grid" class="dataTables_wrapper form-inline" id="example2_wrapper">
+	  		  	    <div class="row" data-no-turbolink>
+			  	  	    <div class="col-md-6">
+			  		  	    <%= link_to 'Add Client', new_client_path, class: "btn btn-primary newempl-btn", :style => "margin-left:12px"%>	
+			  	  	    </div>
+		  	  	    </div>
+	  	  		    <table id="id_client_table" class="table table-striped dataTable listingTable" aria-describedby="example2_info">
+					   <thead>
+					       <% unless @clients.blank? %>
+						       <tr role="row">
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 22px;" aria-label=": activate to sort column ascending"></th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">Name</th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 165px;" aria-label="Rendering engine: activate to sort column ascending">URL</th>
+							       <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 219px;" aria-label="Browser: activate to sort column ascending">Action</th>
+						      </tr>
+                	   </thead>
+                	   <tbody role="alert" aria-live="polite" aria-relevant="all">
+						   <% @clients.each do |client| %>
+				  	       <tr class="gradeX odd">
+							   <td class="center"></td>
+	   							<%logo = client.photos.blank? ? 'missin.png' : client.photos(:thumb) %>
+	                 	  		<td data-no-turbolink> 
+									<% if can? :read, Client %><%= link_to image_tag(logo,:class=>"image_index_setting"), client, :class=>"dashboard-img" %><br><%= link_to client.name, client %><%end%>
+								</td>
+							   <td class=" "><%=link_to client.website, url_with_protocol(client.website) , :target => '_blank'%></td>
+	                 	 	   <td data-no-turbolink>
+	                 	  	   		<% if can? :update, Client %><%= link_to '<i title="Edit Client" class="fa fa-edit"></i>'.html_safe, edit_client_path(client) %><%end%> 
+	                 		   	 	<% if can? :destroy, Client %> | <%= link_to '<i title="Archive Client" class="fa fa-trash-o"></i>'.html_safe, client, method: :delete, data: { confirm: 'Are you sure?' } %><%end%> 
+	   					   	 		<% if can? :add_contact_point, Client %> | <%= link_to 'Add contact', add_contact_point_clients_path(:id=>client) %><%end%>
+	   					   	 		<% if can? :contact_detail, Client %> | <%= link_to 'View contacts', contact_detail_clients_path(:id=>client) %><%end%>
+								</td>
+                  		   </tr>
+	   	      	  		<% end %>
+						<% end %>
+			  		</tbody>
+		  		  </table>
+			 </div>
+        </div>
+    </div>
+</div> 
+ 
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_administration');
+	   });
+</script> 

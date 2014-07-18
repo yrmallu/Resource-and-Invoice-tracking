@@ -1,0 +1,104 @@
+<ul class="breadcrumb">
+    <li>
+        <p>YOU ARE HERE</p>
+    </li>
+    <li><span class="prev-link" data-no-turbolink><%= link_to 'Project Listing'.html_safe, projects_path %></span></li>
+    <li><span class="active"> View Project</span></li>
+</ul>
+
+<div class="row">
+	<div class="col-md-12">
+	    <div class="grid simple vertical green">
+			<div class="grid-title no-border">
+				<!-- <h4><%#=@project.title unless @project.blank?%> Information</h4> -->
+			</div>
+			<div class="grid-body no-border">
+				<div class="row-fluid project-addrinfo">
+				    <address>
+		                <label class="semi-bold">Project Name:</label>
+		                <span class="semi-bold"><%= @project.title %></span>
+					</address>											 
+					<address>
+	            		<label class="semi-bold">Project Incharge:</label>
+						<span><%= @project.project_manager.get_full_detail unless @project.project_manager.blank?%></span>	
+					</address>
+					<address>
+		        	    <label class="semi-bold">Client:</label>
+		              	<span><%= @project.client.name unless @project.client.blank?%></span>
+					</address>
+					<address>
+           	 		    <label class="semi-bold">Contact Persons:</label>
+ 					    <span><%unless @contact_point.blank?%>
+ 					   	    <%@contact_point.each do |contact|%>
+ 							    <%=contact.firstname%><br/>
+ 						    <%end%>
+ 					    <%end%></span>
+					</address>
+					<address>
+	             	 	 <label class="semi-bold">Start Date:</label>
+	                 	   <span><%= @project.start_date %></span>
+					</address>
+					<address>
+	               	   <label class="semi-bold">End Date:</label>
+	               	   <span><%= @project.end_date %></span>
+					</address>
+					<address>
+	           	 	   <label class="semi-bold">Project Type:</label>
+	               	   <span><%= @project.project_type.titleize unless @project.project_type.blank? %></span>
+					</address>
+					<address>
+ 					   <label class="semi-bold">Status:</label>
+                 	   <span><%= @project.status.titleize unless @project.status.blank?%></span>
+					</address>
+					<% if @project.project_type.eql?('fixed_cost')%>
+					<address>
+ 					   <label class="semi-bold">Committed Hours:</label>
+                 	   <span><%= @project.committed_hours unless @project.committed_hours.blank?%></span>
+					</address>
+					<%end%>
+					<address>
+	               	   <label class="semi-bold">Description:</label>
+	               	   <span><%= @project.description %></span>
+					</address>
+					<address>
+   					   <label class="semi-bold">Project Team Members:</label>
+   					   <span><%unless @employee_type.blank?%>
+   					       <%@employee_type.each do |contact|%>
+   						       <%=contact.get_full_detail%><br/>
+   						   <%end%>
+   					   <%end%></span>
+					</address>
+					<address>
+	               	   <label class="semi-bold">Files:</label>
+	 				   <span><%unless @project.project_files.blank?%>
+	 				       <%@project.project_files.each do |file|%>
+	 					       <%=file.files_file_name%>
+	 				   		<%#=link_to file.files_file_name, download_file_projects_path(:id=>file.id), :remote=>true%> <br/>
+	 				   	   <%end%>
+	 				   <%end%></span>
+					</address>
+					<div class="form-actions">
+						<address>
+							<div class="pull-right" data-no-turbolink>
+			 	    	   	    <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary btn-cons", :data => { :disable_with => "Saving..." } %> 
+			 	    	        <%= link_to 'Back', projects_path, class: "btn btn-white btn-cons"	 %>
+						   </div>
+					    </address>
+				    </div>
+				</div>
+			</div>
+		</div> 
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function($){
+		showHideMenu('li_projects');
+	   });
+</script>
+
+
+
+
+        	    
+		
